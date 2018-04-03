@@ -1,6 +1,6 @@
-const config = require("./config");
+const config = require('./config')
 
-const pathPrefix = config.pathPrefix === "/" ? "" : config.pathPrefix;
+const pathPrefix = config.pathPrefix === '/' ? '' : config.pathPrefix
 
 module.exports = {
   pathPrefix: config.pathPrefix,
@@ -16,8 +16,8 @@ module.exports = {
       description: config.siteDescription,
       image_url: `${config.siteUrl + pathPrefix}/logos/logo-512x512.png`,
       author: config.userName,
-      copyright: "© Vadim Gorbachev"
-    }
+      copyright: '© Vadim Gorbachev',
+    },
   },
   plugins: [
     {
@@ -32,26 +32,26 @@ module.exports = {
       options: {
         plugins: [
           {
-            resolve: "gatsby-remark-images",
+            resolve: 'gatsby-remark-images',
             options: {
               maxWidth: 700,
-              linkImagesToOriginal: false
-            }
+              linkImagesToOriginal: false,
+            },
           },
           {
             resolve: `gatsby-remark-responsive-iframe`,
             options: {
               wrapperStyle: `margin-bottom: 1.0725rem`,
               width: 600,
-              ratio: 1.77
+              ratio: 1.77,
             },
           },
-          "gatsby-remark-responsive-iframe",
-          "gatsby-remark-emojis",
-          "gatsby-remark-prismjs",
-          "gatsby-remark-copy-linked-files",
-          "gatsby-remark-autolink-headers",
-          "gatsby-remark-external-links",
+          'gatsby-remark-responsive-iframe',
+          'gatsby-remark-emojis',
+          'gatsby-remark-prismjs',
+          'gatsby-remark-copy-linked-files',
+          'gatsby-remark-autolink-headers',
+          'gatsby-remark-external-links',
           'gatsby-remark-smartypants',
         ],
       },
