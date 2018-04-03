@@ -14,7 +14,7 @@ module.exports = {
   userTwitter: "_bmsdave", // Optionally renders "Follow Me" in the UserInfo segment.
   userLocation: "Saint Petersburg, Russia", // User location to display in the author segment.
   userAvatar: "/images/bmsdave-100.jpg", // User avatar to display in the author segment.
-  userDescription: "", // User description to display in the author segment.
+  userDescription: "<script>alert('test')</script>", // User description to display in the author segment.
   // Links to social profiles/projects you want to display in the author segment/navigation bar.
   userLinks: [
     {

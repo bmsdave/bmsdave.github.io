@@ -6,6 +6,9 @@ module.exports = {
   pathPrefix: config.pathPrefix,
   siteMetadata: {
     siteUrl: config.siteUrl + pathPrefix,
+    title: config.siteTitle,
+    author: config.userName,
+    description: config.siteDescription,
     rssMetadata: {
       site_url: config.siteUrl + pathPrefix,
       feed_url: config.siteUrl + pathPrefix + config.siteRss,
@@ -16,12 +19,6 @@ module.exports = {
       copyright: "© Vadim Gorbachev"
     }
   },
-  // siteMetadata: {
-  //   title: 'Homyak',
-  //   author: 'Vadim Gorbachev',
-  //   description: 'My home page',
-  //   siteUrl: 'https://bmsdave.github.io/',
-  // },
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
