@@ -7,7 +7,7 @@ module.exports = {
   pathPrefix: "/",
   siteDescription:
     "Vadim Gorbachev's personal website and blog about programming", // Website description used for RSS feeds/meta description tag.
-  siteRss: "/blog/rss.xml", // Path to the RSS file.
+  siteRss: "/rss.xml", // Path to the RSS file.
   siteFBAppID: "", // FB Application ID for using app insights
   googleAnalyticsID: "UA-84952508-1", // GA tracking ID.
   userName: "Vadim Gorbachev", // Username to display in the author segment.
@@ -48,6 +48,6 @@ module.exports = {
       href: "google.com"
     }
   ],
-  themeColor: "#89bcfe", // Used for setting manifest and progress theme colors.
-  backgroundColor: "#e0e0e0" // Used for setting manifest background color.
+  themeColor: "#006600", // Used for setting manifest and progress theme colors.
+  backgroundColor: "#006666" // Used for setting manifest background color.
 };
