@@ -1,68 +1,51 @@
 module.exports = {
-  siteTitle: "Vadim Gorbachev", // Site title.
-  shortSiteTitle: "",
-  siteTitleAlt: "", // Alternative site title for SEO.
-  siteLogo: "", // Logo used for SEO and manifest.
-  siteUrl: "", // Domain of your website without pathPrefix.
+  siteTitle: "Vadim Gorbachev | bmsdave", // Site title.
+  shortSiteTitle: "bmsdave",
+  siteTitleAlt: "Vadim Gorbachev | bmsdave", // Alternative site title for SEO.
+  siteLogo: "/logos/logo-192x192.png", // Logo used for SEO and manifest.
+  siteUrl: "https://bmsdave.github.io/", // Domain of your website without pathPrefix.
   pathPrefix: "/",
   siteDescription:
-    "", // Website description used for RSS feeds/meta description tag.
-  siteRss: "", // Path to the RSS file.
+    "Vadim Gorbachev's personal website and blog about programming", // Website description used for RSS feeds/meta description tag.
+  siteRss: "/blog/rss.xml", // Path to the RSS file.
   siteFBAppID: "", // FB Application ID for using app insights
-  googleAnalyticsID: "", // GA tracking ID.
-  userName: "", // Username to display in the author segment.
-  userTwitter: "", // Optionally renders "Follow Me" in the UserInfo segment.
-  userLocation: "", // User location to display in the author segment.
-  userAvatar: "", // User avatar to display in the author segment.
+  googleAnalyticsID: "UA-84952508-1", // GA tracking ID.
+  userName: "Vadim Gorbachev", // Username to display in the author segment.
+  userTwitter: "_bmsdave", // Optionally renders "Follow Me" in the UserInfo segment.
+  userLocation: "Saint Petersburg, Russia", // User location to display in the author segment.
+  userAvatar: "/images/bmsdave-100.jpg", // User avatar to display in the author segment.
   userDescription: "", // User description to display in the author segment.
   // Links to social profiles/projects you want to display in the author segment/navigation bar.
   userLinks: [
     {
-      label: "",
-      href: "",
+      label: "bmsdave@gmail.com",
+      href: "mailto:bmsdave@gmail.com",
       type: "gmail"
     },
     {
-      label: "",
-      href: "",
+      label: "Twitter",
+      href: "https://twitter.com/_bmsdave",
       type: "twitter"
     },
     {
-      label: "",
-      href: "",
+      label: "GitHub",
+      href: "https://github.com/bmsdave",
       type: "github"
     },
     {
-      label: "",
-      href: "",
-      type: "instagram"
-    },
-    {
-      label: "",
-      href: "",
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/bmsdave/",
       type: "linkedin"
     }
   ],
   techInterestedIn: [
     {
-      label: "",
-      href: ""
+      label: "first",
+      href: "vk.com"
     },
     {
-      label: "",
-      href: ""
-    },
-    {
-      label: "",
-      href: ""
-    },
-    {
-      label: "",
-      href: ""
-    },
-    {
-      label: "",
-      href: ""
+      label: "two",
+      href: "google.com"
     }
   ],
   themeColor: "#89bcfe", // Used for setting manifest and progress theme colors.
