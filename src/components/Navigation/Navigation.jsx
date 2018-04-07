@@ -73,7 +73,7 @@ export default class Header extends React.Component {
               activeClassName={activeLinkClass}
               to="/"
             >
-              Alex Suevalov
+              Vadim Gorbachev
             </Link>
           </MenuItem>
           <MenuItem>

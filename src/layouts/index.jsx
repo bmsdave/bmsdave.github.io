@@ -2,7 +2,7 @@ import React from "react";
 import Helmet from "react-helmet";
 import styled from "react-emotion";
 import "typeface-open-sans/index.css";
-import "typeface-montserrat/index.css";
+import "typeface-fira-sans/index.css";
 import config from "../../config";
 import Navigation from "../components/Navigation/Navigation";
 import Footer from "../components/Footer/Footer";

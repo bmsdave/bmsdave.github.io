@@ -8,7 +8,7 @@ const typography = new Typography({
     scaleRatio: 5 / 2,
     googleFonts: [],
     headerFontFamily: [
-        "Montserrat",
+        "Fira Sans",
         "HelveticaNeue-Light",
         "Helvetica Neue Light",
         "Helvetica Neue",
@@ -18,6 +18,7 @@ const typography = new Typography({
         "sans-serif"
     ],
     bodyFontFamily: [
+        "Fira Sans",
         "Open Sans",
         "-apple-system",
         "BlinkMacSystemFont",

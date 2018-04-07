@@ -8,7 +8,7 @@ const Timeline = styled("section")`
   min-height: 600px;
   width: 100%;
   font-size: 0.9em;
-  font-family: "Montserrat", "Helvetica Neue", serif;
+  font-family: "Fira Sans", "Helvetica Neue", serif;
 
   ul {
     margin: 0;
