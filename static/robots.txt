@@ -1,2 +1,4 @@
 User-agent: *
-Disallow:
+Disallow: */tags/
+
+sitemap: https://bmsdave.github.io/sitemap.xml

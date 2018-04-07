@@ -7,3 +7,5 @@ Install this starter (assuming Gatsby is installed) by running from your CLI:
 
 ## Running in development
 `gatsby develop`
+
+# Personal website and blog made with Gatsby.js
