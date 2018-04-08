@@ -1,2 +1,0 @@
-webpackJsonp([0xb32629612b17],{399:function(e,a){e.exports={data:{allTalksJson:{edges:[{node:{title:"",place:"",date:"",url:"",video:"",language:""}}]}},pathContext:{}}}});
-//# sourceMappingURL=path---talks-06ec3fd84fc78bb58ffe.js.map
