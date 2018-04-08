@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "react-emotion";
-import { FancyH2 } from "../FancyHeader/FancyHeader";
+import {FancyH2} from "../FancyHeader/FancyHeader";
 
 const Event = styled('div')`
   position: relative;
@@ -24,21 +24,21 @@ const EventSubtitle = styled('div')`
 
 
 type Props = {
-  awards: Array<{ label: string, value: number }>
+    awards: Array < {label: string, value: number} >
 };
 
 export default class AwardsBlock extends React.Component<Props> {
-  render() {
-    return (
-      <React.Fragment>
-        <FancyH2>Awards</FancyH2>
-        {this.props.awards.map(award=> (
-            <Event>
-                <EventTitle>{award.title}</EventTitle>
-                <EventSubtitle>{award.date}</EventSubtitle>
-            </Event>
-        ))}
-      </React.Fragment>
-    );
-  }
+    render() {
+        return (
+            <React.Fragment>
+                <FancyH2>Awards</FancyH2>
+                {this.props.awards.map(award => (
+                    <Event key={award.title} >
+                        <EventTitle>{award.title}</EventTitle>
+                        <EventSubtitle>{award.date}</EventSubtitle>
+                    </Event>
+                ))}
+            </React.Fragment>
+        );
+    }
 }

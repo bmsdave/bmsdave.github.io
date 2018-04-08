@@ -145,7 +145,8 @@ export default class ExperienceBlock extends React.Component {
                                         - Analysis and review commit's included in the project for the presence of the
                                         impact of changes in PA-DSS certification.
                                     </p>
-                                    <p><strong>List of technologies:</strong> JavaScript, Typescript, AngularJS, Java, SQL, TeamCity,
+                                    <p><strong>List of technologies:</strong> JavaScript, Typescript, AngularJS, Java,
+                                        SQL, TeamCity,
                                         Windows</p>
                                 </EventDescription>
                             </Event>
@@ -177,7 +178,8 @@ export default class ExperienceBlock extends React.Component {
                                         the platform according to the requirements of external customers.<br/>
                                         - Integration of the operating and accounting platform with other external and
                                         internal systems.<br/>
-                                        - Implementation of applications for data synchronization via REST, SOAP, SMTP.<br/>
+                                        - Implementation of applications for data synchronization via REST, SOAP,
+                                        SMTP.<br/>
                                         - Deploy developed applications.<br/>
                                         - Setting up the production environment.<br/>
                                         - Configuration and optimization of web servers.<br/>
@@ -190,7 +192,7 @@ export default class ExperienceBlock extends React.Component {
                                         build systems/task runners – Gulp, Webpack, Grunt<br/>
                                         css frameworks – Bootstrap, Foundation<br/>
                                         js frameworks – Angular(1,2), Backbone.js, Polymer, Ampersand<br/>
-                                    <br/>
+                                        <br/>
                                         server-side:<br/>
                                         languages – Python2.7, PL/SQL<br/>
                                         frameworks – Flask, Botlle<br/>
@@ -219,16 +221,16 @@ export default class ExperienceBlock extends React.Component {
                                 </EventSubtitle>
                                 <EventDescription>
 
-                                        <strong>Tasks:</strong>
+                                    <strong>Tasks:</strong>
                                     <p>
                                         - Monitoring of performance and optimization of performance of the company's
                                         systems.<br/>
-                                        - Participation in the elimination of emergency situations in the server
+                                        - Participation in the elimination of emergencies in the server
                                         SOFTWARE (regardless of the time of day).<br/>
-                                        - Improvement of existing processes to respond to emergency situations.<br/>
+                                        - Improvement of existing processes to respond to emergencies.<br/>
                                     </p>
 
-                                        <strong>Functions:</strong>
+                                    <strong>Functions:</strong>
                                     <p>
                                         - Setting up a monitoring system to display the necessary information for
                                         technical support and specialists responsible for their respective systems.<br/>
@@ -238,7 +240,8 @@ export default class ExperienceBlock extends React.Component {
                                         - Technical advice to internal divisions of the company.
                                     </p>
                                     <p>
-                                        <strong>List of technologies:</strong> Debian, Puppet, Apache/Nginx/Tomcat, SQL, TCP/IP, Zabbix,
+                                        <strong>List of technologies:</strong> Debian, Puppet, Apache/Nginx/Tomcat, SQL,
+                                        TCP/IP, Zabbix,
                                         Java, Python, Bash.
                                     </p>
                                 </EventDescription>
@@ -262,22 +265,24 @@ export default class ExperienceBlock extends React.Component {
                                 <EventDescription>
                                     <strong>Tasks:</strong>
                                     <p>
-                                    - Providing support for the uninterrupted operation of servers, websites and other
-                                    services of the company.
+                                        - Providing support for the uninterrupted operation of servers, websites and
+                                        other
+                                        services of the company.
                                     </p>
                                     <strong>Functions:</strong>
                                     <p>
-                                    - Round-the-clock monitoring of the company's servers and services and rapid
-                                    response to problems.<br/>
-                                    - Maintenance, configuration and improvement of the monitoring system.<br/>
-                                    - Elimination of errors in the company's systems (independently or with the
-                                    assistance of specialists).<br/>
-                                    - Technical consultations to corporate clients of the company.<br/>
-                                    - Technical advice to internal divisions of the company.
+                                        - Round-the-clock monitoring of the company's servers and services and rapid
+                                        response to problems.<br/>
+                                        - Maintenance, configuration and improvement of the monitoring system.<br/>
+                                        - Elimination of errors in the company's systems (independently or with the
+                                        assistance of specialists).<br/>
+                                        - Technical consultations to corporate clients of the company.<br/>
+                                        - Technical advice to internal divisions of the company.
                                     </p>
                                     <p>
-                                    <strong>List of technologies:</strong> Debian, SMPP, Apache / Nginx / Tomcat, SQL, TCP / IP, Zabbix,
-                                    Python, Bash
+                                        <strong>List of technologies:</strong> Debian, SMPP, Apache / Nginx / Tomcat,
+                                        SQL, TCP / IP, Zabbix,
+                                        Python, Bash
                                     </p>
                                 </EventDescription>
                             </Event>
@@ -300,20 +305,22 @@ export default class ExperienceBlock extends React.Component {
                                 <EventDescription>
                                     <strong>Responsibilities:</strong>
                                     <p>
-                                    - Consulting clients on technical issues.<br/>
-                                    - Localization and elimination of problems related to the functioning of the
-                                    services provided by the company.
+                                        - Consulting clients on technical issues.<br/>
+                                        - Localization and elimination of problems related to the functioning of the
+                                        services provided by the company.
                                     </p>
                                     <strong>Functions:</strong>
                                     <p>
-                                    - Debugging and analysis of application traffic in the interaction of the main
-                                    protocols (DNS, FTP, SSH, POP3, SMTP, HTTP).<br/>
-                                    - Configuration and monitoring of the Linux/FreeBSD operating system family,
-                                    configuration and monitoring of services (Apache, Nginx, MySQL, exim/postfix).<br/>
-                                    - Work on the bash, vi command line with the main GNU utilities.<br/>
-                                    - Administration of web servers and organization of web sites.<br/>
-                                    - Competent written and oral communication with clients, ability to formulate the
-                                    thoughts and correctly to bring them to the interlocutor.
+                                        - Debugging and analysis of application traffic in the interaction of the main
+                                        protocols (DNS, FTP, SSH, POP3, SMTP, HTTP).<br/>
+                                        - Configuration and monitoring of the Linux/FreeBSD operating system family,
+                                        configuration and monitoring of services (Apache, Nginx, MySQL,
+                                        exim/postfix).<br/>
+                                        - Work on the bash, vi command line with the main GNU utilities.<br/>
+                                        - Administration of web servers and organization of web sites.<br/>
+                                        - Competent written and oral communication with clients, ability to formulate
+                                        the
+                                        thoughts and correctly to bring them to the interlocutor.
                                     </p>
                                 </EventDescription>
                             </Event>
@@ -330,9 +337,9 @@ export default class ExperienceBlock extends React.Component {
                                 <EventDescription>
                                     <strong>Tasks:</strong>
                                     <p>
-                                    - Technical support of terminals.<br/>
-                                    - Hardware and software Troubleshooting.<br/>
-                                    - Replacement of components.<br/>
+                                        - Technical support of terminals.<br/>
+                                        - Hardware and software Troubleshooting.<br/>
+                                        - Replacement of components.<br/>
                                     </p>
                                 </EventDescription>
                             </Event>

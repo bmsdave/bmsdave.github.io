@@ -88,6 +88,7 @@ class Resume extends React.Component {
                         />
                     </div>
                 </Row>
+                <a href="./static/assets/vgorbachev_cv.docx" alt="download word">download word</a>
             </div>
         );
     }

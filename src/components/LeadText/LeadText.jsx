@@ -41,8 +41,8 @@ export default class LeadText extends React.Component<LeadTextProps> {
                 </H2>
                 <Text style={{marginTop: 20}}>
                      {experienceInWeb} years of professional experience in web development and {experienceInIT} years of experience in IT.<br/>
-                    I Focus on the configuration flexibility, maintainability, performance, and security of product.<br/>
-                    I actively participate in the life of the Javascript community, I am an organizer of <a href="https://piterjs.org/">PiterJS</a>, mentor <a href="https://nodeschool.io/spb/">NodeSchool/SPB</a> and a member of the <a href="https://holyjs.ru">HolyJS</a> program Committee.
+                    I focus on the configuration flexibility, maintainability, performance, and security of product.<br/>
+                    I actively participate in the life of the Javascript community; I am an organizer of <a href="https://piterjs.org/">PiterJS</a>, mentor <a href="https://nodeschool.io/spb/">NodeSchool/SPB</a> and a member of the <a href="https://holyjs.ru">HolyJS</a> program Committee.
                     Previously I mentored in <a href="https://htmlacademy.ru/">HTML Academy</a> and lectured on JavaScript and node.JS in <a href="https://netology.ru/">Netology</a>.
 
 

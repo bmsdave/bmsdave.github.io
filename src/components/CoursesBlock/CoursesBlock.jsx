@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "react-emotion";
-import { FancyH2 } from "../FancyHeader/FancyHeader";;
+import {FancyH2} from "../FancyHeader/FancyHeader";
 
 const Event = styled('div')`
   position: relative;
@@ -24,21 +24,22 @@ const EventSubtitle = styled('div')`
 
 
 type Props = {
-  courses: Array<{ label: string, value: number }>
+    courses: Array < {label: string, value: number} >
 };
 
 export default class CoursesBlock extends React.Component<Props> {
-  render() {
-    return (
-      <React.Fragment>
-        <FancyH2>Courses</FancyH2>
-        {this.props.courses.map(course=> (
-            <Event>
-                <EventTitle>{course.title}</EventTitle>
-                <EventSubtitle><a href={course.link}>Certificate</a>, <a href={course.organizationLink}>{course.organization}</a>, {course.date}</EventSubtitle>
-            </Event>
-        ))}
-      </React.Fragment>
-    );
-  }
+    render() {
+        return (
+            <React.Fragment>
+                <FancyH2>Courses</FancyH2>
+                {this.props.courses.map(course => (
+                    <Event key={course.link}>
+                        <EventTitle>{course.title}</EventTitle>
+                        <EventSubtitle><a href={course.link}>Certificate</a>, <a
+                            href={course.organizationLink}>{course.organization}</a>, {course.date}</EventSubtitle>
+                    </Event>
+                ))}
+            </React.Fragment>
+        );
+    }
 }
