@@ -2,5 +2,17 @@
   {
     "label": "Javascript",
     "value": 95
+  },
+  {
+    "label": "Angular",
+    "value": 85
+  },
+  {
+    "label": "Python",
+    "value": 70
+  },
+  {
+    "label": "PL/SQL",
+    "value": 50
   }
 ]

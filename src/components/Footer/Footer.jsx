@@ -46,7 +46,7 @@ export default class extends Component {
               © {currentYear} {config.userName}<br/>
           the site is based on <a href="https://www.gatsbyjs.org/">Gatsby</a> and <a href="https://www.suevalov.com/">Alex Suevalov Blog</a>
           </h5>
-          <Link className="animated" to={url}>
+          <Link to={url}>
             Subscribe
           </Link>
         </NoticeContainer>

@@ -68,7 +68,6 @@ export default class Header extends React.Component {
         <Menu>
           <MenuItem>
             <Link
-              className="animated"
               isActive={(match, location) => location.pathname === "/"}
               activeClassName={activeLinkClass}
               to="/"
@@ -78,7 +77,6 @@ export default class Header extends React.Component {
           </MenuItem>
           <MenuItem>
             <Link
-              className="animated"
               isActive={(match, location) =>
                 location.pathname.indexOf("/blog") === 0
               }
@@ -90,7 +88,6 @@ export default class Header extends React.Component {
           </MenuItem>
           <MenuItem>
             <Link
-              className="animated"
               isActive={(match, location) =>
                 location.pathname.indexOf("/talks") === 0
               }
@@ -102,7 +99,6 @@ export default class Header extends React.Component {
           </MenuItem>
           <MenuItem>
             <Link
-              className="animated"
               isActive={(match, location) =>
                 location.pathname.indexOf("/resume") === 0
               }

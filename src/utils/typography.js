@@ -88,30 +88,6 @@ const typography = new Typography({
         "a.anchor": {
             boxShadow: "none"
         },
-        "a.animated:hover": {
-            color: "#fff",
-            transitionDelay: "0.1s",
-            outline: "none"
-        },
-        "a.animated:hover:before": {
-            transition: "transform 0.2s ease-in",
-            transitionDelay: "0.1s",
-            transform: "scaleX(1)"
-        },
-        "a.animated:before": {
-            transitionDelay: "0.1s",
-            content: "''",
-            position: "absolute",
-            left: "-2%",
-            top: "0",
-            width: "104%",
-            background: "#89bcfe",
-            transform: "scaleX(0)",
-            transition: "transform 0.1s ease-out",
-            height: "100%",
-            transformOrigin: "left top",
-            zIndex: "-1"
-        },
         "mark,ins": {
             background: "#007acc",
             color: "white",

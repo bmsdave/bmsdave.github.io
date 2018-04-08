@@ -1,6 +1,18 @@
 [
   {
-    "label": "",
-    "value": 10
+    "label": "Flexibility",
+    "value": 90
+  },
+  {
+    "label": "Problem-Solving Skills",
+    "value": 80
+  },
+  {
+    "label": "Team Player",
+    "value": 80
+  },
+  {
+    "label": "Communication Skills",
+    "value": 70
   }
 ]

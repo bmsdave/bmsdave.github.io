@@ -97,7 +97,7 @@ class Index extends React.Component {
                     <TalksList>
                         <h3>
                             Latest Posts
-                            <Link className="animated" to="/blog">
+                            <Link to="/blog">
                                 see all
                             </Link>
                         </h3>
@@ -112,7 +112,7 @@ class Index extends React.Component {
                     <TalksList>
                         <h3>
                             Latest Talks
-                            <Link className="animated" to="/talks">
+                            <Link to="/talks">
                                 see all
                             </Link>
                         </h3>

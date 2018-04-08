@@ -5,7 +5,7 @@ import SkillBar from "./SkillBar";
 type Props = {
   languages: Array<{ label: string, value: number }>,
   personalQualities: Array<{ label: string, value: number }>,
-  designSkills: Array<{ label: string, value: number }>,
+  sysadminSkills: Array<{ label: string, value: number }>,
   developmentSkills: Array<{ label: string, value: number }>
 };
 
@@ -20,8 +20,8 @@ export default class SkillsBlock extends React.Component<Props> {
           <SkillBar key={skill.label} value={skill.value} title={skill.label} />
         ))}
 
-        <h4>Design</h4>
-        {this.props.designSkills.map(skill => (
+        <h4>Administration</h4>
+        {this.props.sysadminSkills.map(skill => (
           <SkillBar key={skill.label} value={skill.value} title={skill.label} />
         ))}
 

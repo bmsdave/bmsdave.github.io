@@ -106,7 +106,6 @@ export default class LeadContacts extends React.Component<LeadContactsProps> {
                   <IconComponent className={classes.icon} />
                 </a>
                 <a
-                  className="animated"
                   target={target}
                   rel="noopener noreferrer"
                   href={link.href}

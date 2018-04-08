@@ -1,12 +1,14 @@
 import React from "react";
 import Helmet from "react-helmet";
 import styled from "react-emotion";
-import { TABLET_MEDIA_QUERY } from "typography-breakpoint-constants";
+import {TABLET_MEDIA_QUERY} from "typography-breakpoint-constants";
 import Config from "../../config";
-import { FancyH1 } from "../components/FancyHeader/FancyHeader";
+import {FancyH1} from "../components/FancyHeader/FancyHeader";
 import ExperienceBlock from "../components/ExperienceBlock/ExperienceBlock";
+import EducationBlock from "../components/EducationBlock/EducationBlock";
 import SkillsBlock from "../components/SkillsBlock/SkillsBlock";
-import RecommendationsBlock from "../components/RecommendationsBlock/RecommendationsBlock";
+import CoursesBlock from "../components/CoursesBlock/CoursesBlock";
+import AwardsBlock from "../components/AwardsBlock/AwardsBlock";
 
 const Row = styled("div")`
   display: flex;
@@ -21,12 +23,12 @@ const Row = styled("div")`
   > div:first-child {
     position: relative;
     margin-right: 20px;
-    width: 50%;
+    width: 70%;
   }
 
   > div:last-child {
     position: relative;
-    width: 40%;
+    width: 30%;
   }
 
   ${TABLET_MEDIA_QUERY} {
@@ -41,57 +43,59 @@ const Row = styled("div")`
 `;
 
 class Resume extends React.Component {
-  render() {
-    const recommendations = this.props.data.allRecommendationsJson.edges.map(
-      edge => edge.node
-    );
-    const languages = this.props.data.allLanguagesJson.edges.map(
-      edge => edge.node
-    );
-    const personalQualities = this.props.data.allPersonalQualitiesJson.edges.map(
-      edge => edge.node
-    );
-    const designSkills = this.props.data.allDesignSkillsJson.edges.map(
-      edge => edge.node
-    );
-    const developmentSkills = this.props.data.allDevelopmentSkillsJson.edges.map(
-      edge => edge.node
-    );
-    return (
-      <div>
-        <Helmet title={Config.siteTitle} />
-        <FancyH1>Resume</FancyH1>
-        <Row style={{ marginTop: 50 }}>
-          <div>
-            <ExperienceBlock />
-            <RecommendationsBlock recommendations={recommendations} />
-          </div>
-          <div>
-            <SkillsBlock
-              languages={languages}
-              personalQualities={personalQualities}
-              designSkills={designSkills}
-              developmentSkills={developmentSkills}
-            />
-          </div>
-        </Row>
-      </div>
-    );
-  }
+    render() {
+        const awards = this.props.data.allAwardsJson.edges.map(
+            edge => edge.node
+        );
+        const courses = this.props.data.allCoursesJson.edges.map(
+            edge => edge.node
+        );
+        const languages = this.props.data.allLanguagesJson.edges.map(
+            edge => edge.node
+        );
+        const personalQualities = this.props.data.allPersonalQualitiesJson.edges.map(
+            edge => edge.node
+        );
+        const sysadminSkills = this.props.data.allSysadminSkillsJson.edges.map(
+            edge => edge.node
+        );
+        const developmentSkills = this.props.data.allDevelopmentSkillsJson.edges.map(
+            edge => edge.node
+        );
+        return (
+            <div>
+                <Helmet title={Config.siteTitle}/>
+                <FancyH1>Resume</FancyH1>
+                <Row style={{marginTop: 50}}>
+                    <div>
+                        <ExperienceBlock/>
+                        <EducationBlock/>
+                    </div>
+                    <div>
+                        <SkillsBlock
+                            languages={languages}
+                            personalQualities={personalQualities}
+                            sysadminSkills={sysadminSkills}
+                            developmentSkills={developmentSkills}
+                        />
+                        <br/><br/>
+                        <CoursesBlock
+                            courses={courses}
+                        />
+                        <br/><br/>
+                        <AwardsBlock
+                            awards={awards}
+                        />
+                    </div>
+                </Row>
+            </div>
+        );
+    }
 }
 
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
   query ResumeQuery {
-    allRecommendationsJson {
-      edges {
-        node {
-          text
-          position
-          name
-        }
-      }
-    }
     allPersonalQualitiesJson {
       edges {
         node {
@@ -100,7 +104,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allDesignSkillsJson {
+    allSysadminSkillsJson {
       edges {
         node {
           label
@@ -121,6 +125,25 @@ export const pageQuery = graphql`
         node {
           label
           value
+        }
+      }
+    }
+    allCoursesJson {
+      edges {
+        node {
+          title
+          link
+          organization
+          organizationLink
+          date
+        }
+      }
+    }
+    allAwardsJson {
+      edges {
+        node {
+          title
+          date
         }
       }
     }

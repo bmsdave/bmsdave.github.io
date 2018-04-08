@@ -1,0 +1,22 @@
+[
+  {
+    "label": "web servers: nginx, Apache",
+    "value": 90
+  },
+  {
+    "label": "*nix",
+    "value": 80
+  },
+  {
+    "label": "Zabbix",
+    "value": 70
+  },
+  {
+    "label": "PostgreSQL",
+    "value": 60
+  },
+  {
+    "label": "Puppet",
+    "value": 50
+  }
+]
