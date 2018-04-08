@@ -27,7 +27,8 @@ LeadTextProps = {
 export default class LeadText extends React.Component<LeadTextProps> {
     render() {
         const currentYear = new Date().getFullYear();
-        const experience = currentYear - 2010;
+        const experienceInWeb = currentYear - 2014;
+        const experienceInIT  = currentYear - 2009 - 2;
         return (
             <div className={this.props.className}>
                 <FancyH1>Hi, I{"'"}m Vadim</FancyH1>
@@ -39,34 +40,12 @@ export default class LeadText extends React.Component<LeadTextProps> {
                     </a>.
                 </H2>
                 <Text style={{marginTop: 20}}>
-                    {experience} years of professional expertise in web development and
-                    creating complex SPAs.
-                </Text>
-                <Text>
-                    I interviewed over 30 engineers and was actively involved in sharing
-                    knowledge and good practices in companies I worked for. Focused on
-                    performance and maintainability, simplifying processes and getting
-                    things done.
-                </Text>
-                <Text>
-                    Currently interested in{" "}
-                    {this.props.techs.map((tech, index) => {
-                        const isLast = index === this.props.techs.length - 1;
-                        return (
-                            <Fragment key={tech.href}>
-                                {isLast && "and "}
-                                <a
-                                    className="animated"
-                                    href={tech.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {tech.label}
-                                </a>
-                                {!isLast && ", "}
-                            </Fragment>
-                        );
-                    })}
+                     {experienceInWeb} years of professional experience in web development and {experienceInIT} years of experience in IT.<br/>
+                    I Focus on the configuration flexibility, maintainability, performance, and security of product.<br/>
+                    I actively participate in the life of the Javascript community, I am an organizer of <a href="https://piterjs.org/">PiterJS</a>, mentor <a href="https://nodeschool.io/spb/">NodeSchool/SPB</a> and a member of the <a href="https://holyjs.ru">HolyJS</a> program Committee.
+                    Previously I mentored in <a href="https://htmlacademy.ru/">HTML Academy</a> and lectured on JavaScript and node.JS in <a href="https://netology.ru/">Netology</a>.
+
+
                 </Text>
             </div>
         );

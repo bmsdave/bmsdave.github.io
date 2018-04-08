@@ -40,8 +40,7 @@ module.exports = {
     ],
     techInterestedIn: [
         {
-            label: "first",
-            href: "vk.com"
+            label: "Security"
         },
         {
             label: "two",

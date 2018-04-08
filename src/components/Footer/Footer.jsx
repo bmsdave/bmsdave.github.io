@@ -43,7 +43,8 @@ export default class extends Component {
       <Footer>
         <NoticeContainer>
           <h5>
-            © 2017...{currentYear} {config.userName}
+              © {currentYear} {config.userName}<br/>
+          the site is based on <a href="https://www.gatsbyjs.org/">Gatsby</a> and <a href="https://www.suevalov.com/">Alex Suevalov Blog</a>
           </h5>
           <Link className="animated" to={url}>
             Subscribe
