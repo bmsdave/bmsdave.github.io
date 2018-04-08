@@ -1,0 +1,2 @@
+webpackJsonp([0xc69833dc971c],{398:function(e,l){e.exports={data:{allRecommendationsJson:{edges:[{node:{text:"",position:"",name:""}}]},allPersonalQualitiesJson:{edges:[{node:{label:"",value:10}}]},allDesignSkillsJson:{edges:[{node:{label:"",value:80}}]},allLanguagesJson:{edges:[{node:{label:"Russian",value:100}},{node:{label:"English",value:60}},{node:{label:"Belarusian",value:70}},{node:{label:"German",value:10}}]},allDevelopmentSkillsJson:{edges:[{node:{label:"Javascript",value:95}}]}},pathContext:{}}}});
+//# sourceMappingURL=path---resume-962eeb3ee09e01b36389.js.map
