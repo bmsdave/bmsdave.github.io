@@ -1,22 +1,6 @@
 [
   {
-    "label": "Self Management",
-    "value": 90
-  },
-  {
-    "label": "Proactivity",
-    "value": 90
-  },
-  {
-    "label": "Creativity",
-    "value": 75
-  },
-  {
-    "label": "Communication",
-    "value": 70
-  },
-  {
-    "label": "Team Player",
-    "value": 65
+    "label": "",
+    "value": 10
   }
 ]
