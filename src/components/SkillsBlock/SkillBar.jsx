@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "react-emotion";
+import monokaiColors from "../../../monokaiColors";
 
 const SkillBarRoot = styled("div")`
   margin-bottom: 10px;
@@ -22,7 +23,7 @@ const SkillValueBar = styled("div")`
   transition: width 0.7s ease;
   width: ${props => `${props.width}%`};
   height: 8px;
-  background-color: #89bcfe;
+  background-color: ${monokaiColors.colors["list.focusBackground"]};
   opacity: 0.6;
 `;
 

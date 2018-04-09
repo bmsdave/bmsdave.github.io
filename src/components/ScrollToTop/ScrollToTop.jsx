@@ -1,12 +1,13 @@
 import React from "react";
 import ScrollToTop from "react-scroll-up";
 import { css } from "react-emotion";
+import monokaiColors from "../../../monokaiColors";
 
 const classes = {
   container: css`
     width: 30px;
     height: 30px;
-    background-color: #89bcfe;
+    background-color: ${monokaiColors.colors["list.focusBackground"]};
     border-radius: 50%;
     opacity: 0.6;
   `,

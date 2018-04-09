@@ -16,6 +16,7 @@ import "./code-highlight.css";
 import "./post.css";
 import TableOfContents from "../components/TableOfContent/TableOfContent";
 import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
+import monokaiColors from "../../monokaiColors";
 
 const HiddenOnTablet = styled("div")`
   ${TABLET_MEDIA_QUERY} {
@@ -102,7 +103,7 @@ const PostContainer = styled("div")`
       position: absolute;
       left: -10px;
       bottom: -5px;
-      background-color: #89bcfe;
+      background-color: ${monokaiColors.colors["list.focusBackground"]};
       opacity: 0.6;
       z-index: -2;
     }

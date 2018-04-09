@@ -6,6 +6,7 @@ import GithubIcon from "../Icons/GithubIcon";
 import LinkedInIcon from "../Icons/LinkedInIcon";
 import GmailIcon from "../Icons/GmailIcon";
 import InstagramIcon from "../Icons/InstagramIcon";
+import monokaiColors from "../../../monokaiColors";
 
 const LeadContactsContainer = styled("div")`
   font-size: 0.9em;
@@ -45,7 +46,7 @@ const classes = {
     width: 25px;
     height: 25px;
     opacity: 0.6;
-    color: #89bcfe;
+    color: ${monokaiColors.colors["list.focusBackground"]};
     vertical-align: middle;
   `
 };

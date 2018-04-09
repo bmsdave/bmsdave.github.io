@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'react-emotion'
 import {FancyH2} from '../FancyHeader/FancyHeader'
+import monokaiColors from "../../../monokaiColors";
 
 const Timeline = styled('section')`
   position: relative;
@@ -69,7 +70,7 @@ const EventTime = styled('div')`
     position: absolute;
     left: -5px;
     bottom: 0px;
-    background-color: #89bcfe;
+    background-color: ${monokaiColors.colors["list.focusBackground"]};
     opacity: 0.6;
     z-index: -2;
   }

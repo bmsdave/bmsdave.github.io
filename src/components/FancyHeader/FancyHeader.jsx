@@ -1,4 +1,5 @@
 import styled from "react-emotion";
+import monokaiColors from "../../../monokaiColors";
 
 export const FancyH1 = styled("h1")`
   margin: 0;
@@ -22,7 +23,7 @@ export const FancyH2 = styled(`h2`)`
     position: absolute;
     left: -10px;
     bottom: -5px;
-    background-color: #89bcfe;
+    background-color: ${monokaiColors.colors["list.focusBackground"]};
     opacity: 0.6;
     z-index: -2;
   }

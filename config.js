@@ -1,3 +1,5 @@
+import monokaiColors from "./monokaiColors";
+
 module.exports = {
     siteTitle: "Vadim Gorbachev | bmsdave", // Site title.
     shortSiteTitle: "bmsdave",
@@ -38,15 +40,7 @@ module.exports = {
             type: "linkedin"
         }
     ],
-    techInterestedIn: [
-        {
-            label: "Security"
-        },
-        {
-            label: "two",
-            href: "google.com"
-        }
-    ],
-    themeColor: "#006600", // Used for setting manifest and progress theme colors.
-    backgroundColor: "#006666" // Used for setting manifest background color.
+    themeColor: monokaiColors.colors["list.highlightForeground"], // Used for setting manifest and progress theme colors.
+    backgroundColor: monokaiColors.colors["editor.background"] // Used for setting manifest background color.
+
 };

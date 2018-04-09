@@ -85,7 +85,6 @@ class Index extends React.Component {
                 <Helmet title={Config.siteTitle}/>
                 <Row justifyContent="space-between" style={{marginBottom: 0}}>
                     <LeadText
-                        techs={Config.techInterestedIn}
                         className={classes.leadText}
                     />
                     <LeadContacts

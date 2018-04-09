@@ -1,6 +1,7 @@
 import Typography from "typography";
 import gray from "gray-percentage";
 import {MOBILE_MEDIA_QUERY} from "typography-breakpoint-constants";
+import monokaiColors from "../../monokaiColors";
 
 const typography = new Typography({
     baseFontSize: "16px",
@@ -77,7 +78,7 @@ const typography = new Typography({
         },
         a: {
             boxShadow: "0 1px 0 0 currentColor",
-            color: "#007acc",
+            color: monokaiColors.colors["list.highlightForeground"],
             textDecoration: "none",
             position: "relative",
             transition: "color 0.2s ease-out"
@@ -89,7 +90,7 @@ const typography = new Typography({
             boxShadow: "none"
         },
         "mark,ins": {
-            background: "#007acc",
+            background: monokaiColors.colors["list.highlightForeground"],
             color: "white",
             padding: `${rhythm(1 / 16)} ${rhythm(1 / 8)}`,
             textDecoration: "none"

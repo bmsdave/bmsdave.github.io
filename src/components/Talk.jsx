@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "react-emotion";
 import YoutubeIcon from "./Icons/YoutubeIcon";
+import monokaiColors from "../../monokaiColors";
 
 const TalkContainer = styled("div")``;
 
 const TalkVideoLink = styled("a")`
   box-shadow: none;
   opacity: 0.6;
-  color: #89bcfe;
+  color: ${monokaiColors.colors["list.focusBackground"]};
 
   :hover,
   :focus {
