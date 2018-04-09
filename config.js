@@ -1,4 +1,4 @@
-const monokaiColors = require('./monokaiColors.js')
+const monokaiColors = require('./monokaiColors.js');
 
 module.exports = {
   siteTitle: 'Vadim Gorbachev | bmsdave', // Site title.
