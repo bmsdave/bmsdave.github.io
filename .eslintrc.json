@@ -7,7 +7,9 @@
     "react/prop-types": "off",
     "react/no-danger": "off",
     "prefer-destructuring": "off",
-    "jsx-a11y/anchor-is-valid": "off"
+    "jsx-a11y/anchor-is-valid": "off",
+    "flow.useNPMPackagedFlow": true,
+    "javascript.validate.enable": false
   },
   "settings": {
     "import/core-modules": []
