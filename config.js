@@ -1,4 +1,4 @@
-const monokaiColors = require('./monokaiColors.js');
+const monokaiColors = require('./monokaiColors.js')
 
 module.exports = {
   siteTitle: 'Vadim Gorbachev | bmsdave', // Site title.
@@ -38,6 +38,11 @@ module.exports = {
       label: 'LinkedIn',
       href: 'https://www.linkedin.com/in/bmsdave/',
       type: 'linkedin',
+    },
+    {
+      label: 'LastFM',
+      href: 'https://www.last.fm/user/bmsdave',
+      type: 'lastfm',
     },
   ],
   themeColor: monokaiColors.colors['list.highlightForeground'], // Used for setting manifest and progress theme colors.

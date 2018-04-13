@@ -72,38 +72,7 @@ const classes = {
 }
 
 class Index extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      lastfm: '',
-      isLoading: false,
-    }
-  }
-
-  componentDidMount() {
-    this.setState({ isLoading: true })
-
-    const fullUrl = `http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=bmsdave&api_key=e07781fdb72b940ecccaa4e84182695b&format=json&limit=1`
-
-    const lastfmPromise = fetch(fullUrl)
-      .then(response => response.json().then(json => ({ json, response })))
-      .then(({ json, response }) => {
-        if (!response.ok) {
-          return Promise.reject(json)
-        }
-        const lastfm = json.recenttracks.track[0].name
-
-        this.setState({ lastfm: lastfm, isLoading: false })
-
-        console.log('Last.fm', json, response)
-
-        return true
-      })
-  }
-
   render() {
-    const lastfm = this.state.lastfm
     const talks = this.props.data.allTalksJson.edges.map(edge => edge.node)
     const posts = this.props.data.allMarkdownRemark.edges
       .map(edge => edge.node)
@@ -124,7 +93,7 @@ class Index extends React.Component {
         <Row justifyContent="flex-start">
           <TalksList>
             <h3>
-              Latest Posts {lastfm}
+              Latest Posts
               <Link to="/blog">see all</Link>
             </h3>
             <ul>

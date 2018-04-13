@@ -1,14 +1,14 @@
-import React from "react";
-import styled, { css } from "react-emotion";
-import { TABLET_MEDIA_QUERY } from "typography-breakpoint-constants";
-import TwitterIcon from "../Icons/TwitterIcon";
-import GithubIcon from "../Icons/GithubIcon";
-import LinkedInIcon from "../Icons/LinkedInIcon";
-import GmailIcon from "../Icons/GmailIcon";
-import InstagramIcon from "../Icons/InstagramIcon";
-import monokaiColors from "../../../monokaiColors";
+import React from 'react'
+import styled, { css } from 'react-emotion'
+import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
+import TwitterIcon from '../Icons/TwitterIcon'
+import GithubIcon from '../Icons/GithubIcon'
+import LinkedInIcon from '../Icons/LinkedInIcon'
+import GmailIcon from '../Icons/GmailIcon'
+import LastFMIcon from '../Icons/LastFMIcon'
+import monokaiColors from '../../../monokaiColors'
 
-const LeadContactsContainer = styled("div")`
+const LeadContactsContainer = styled('div')`
   font-size: 0.9em;
 
   ul {
@@ -39,85 +39,124 @@ const LeadContactsContainer = styled("div")`
       }
     }
   }
-`;
+`
 
 const classes = {
   icon: css`
     width: 25px;
     height: 25px;
     opacity: 0.6;
-    color: ${monokaiColors.colors["list.focusBackground"]};
+    color: ${monokaiColors.colors['list.focusBackground']};
     vertical-align: middle;
-  `
-};
+  `,
+}
 
-type UserContant = {
-  type: "gmail" | "twitter" | "github" | "linkedin" | "instagram",
-  label: string,
-  href: string
-};
+export default class LeadContacts extends React.Component {
+  constructor(props) {
+    super(props)
 
-type LeadContactsProps = {
-  className?: string,
-  links: UserContant[]
-};
+    this.state = {
+      lastfm: '',
+      isLoading: false,
+      nowplaying: false,
+    }
+  }
 
-export default class LeadContacts extends React.Component<LeadContactsProps> {
+  componentDidMount() {
+    this.setState({ isLoading: true })
+
+    const fullUrl = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=bmsdave&api_key=e07781fdb72b940ecccaa4e84182695b&format=json&limit=1`
+
+    const lastfmPromise = fetch(fullUrl)
+      .then(response => response.json().then(json => ({ json, response })))
+      .then(({ json, response }) => {
+        if (!response.ok) {
+          return Promise.reject(json)
+        }
+        const lastfm =
+          json.recenttracks.track[0].artist['#text'] +
+          ' - ' +
+          json.recenttracks.track[0].name
+        const nowplaying =
+          json.recenttracks.track[0]['@attr'].nowplaying || false
+        this.setState({
+          lastfm: lastfm,
+          isLoading: false,
+          nowplaying: nowplaying,
+        })
+
+        return true
+      })
+  }
+
   render() {
+    const lastfm = this.state.lastfm
     return (
       <LeadContactsContainer className={this.props.className}>
         <ul>
-          {this.props.links.map((link: UserContant) => {
-            let IconComponent = null;
-            let target = "_blank";
+          {this.props.links.map(link => {
+            let IconComponent = null
+            let target = '_blank'
 
             switch (link.type) {
-              case "gmail":
-                IconComponent = GmailIcon;
-                target = "_self";
-                break;
-              case "github":
-                IconComponent = GithubIcon;
-                break;
-              case "twitter":
-                IconComponent = TwitterIcon;
-                break;
-              case "linkedin":
-                IconComponent = LinkedInIcon;
-                break;
-              case "instagram":
-                IconComponent = InstagramIcon;
-                break;
+              case 'gmail':
+                IconComponent = GmailIcon
+                target = '_self'
+                break
+              case 'github':
+                IconComponent = GithubIcon
+                break
+              case 'twitter':
+                IconComponent = TwitterIcon
+                break
+              case 'linkedin':
+                IconComponent = LinkedInIcon
+                break
+              case 'lastfm':
+                IconComponent = LastFMIcon
+                break
               default:
-                break;
+                break
             }
 
             if (IconComponent === null) {
-              return null;
+              return null
+            }
+
+            let label
+            if (this.state.nowplaying && IconComponent === LastFMIcon) {
+              label = link.label + ': ' + this.state.lastfm
+            } else {
+              label = link.label
             }
 
             return (
               <li key={link.type}>
                 <a
-                  style={{ boxShadow: "none" }}
+                  style={{ boxShadow: 'none' }}
                   target={target}
                   rel="noopener noreferrer"
                   href={link.href}
                 >
                   <IconComponent className={classes.icon} />
                 </a>
-                <a
-                  target={target}
-                  rel="noopener noreferrer"
-                  href={link.href}
-                >
+                <a target={target} rel="noopener noreferrer" href={link.href}>
                   {link.label}
                 </a>
+                {this.state.nowplaying && IconComponent === LastFMIcon ? (
+                  <span>
+                    <br />
+                    <small>
+                      <img class="nowplaying" src="/images/nowplaying.gif" />{' '}
+                      {this.state.lastfm}
+                    </small>
+                  </span>
+                ) : null}
               </li>
-            );
+            )
           })}
         </ul>
       </LeadContactsContainer>
-    );
+    )
   }
 }
