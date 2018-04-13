@@ -19,6 +19,7 @@ const Footer = styled('footer')`
   a {
     font-size: 0.9em;
     line-height: 1.3em;
+    padding-top: 8px;
   }
 `
 

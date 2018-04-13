@@ -26,6 +26,11 @@ const LeadContactsContainer = styled('div')`
       float: left;
       margin-right: 10px;
     }
+
+    small {
+      display: block;
+      margin-left: 34px;
+    }
   }
 
   ${TABLET_MEDIA_QUERY} {
@@ -35,6 +40,10 @@ const LeadContactsContainer = styled('div')`
       margin-bottom: 10px;
 
       > a:first-child {
+        display: none;
+      }
+
+      small {
         display: none;
       }
     }
@@ -78,7 +87,9 @@ export default class LeadContacts extends React.Component {
           ' - ' +
           json.recenttracks.track[0].name
         const nowplaying =
-          json.recenttracks.track[0]['@attr'].nowplaying || false
+          (json.recenttracks.track[0]['@attr'] &&
+            json.recenttracks.track[0]['@attr'].nowplaying) ||
+          false
         this.setState({
           lastfm: lastfm,
           isLoading: false,
@@ -147,8 +158,7 @@ export default class LeadContacts extends React.Component {
                   <span>
                     <br />
                     <small>
-                      <img class="nowplaying" src="/images/nowplaying.gif" />{' '}
-                      {this.state.lastfm}
+                      <img src="/images/nowplaying.gif" /> {this.state.lastfm}
                     </small>
                   </span>
                 ) : null}
