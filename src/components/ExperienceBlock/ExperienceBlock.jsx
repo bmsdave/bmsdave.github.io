@@ -97,7 +97,7 @@ const EventSubtitle = styled('div')`
   font-size: 0.9em;
   color: #999;
   padding-left: 10px;
-  line-height: 0.9em;
+  line-height: 1.4em;
 `
 
 const EventDescription = styled('div')`
