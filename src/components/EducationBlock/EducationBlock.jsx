@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'react-emotion'
-import {FancyH2} from '../FancyHeader/FancyHeader'
-import monokaiColors from "../../../monokaiColors";
+import { FancyH2 } from '../FancyHeader/FancyHeader'
+import monokaiColors from '../../../monokaiColors'
 
 const Timeline = styled('section')`
   position: relative;
@@ -70,7 +70,7 @@ const EventTime = styled('div')`
     position: absolute;
     left: -5px;
     bottom: 0px;
-    background-color: ${monokaiColors.colors["list.focusBackground"]};
+    background-color: ${monokaiColors.colors['list.focusBackground']};
     opacity: 0.6;
     z-index: -2;
   }
@@ -114,54 +114,56 @@ const Line = styled('div')`
 `
 
 export default class EducationBlock extends React.Component {
-    render() {
-        return (
-            <React.Fragment>
-                <FancyH2>Education</FancyH2>
-                <Timeline>
-                    <Line/>
-                    <ul>
-                        <li>
-                            <EventTime>
-                                <time>2011 - 2016</time>
-                            </EventTime>
-                            <Event>
-                                <EventTitle>Bachelor's degree, System analysis and management</EventTitle>
-                                <EventSubtitle>
-                                    <a
-                                        href="http://english.spbstu.ru/"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        Peter the Great St.Petersburg Polytechnic University
-                                    </a>, Saint Petersburg
-                                </EventSubtitle>
-                                <EventDescription>
-                                </EventDescription>
-                            </Event>
-                        </li>
-                        <li>
-                            <EventTime>
-                                <time>2005 - 2007</time>
-                            </EventTime>
-                            <Event>
-                                <EventTitle>Associate's degree, Mathematics and Informatics</EventTitle>
-                                <EventSubtitle>
-                                    <a
-                                        href="http://en.bru.by"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        Belarusian-Russian University
-                                    </a>, Mogilev, Belarus
-                                </EventSubtitle>
-                                <EventDescription>
-                                </EventDescription>
-                            </Event>
-                        </li>
-                    </ul>
-                </Timeline>
-            </React.Fragment>
-        )
-    }
+  render() {
+    return (
+      <React.Fragment>
+        <FancyH2>Education</FancyH2>
+        <Timeline>
+          <Line />
+          <ul>
+            <li>
+              <EventTime>
+                <time>2011 - 2016</time>
+              </EventTime>
+              <Event>
+                <EventTitle>
+                  Bachelor's degree, System analysis and management
+                </EventTitle>
+                <EventSubtitle>
+                  <a
+                    href="http://english.spbstu.ru/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Peter the Great St.Petersburg Polytechnic University
+                  </a>, Saint Petersburg, Russia
+                </EventSubtitle>
+                <EventDescription />
+              </Event>
+            </li>
+            <li>
+              <EventTime>
+                <time>2005 - 2007</time>
+              </EventTime>
+              <Event>
+                <EventTitle>
+                  Associate's degree, Mathematics and Informatics
+                </EventTitle>
+                <EventSubtitle>
+                  <a
+                    href="http://en.bru.by"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Belarusian-Russian University
+                  </a>, Mogilev, Belarus
+                </EventSubtitle>
+                <EventDescription />
+              </Event>
+            </li>
+          </ul>
+        </Timeline>
+      </React.Fragment>
+    )
+  }
 }

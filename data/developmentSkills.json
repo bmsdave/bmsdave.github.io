@@ -4,8 +4,12 @@
     "value": 95
   },
   {
-    "label": "Angular",
+    "label": "AngularJS",
     "value": 85
+  },
+  {
+    "label": "TypeScript",
+    "value": 70
   },
   {
     "label": "Python",
@@ -14,5 +18,21 @@
   {
     "label": "PL/SQL",
     "value": 50
+  },
+  {
+    "label": "Java",
+    "value": 50
+  },
+  {
+    "label": "Angular",
+    "value": 50
+  },
+  {
+    "label": "React",
+    "value": 40
+  },
+  {
+    "label": "RxJS",
+    "value": 40
   }
 ]

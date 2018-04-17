@@ -1,10 +1,10 @@
 [
   {
-    "label": "web servers: nginx, Apache",
+    "label": "Web Servers: nginx, Apache",
     "value": 90
   },
   {
-    "label": "*nix",
+    "label": "Linux",
     "value": 80
   },
   {

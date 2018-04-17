@@ -141,6 +141,7 @@ export const pageQuery = graphql`
         node {
           title
           date
+          location
         }
       }
     }
