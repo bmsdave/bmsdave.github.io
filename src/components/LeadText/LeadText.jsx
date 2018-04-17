@@ -34,30 +34,32 @@ export default class LeadText extends React.Component {
           </a>.
         </H2>
         <Text style={{ marginTop: 20 }}>
-          {experienceInWeb} years of professional experience in web development
-          and {experienceInIT} years of experience in IT.<br />
-          I focus on the configuration flexibility, maintainability,
-          performance, and security of product.<br />
-          I actively participate in the life of the Javascript community; I am
-          an organizer of{' '}
+          Professional web developer with {experienceInWeb} years of experience
+          in web development and {experienceInIT} years of experience in IT. I
+          focus on the configuration flexibility, maintainability, performance,
+          and product security. I actively participate in the life of the
+          JavaScript community. I organize{' '}
           <a href="https://piterjs.org/" target="_blank">
             PiterJS
-          </a>, mentor{' '}
+          </a>{' '}
+          – monthly JavaScript Meetup in Saint Petersburg, volunteer as a mentor
+          at{' '}
           <a href="https://nodeschool.io/spb/" target="_blank">
             NodeSchool/SPB
           </a>{' '}
-          and a member of the{' '}
+          and has been a member of the{' '}
           <a href="https://holyjs.ru" target="_blank">
             HolyJS
           </a>{' '}
-          program Committee. Previously I mentored in{' '}
+          program committee. Previously I served as a mentor at{' '}
           <a href="https://htmlacademy.ru/" target="_blank">
             HTML Academy
           </a>{' '}
-          and lectured on JavaScript and node.JS in{' '}
+          and lectured on JavaScript and node.JS at the online university of{' '}
           <a href="https://netology.ru/" target="_blank">
             Netology
-          </a>.
+          </a>. I like sports (boxing, speedcubing, and chess). I respect and
+          love mathematics and everything related to it.
         </Text>
       </div>
     )
