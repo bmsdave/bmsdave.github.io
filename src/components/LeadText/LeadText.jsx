@@ -34,11 +34,11 @@ export default class LeadText extends React.Component {
           </a>.
         </H2>
         <Text style={{ marginTop: 20 }}>
-          Professional web developer with {experienceInWeb} years of experience
-          in web development and {experienceInIT} years of experience in IT. I
-          focus on the configuration flexibility, maintainability, performance,
-          and product security. I actively participate in the life of the
-          JavaScript community. I organize{' '}
+          {experienceInWeb} years of experience in web development and{' '}
+          {experienceInIT} years of experience in IT. I focus on the
+          configuration flexibility, maintainability, performance, and product
+          security. I actively participate in the life of the JavaScript
+          community. I organize{' '}
           <a href="https://piterjs.org/" target="_blank">
             PiterJS
           </a>{' '}
