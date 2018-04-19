@@ -86,10 +86,18 @@ class Resume extends React.Component {
             <AwardsBlock awards={awards} />
           </div>
         </Row>
-        <Download href="../assets/vgorbachev_cv.docx" alt="*.docx">
+        <Download
+          href="../assets/vgorbachev_cv.docx"
+          alt="*.docx"
+          target="_blank"
+        >
           *.docx
         </Download>
-        <Download href="../assets/vgorbachev_cv.pdf" alt="*.pdf">
+        <Download
+          href="../assets/vgorbachev_cv.pdf"
+          alt="*.pdf"
+          target="_blank"
+        >
           *.pdf
         </Download>
       </div>
