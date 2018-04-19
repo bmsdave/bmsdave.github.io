@@ -229,9 +229,9 @@ export default class ExperienceBlock extends React.Component {
                   </p>
                   <p>
                     <strong>Technologies</strong>: JS, Dart, Typescript,
-                    Angular(1,2), Backbone.js, Polymer, Ampersand Python2.7,
-                    PL/SQL, Flask, SqlAlchemy, PostrgreSQL, GIT, Nginx, Apache2,
-                    Debian, Puppet
+                    Angular(1,2), React, Backbone.js, Polymer, Ampersand
+                    Python2.7, PL/SQL, Flask, SqlAlchemy, PostrgreSQL, GIT,
+                    Nginx, Apache2, Debian, Puppet
                   </p>
                 </EventDescription>
               </Event>
