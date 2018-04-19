@@ -42,6 +42,10 @@ const Row = styled('div')`
   }
 `
 
+const Download = styled('a')`
+  margin-left: 20px;
+`
+
 class Resume extends React.Component {
   render() {
     const awards = this.props.data.allAwardsJson.edges.map(edge => edge.node)
@@ -82,9 +86,12 @@ class Resume extends React.Component {
             <AwardsBlock awards={awards} />
           </div>
         </Row>
-        <a href="../assets/vgorbachev_cv.docx" alt="download word">
-          download word
-        </a>
+        <Download href="../assets/vgorbachev_cv.docx" alt="*.docx">
+          *.docx
+        </Download>
+        <Download href="../assets/vgorbachev_cv.pdf" alt="*.pdf">
+          *.pdf
+        </Download>
       </div>
     )
   }
