@@ -5,7 +5,7 @@ module.exports = {
   shortSiteTitle: 'bmsdave',
   siteTitleAlt: 'Vadim Gorbachev | bmsdave', // Alternative site title for SEO.
   siteLogo: '/logos/logo-192x192.png', // Logo used for SEO and manifest.
-  siteUrl: 'https://bmsdave.github.io/', // Domain of your website without pathPrefix.
+  siteUrl: 'https://bmsdave.github.io', // Domain of your website without pathPrefix.
   pathPrefix: '/',
   siteDescription:
     "Vadim Gorbachev's personal website and blog about programming", // Website description used for RSS feeds/meta description tag.
