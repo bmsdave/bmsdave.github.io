@@ -48,7 +48,7 @@ export default class LeadText extends React.Component {
             NodeSchool/SPB
           </a>{' '}
           and has been a member of the{' '}
-          <a href="https://holyjs.ru" target="_blank">
+          <a href="https://holyjs.ru/en/" target="_blank">
             HolyJS
           </a>{' '}
           program committee. Previously I served as a mentor at{' '}
