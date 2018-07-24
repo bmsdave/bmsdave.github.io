@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <p>Hello %username!</p>
+    <div style='height:100px'>
+        <button onclick='start()'>Click me</button>
+    </div>
+
+    <div id="wrapper">
+    </div>
+
+    <script>
+        window.show = true;
+
+        function start() {
+            window.counter = 50;
+            window.promise = setInterval(function () {
+                window.counter--;
+                toggleButton();
+                if (window.counter <= 0) {
+                    clearInterval(window.promise);
+                }
+            }, 50);
+        }
+
+        function toggleButton() {
+            if (window.show) {
+                var b = document.createElement("BUTTON");
+                b.innerHTML = 'Click me too';
+                b.setAttribute('id', 'button');
+
+                var wrapper = document.getElementById("wrapper");
+                wrapper.appendChild(b);
+                b.focus()
+            } else {
+                var b = document.getElementById("button");
+                b.remove();
+            }
+            window.show = !window.show;
+        }
+    </script>
+
+</body>
+</html>
