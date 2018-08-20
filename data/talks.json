@@ -8,6 +8,13 @@
     "language": "Russian"
   },
   {
+    "title": "Documentation",
+    "place": "PiterJS #13, Saint Petersburg, Russia",
+    "url": "https://bmsdave.github.io/talk-jsdoc/",
+    "date": "23.03.2017",
+    "language": "Russian"
+  },
+  {
     "title": "Module Bundlers and Task Runners",
     "place": "Openway Group, Saint Petersburg, Russia",
     "url": "https://bmsdave.github.io/talk-moduleBundlers-and-taskRunners",
@@ -16,7 +23,7 @@
   },
   {
     "title": "Mercurial: Workflows",
-    "place": "PiterJS #9, Saint Petersburg, Russia",
+    "place": "Openway Group, Saint Petersburg, Russia",
     "url": "https://bmsdave.github.io/talk-mercurial",
     "date": "17.02.2017",
     "language": "Russian"
