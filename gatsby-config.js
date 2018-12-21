@@ -14,7 +14,7 @@ module.exports = {
       feed_url: config.siteUrl + pathPrefix + config.siteRss,
       title: config.siteTitle,
       description: config.siteDescription,
-      image_url: `${config.siteUrl + pathPrefix}/logos/logo-512x512.png`,
+      image_url: `${config.siteUrl + pathPrefix}/logos/logo-512x512.jpg`,
       author: config.userName,
       copyright: '© Vadim Gorbachev',
     },
@@ -104,12 +104,12 @@ module.exports = {
           {
             src: '/logos/logo-192x192.jpg',
             sizes: '192x192',
-            type: 'image/png',
+            type: 'image/jpg',
           },
           {
             src: '/logos/logo-512x512.jpg',
             sizes: '512x512',
-            type: 'image/png',
+            type: 'image/jpg',
           },
         ],
       },
