@@ -29,7 +29,7 @@ export default class LeadText extends React.Component {
         <H2>Software Engineer, based&nbsp;in&nbsp;Saint Petersburg.</H2>
         <H2>
           Work at{' '}
-          <a href="http://openwaygroup.com/" target="_blank">
+          <a href="http://www.openwaygroup.com/" target="_blank">
             OpenWay
           </a>.
         </H2>
