@@ -1,2 +1,2 @@
-webpackJsonp([31811852732581],{413:function(a,t){a.exports={data:{allMarkdownRemark:null},pathContext:{tag:"y-combinator"}}}});
+webpackJsonp([31811852732581],{415:function(a,t){a.exports={data:{allMarkdownRemark:null},pathContext:{tag:"y-combinator"}}}});
 //# sourceMappingURL=path---blog-tags-y-combinator-7baf1b0c6b76388ae6e4.js.map
