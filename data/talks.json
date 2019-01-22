@@ -1,5 +1,12 @@
 [
   {
+    "title": "Vulnerability analysis in the authentication process",
+    "place": "PiterJS #33, Saint Petersburg, Russia",
+    "url": "https://docs.google.com/presentation/d/1Euv_etttjtSrGLb9GlytLCvXmxiTmsQ0h5w8WjuvWYw/edit?usp=sharing",
+    "date": "17.01.2019",
+    "language": "Russian"
+  },
+  {
     "title": "RxJS",
     "place": "TradingView, Saint Petersburg, Russia",
     "url": "https://bmsdave.github.io/talk-rxjs",
