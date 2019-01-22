@@ -147,7 +147,7 @@ export default class EducationBlock extends React.Component {
               </EventTime>
               <Event>
                 <EventTitle>
-                  Associate's degree, Mathematics and Informatics
+                  Associate's degree, Mathematics and Computer Science
                 </EventTitle>
                 <EventSubtitle>
                   <a
