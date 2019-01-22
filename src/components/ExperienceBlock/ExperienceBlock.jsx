@@ -146,6 +146,10 @@ export default class ExperienceBlock extends React.Component {
                     <strong>Project</strong>: WAY4WEB
                   </p>
                   <p>
+                    <strong>Roles</strong>: Product Owner WAY4WEB, Information
+                    Security Officer (PCI DSS) WAY4WEB
+                  </p>
+                  <p>
                     <strong>Scope of project</strong>: The standard delivery of
                     the project consists of more than 10 thousand screens (forms
                     of display of certain entities, such as information about a
@@ -154,8 +158,10 @@ export default class ExperienceBlock extends React.Component {
                     interface.
                   </p>
                   <p>
-                    <strong>Clients</strong>: NETS, Santander, SberBank,
-                    OpenBank, etc.
+                    <strong>Clients</strong>: quensWorldline, SIX Payment
+                    Services, Credorax, Comdata, ACB, Network International,
+                    Asbanda, Finnet Indonesia, Raiffeisenbank Int. Halyk Bank,
+                    etc.
                   </p>
                   <p>
                     <strong>Job Responsibilities:</strong>
@@ -164,8 +170,6 @@ export default class ExperienceBlock extends React.Component {
                     part.<br />
                     - Stress testing and optimization of web applications.<br />
                     - Web applications penetration testing.<br />
-                    - Performing the duties of the Information Security Officer
-                    (PCI DSS).<br />
                     - Analysis and review of commits included in the project for
                     the presence of the impact of changes in PA-DSS
                     certification.
