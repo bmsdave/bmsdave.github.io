@@ -9,12 +9,12 @@
       "path---blog-tags-functional-programming-a00336461e99ad3de4d6.js.map"
     ],
     "path---blog": [
-      "path---blog-dcc0aa506c603c23e6b7.js",
-      "path---blog-dcc0aa506c603c23e6b7.js.map"
+      "path---blog-2f1e5e4910f9e20899c8.js",
+      "path---blog-2f1e5e4910f9e20899c8.js.map"
     ],
     "path---blog-y-combinator": [
-      "path---blog-y-combinator-db8eebc11601476f8b7d.js",
-      "path---blog-y-combinator-db8eebc11601476f8b7d.js.map"
+      "path---blog-y-combinator-8d1d8c4a7256ef9a011e.js",
+      "path---blog-y-combinator-8d1d8c4a7256ef9a011e.js.map"
     ],
     "component---src-pages-resume-jsx": [
       "component---src-pages-resume-jsx-81dd6bea8f231674d714.js",
@@ -29,8 +29,8 @@
       "component---src-layouts-index-jsx-dbfa6af898959da1e925.js.map"
     ],
     "path---blog-tags-node-js": [
-      "path---blog-tags-node-js-a7f133b8ab99213b191d.js",
-      "path---blog-tags-node-js-a7f133b8ab99213b191d.js.map"
+      "path---blog-tags-node-js-138a426a7551c6038f25.js",
+      "path---blog-tags-node-js-138a426a7551c6038f25.js.map"
     ],
     "path---blog-y-combinator-eng": [
       "path---blog-y-combinator-eng-cfff54b927ea3473da93.js",
@@ -49,12 +49,12 @@
       "path---blog-tags-combinators-6d6b275347c9a9c5519f.js.map"
     ],
     "path---index": [
-      "path---index-31ca7c05341f53721084.js",
-      "path---index-31ca7c05341f53721084.js.map"
+      "path---index-c6f09f68e214c2d28a37.js",
+      "path---index-c6f09f68e214c2d28a37.js.map"
     ],
     "path---blog-tags-javascript": [
-      "path---blog-tags-javascript-43afe17136497b354eb6.js",
-      "path---blog-tags-javascript-43afe17136497b354eb6.js.map"
+      "path---blog-tags-javascript-e3638c99fe1220ab8545.js",
+      "path---blog-tags-javascript-e3638c99fe1220ab8545.js.map"
     ],
     "commons": [
       "commons-1507ad4637a19134078c.js",
@@ -91,8 +91,8 @@
       "path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js.map"
     ],
     "component---src-templates-post-jsx": [
-      "component---src-templates-post-jsx-a7d1eee03fbec2552015.js",
-      "component---src-templates-post-jsx-a7d1eee03fbec2552015.js.map"
+      "component---src-templates-post-jsx-5031f49875dcc5d9465b.js",
+      "component---src-templates-post-jsx-5031f49875dcc5d9465b.js.map"
     ],
     "component---src-pages-index-jsx": [
       "component---src-pages-index-jsx-98cbe73b204065ea502f.js",
@@ -107,10 +107,14 @@
       "path---resume-1a281e8b3d5183432b9c.js.map"
     ],
     "app": [
-      "app-6230e805e780c5de4077.js",
+      "app-8dd089517156ee3d0280.js",
       "build-js-styles.css",
-      "app-6230e805e780c5de4077.js.map",
+      "app-8dd089517156ee3d0280.js.map",
       "build-js-styles.css.map"
+    ],
+    "path---blog-auth-vulnerabilities": [
+      "path---blog-auth-vulnerabilities-5831aa519e8ca7c0871e.js",
+      "path---blog-auth-vulnerabilities-5831aa519e8ca7c0871e.js.map"
     ],
     "path---404": [
       "path---404-a0e39f21c11f6a62c5ab.js",

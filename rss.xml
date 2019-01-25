@@ -1,1 +1,602 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Vadim Gorbachev | bmsdave]]></title><description><![CDATA[Vadim Gorbachev's personal website and blog about programming]]></description><link>https://bmsdave.github.io</link><image><url>https://bmsdave.github.io/logos/logo-512x512.jpg</url><title>Vadim Gorbachev | bmsdave</title><link>https://bmsdave.github.io</link></image><generator>GatsbyJS Material Starter</generator><lastBuildDate>Tue, 22 Jan 2019 09:25:13 GMT</lastBuildDate><atom:link href="https://bmsdave.github.io/rss.xml" rel="self" type="application/rss+xml"/><author><![CDATA[Vadim Gorbachev]]></author><copyright><![CDATA[© Vadim Gorbachev]]></copyright><item><title><![CDATA[First Post]]></title><description><![CDATA[Hello world!]]></description><link>https://bmsdave.github.io/blog/first-post</link><guid isPermaLink="false">https://bmsdave.github.io/blog/first-post</guid><category><![CDATA[first]]></category><dc:creator><![CDATA[Vadim Gorbachev]]></dc:creator><pubDate>Sat, 07 Apr 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hello world!&lt;/p&gt;</content:encoded></item></channel></rss>
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Vadim Gorbachev | bmsdave]]></title><description><![CDATA[Vadim Gorbachev's personal website and blog about programming]]></description><link>https://bmsdave.github.io</link><image><url>https://bmsdave.github.io/logos/logo-512x512.jpg</url><title>Vadim Gorbachev | bmsdave</title><link>https://bmsdave.github.io</link></image><generator>GatsbyJS Material Starter</generator><lastBuildDate>Fri, 25 Jan 2019 19:46:28 GMT</lastBuildDate><atom:link href="https://bmsdave.github.io/rss.xml" rel="self" type="application/rss+xml"/><author><![CDATA[Vadim Gorbachev]]></author><copyright><![CDATA[© Vadim Gorbachev]]></copyright><item><title><![CDATA[Анализ уязвимостей процесса аутентификации]]></title><description><![CDATA[Введение Приветствую. Последней каплей вдохновения для этого поста стал перевод  курса MIT «Безопасность компьютерных систем»  от  @ua…]]></description><link>https://bmsdave.github.io/blog/auth-vulnerabilities</link><guid isPermaLink="false">https://bmsdave.github.io/blog/auth-vulnerabilities</guid><category><![CDATA[javascript]]></category><category><![CDATA[node.js]]></category><dc:creator><![CDATA[Vadim Gorbachev]]></dc:creator><pubDate>Fri, 25 Jan 2019 00:00:00 GMT</pubDate><content:encoded>&lt;h2 id=&quot;Введение&quot;&gt;&lt;a href=&quot;#%D0%92%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Введение&lt;/h2&gt;
+&lt;p&gt;Приветствую.&lt;/p&gt;
+&lt;p&gt;Последней каплей вдохновения для этого поста стал перевод &lt;a href=&quot;https://habr.com/ru/company/ua-hosting/blog/354874/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;курса MIT «Безопасность компьютерных систем»&lt;/a&gt; от &lt;a href=&quot;https://habr.com/ru/company/ua-hosting/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;@ua-hosting&lt;/a&gt;, огромное спасибо им за это. Если кто-то еще не читал/смотрел этот курс, то я настоятельно его рекомендую.&lt;/p&gt;
+&lt;p&gt;А для затравки и в качестве введения для этого поста приведу примеры, которые приводились во введение в этом курсе.&lt;/p&gt;
+&lt;p&gt;В первую очередь хочется сказать, что материал который предоставляется в этом посте нельзя использовать в незаконных целях и направлен на то, чтобы мы как разработчики знали как может вести себя злоумышленник и были защищены от этого, а не наоборот. Если вы захотите попробовать некоторые из подходов на практике, то прочитайте вот эту статью &lt;a href=&quot;https://xakep.ru/2017/01/12/lawyer-answers-hacker-responsibility-howto/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;&quot;Ответы юриста: как избежать ответственности за поиск уязвимостей&quot;&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;cool-story-1&quot;&gt;&lt;a href=&quot;#cool-story-1&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Cool story 1&lt;/h3&gt;
+&lt;p&gt;В определенный момент времени Yahoo решила дать своим пользователям получать доступ к аккаунту не только по логину и паролю, но и в случае, если вы забыли пароль, ответить на пару вопросов, ответ на который могли знать только вы (т.к. у них не было возможности отправить вам пароль на какой либо другой резервный аккаунт).&lt;/p&gt;
+&lt;p&gt;И в один прекрасный день, &lt;a href=&quot;https://ru.wikipedia.org/wiki/%D0%9F%D1%8D%D0%B9%D0%BB%D0%B8%D0%BD,_%D0%A1%D0%B0%D1%80%D0%B0&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Сара Пэйлин&lt;/a&gt;, у которой был ящик на Yahoo, обнаружила, что данные ее почтового ящика утекли. Дело в том, что на кодовые вопросы для доступа к аккаунту были «Где вы посещали школу? Как звали вашего друга? Когда у вас день рождения?», а ответы на эти вопросы были на ее странице в википедии. И каждый мог получить доступ к ее аккаунту, просто прочитав страницу о ней.  &lt;/p&gt;
+&lt;h3 id=&quot;cool-story-2&quot;&gt;&lt;a href=&quot;#cool-story-2&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Cool story 2&lt;/h3&gt;
+&lt;p&gt;Еще один &quot;прекрасный&quot; случай произошел с парнем по имени &lt;a href=&quot;https://twitter.com/mat&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Мэт Хонан&lt;/a&gt;. Злоумышленников заинтересовал твиттер этого человека. Из персонального сайта нашли его email - mhonan@gmail.com, а информация Whois одного из проектов говорила что его адрес 1559B Sloat Blvd, San Francisco. Далее злоумышленник через форму восстановления пароля google узнал его резервный ящик m••••n@me.com. Ящики на me.com - это по совместительству еще и AppleID -  идентификатор, используемый для совершения покупок в магазине AppStore. Дабы восстановить пароль к аккаунту @me.com через звонок в техподдержку Apple, необходимо знать:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;адрес почты @me.com;&lt;/li&gt;
+&lt;li&gt;billing address - адрес проживания;&lt;/li&gt;
+&lt;li&gt;последние 4 цифры кредитной карты, привязанной к AppleID.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Первые два пункта хакер уже знал. Осталось узнать последние 4ре цифры кредитки, и в этом ему помог Amazon. Хакер позвонил в техподдержку Амазона, представился Мэтом и сказал, что хочет привязать к аккаунту еще одну кредитную карту. Все что нужно знать для этого - ФИО, мыло и адрес. Далее он повесил трубку и позвонил еще раз, но уже с другим запросом - он &quot;забыл пароль от аккаунта&quot; и хотел бы привязать еще один ящик для восстановления пароля. Всё, что нужно знать в таком случае - ФИО, адрес и номер свежей добавленной кредитной карты (!). Теперь осталось зайти на страничку Амазона и посмотреть последние 4 цифры привязанной старым хозяином кредитной карты. Вуаля!
+Подробнее об этом случае можно почитать &lt;a href=&quot;http://www.itsec.pro/2012/08/blog-post_7.html&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;здесь&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Какие выводы мы можем сделать по этим примерам:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Взлом подразумевает наличие “плохого парня”&lt;/li&gt;
+&lt;li&gt;Подход к ИБ должен быть глобальным&lt;/li&gt;
+&lt;li&gt;Чем меньше мы открываем данных, тем безопаснее система.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Но давайте продолжим и рассмотрим технические детали и возможные уязвимости одного из основополагающих процессов - процесса аутентификации.&lt;/p&gt;
+&lt;p&gt;Так же очень хочется уделить особое внимание инструментам, которые помогут нам не быть слепыми котятами и дать возможность более прозрачно видеть детали процесса отправки запросов. В частности, изначально пост назывался &quot;Анализ уязвимостей форм для аутентификации&quot;, но я из него убрал слово &quot;форм&quot;, так как хочется показать такой инструмент, как postman.&lt;/p&gt;
+&lt;h3 id=&quot;Инструментарий&quot;&gt;&lt;a href=&quot;#%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%80%D0%B8%D0%B9&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Инструментарий&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Postman&lt;/li&gt;
+&lt;li&gt;tcpdump&lt;/li&gt;
+&lt;li&gt;wireshark&lt;/li&gt;
+&lt;li&gt;katools (kali linux tool)&lt;/li&gt;
+&lt;li&gt;puppeteer&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Давайте рассмотрим очень простой пример.&lt;/p&gt;
+&lt;h2 id=&quot;Очень-простой-пример&quot;&gt;&lt;a href=&quot;#%D0%9E%D1%87%D0%B5%D0%BD%D1%8C-%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%D0%B9-%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Очень простой пример&lt;/h2&gt;
+&lt;p&gt;Задача: нам нужно по логину и паролю аутентифицировать пользователя.&lt;/p&gt;
+&lt;p&gt;Для этого создадим табличку:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-sql&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;TABLE&lt;/span&gt; users &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    login &lt;span class=&quot;token keyword&quot;&gt;TEXT&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;NULL&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;UNIQUE&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    password &lt;span class=&quot;token keyword&quot;&gt;TEXT&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;NULL&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Как БД будем использовать &lt;code class=&quot;language-text&quot;&gt;sqlite3&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;И напишем запрос аутентификации:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;/api/v1/login&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;req&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; res&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    db&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token string&quot;&gt;`
+        SELECT rowid AS id, login, password
+           FROM users
+            WHERE login = &apos;&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;req&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;query&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;login&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;
+        `&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; rows&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            res&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;message&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;let&lt;/span&gt; loginFlag &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;rows &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; rows&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;length &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;req&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;query&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;password &lt;span class=&quot;token operator&quot;&gt;===&lt;/span&gt; rows&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;password&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                    loginFlag &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+                &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+        res&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;loginFlag &lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;logged in&quot;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;bad news&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Полный листинг сервера &lt;a href=&quot;https://github.com/bmsdave/talk-auth-vulnerabilities/blob/master/example/server.v2.js&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;здесь&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Что здесь происходит, по &lt;code class=&quot;language-text&quot;&gt;GET&lt;/code&gt; запросу, мы идем в БД и ищем запись по логину.
+Если такая есть, сверяем пароль который к нам пришел с тем, который записан в БД.
+Если все ок выводим &lt;code class=&quot;language-text&quot;&gt;&amp;quot;logged in&amp;quot;&lt;/code&gt;, если нет &lt;code class=&quot;language-text&quot;&gt;&amp;quot;bad news&amp;quot;&lt;/code&gt;.
+В базе у нас заведен пользоватеть с логин = &quot;v1&quot; и паролем &quot;123456&quot;.&lt;/p&gt;
+&lt;p&gt;Этот код, является отличным рассадником уязвимостей, давайте посмотрим почему.&lt;/p&gt;
+&lt;p&gt;Во-первых. Давайте воспользуемся Postman и составим запрос:
+&lt;code class=&quot;language-text&quot;&gt;127.0.0.1:3030/api/v1/login?login=v1&amp;amp;password=123456&lt;/code&gt;.&lt;/p&gt;
+&lt;figure style=&quot;text-aling: center;&quot;&gt;
+    
+  &lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; ; max-width: 700px; margin-left: auto; margin-right: auto;&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAIBBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAebkikj/xAAWEAEBAQAAAAAAAAAAAAAAAAARACD/2gAIAQEAAQUCZnH/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAUEAEAAAAAAAAAAAAAAAAAAAAg/9oACAEBAAY/Al//xAAaEAACAgMAAAAAAAAAAAAAAAAAARFBECGB/9oACAEBAAE/IXtZ0OTvEEH/2gAMAwEAAgADAAAAECPP/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPxA//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPxA//8QAGxABAAICAwAAAAAAAAAAAAAAAQARITFRYXH/2gAIAQEAAT8QVyt2Ygr0j2MiAOIq7WUiBn//2Q==&amp;apos;); background-size: cover; display: block;&quot;&gt;
+      &lt;img class=&quot;gatsby-resp-image-image&quot; style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot; alt=&quot;Postman &amp;#x437;&amp;#x430;&amp;#x43F;&amp;#x440;&amp;#x43E;&amp;#x441; &amp;#x441; &amp;#x43F;&amp;#x440;&amp;#x430;&amp;#x432;&amp;#x438;&amp;#x43B;&amp;#x44C;&amp;#x43D;&amp;#x44B;&amp;#x43C;&amp;#x438; login/pass&quot; title=&quot;&quot; src=&quot;/static/request-good-c0f440590f366a622f74d4df2d86d57b-8e1e9.jpg&quot; srcset=&quot;/static/request-good-c0f440590f366a622f74d4df2d86d57b-34379.jpg 175w,
+/static/request-good-c0f440590f366a622f74d4df2d86d57b-fd8cf.jpg 350w,
+/static/request-good-c0f440590f366a622f74d4df2d86d57b-8e1e9.jpg 700w,
+/static/request-good-c0f440590f366a622f74d4df2d86d57b-5b748.jpg 1050w,
+/static/request-good-c0f440590f366a622f74d4df2d86d57b-8ede4.jpg 1400w,
+/static/request-good-c0f440590f366a622f74d4df2d86d57b-23eb3.jpg 1920w&quot; sizes=&quot;(max-width: 700px) 100vw, 700px&quot;&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+    &lt;figcaption&gt;Postman &amp;#x437;&amp;#x430;&amp;#x43F;&amp;#x440;&amp;#x43E;&amp;#x441; &amp;#x441; &amp;#x43F;&amp;#x440;&amp;#x430;&amp;#x432;&amp;#x438;&amp;#x43B;&amp;#x44C;&amp;#x43D;&amp;#x44B;&amp;#x43C;&amp;#x438; login/pass&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;В ответ, мы получим &lt;code class=&quot;language-text&quot;&gt;&amp;quot;logged in&amp;quot;&lt;/code&gt;, если мы введем другие данные, например &lt;code class=&quot;language-text&quot;&gt;127.0.0.1:3030/api/v1/login?login=whatthefoxsay&amp;amp;password=test&lt;/code&gt;, то получим &lt;code class=&quot;language-text&quot;&gt;&amp;quot;bad news&amp;quot;&lt;/code&gt;, т.е. API работает и выполняет свою задачу.&lt;/p&gt;
+&lt;figure style=&quot;text-aling: center;&quot;&gt;
+    
+  &lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; ; max-width: 700px; margin-left: auto; margin-right: auto;&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAIBBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAebkikj/xAAWEAEBAQAAAAAAAAAAAAAAAAARACD/2gAIAQEAAQUCZnH/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAUEAEAAAAAAAAAAAAAAAAAAAAg/9oACAEBAAY/Al//xAAaEAACAgMAAAAAAAAAAAAAAAAAARFBECGB/9oACAEBAAE/IXtZ0OTvEEH/2gAMAwEAAgADAAAAEGPP/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPxA//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPxA//8QAGxABAAICAwAAAAAAAAAAAAAAAQARITFBYXH/2gAIAQEAAT8QVytxZibaR7EsodRVwrKRAz//2Q==&amp;apos;); background-size: cover; display: block;&quot;&gt;
+      &lt;img class=&quot;gatsby-resp-image-image&quot; style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot; alt=&quot;Postman &amp;#x437;&amp;#x430;&amp;#x43F;&amp;#x440;&amp;#x43E;&amp;#x441; &amp;#x441; &amp;#x43D;&amp;#x435;&amp;#x43F;&amp;#x440;&amp;#x430;&amp;#x432;&amp;#x438;&amp;#x43B;&amp;#x44C;&amp;#x43D;&amp;#x44B;&amp;#x43C;&amp;#x438; login/pass&quot; title=&quot;&quot; src=&quot;/static/request-bad-897d82b1b2a589ab9f325b814ac859fe-8e1e9.jpg&quot; srcset=&quot;/static/request-bad-897d82b1b2a589ab9f325b814ac859fe-34379.jpg 175w,
+/static/request-bad-897d82b1b2a589ab9f325b814ac859fe-fd8cf.jpg 350w,
+/static/request-bad-897d82b1b2a589ab9f325b814ac859fe-8e1e9.jpg 700w,
+/static/request-bad-897d82b1b2a589ab9f325b814ac859fe-5b748.jpg 1050w,
+/static/request-bad-897d82b1b2a589ab9f325b814ac859fe-8ede4.jpg 1400w,
+/static/request-bad-897d82b1b2a589ab9f325b814ac859fe-23eb3.jpg 1920w&quot; sizes=&quot;(max-width: 700px) 100vw, 700px&quot;&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+    &lt;figcaption&gt;Postman &amp;#x437;&amp;#x430;&amp;#x43F;&amp;#x440;&amp;#x43E;&amp;#x441; &amp;#x441; &amp;#x43D;&amp;#x435;&amp;#x43F;&amp;#x440;&amp;#x430;&amp;#x432;&amp;#x438;&amp;#x43B;&amp;#x44C;&amp;#x43D;&amp;#x44B;&amp;#x43C;&amp;#x438; login/pass&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&quot;sql-инъекции&quot;&gt;&lt;a href=&quot;#sql-%D0%B8%D0%BD%D1%8A%D0%B5%D0%BA%D1%86%D0%B8%D0%B8&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;SQL инъекции&lt;/h2&gt;
+&lt;p&gt;Но что будет, если мы отправим: &lt;code class=&quot;language-text&quot;&gt;127.0.0.1:3030/api/v1/login?login=whatthefoxsay&amp;#39;&amp;amp;password=test&lt;/code&gt;&lt;/p&gt;
+&lt;figure style=&quot;text-aling: center;&quot;&gt;
+    
+  &lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; ; max-width: 700px; margin-left: auto; margin-right: auto;&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAECBf/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIQAxAAAAHNQoogr//EABcQAAMBAAAAAAAAAAAAAAAAAAABESD/2gAIAQEAAQUCpRvH/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAFBABAAAAAAAAAAAAAAAAAAAAIP/aAAgBAQAGPwJf/8QAGhAAAgIDAAAAAAAAAAAAAAAAAAERIRBBgf/aAAgBAQABPyF22dDG5vMH/9oADAMBAAIAAwAAABAMz//EABURAQEAAAAAAAAAAAAAAAAAABAR/9oACAEDAQE/EIf/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/ED//xAAbEAEAAgMBAQAAAAAAAAAAAAABABEhMUFhcf/aAAgBAQABPxBXK3pib9H2YUEFrfIl2ciBn//Z&amp;apos;); background-size: cover; display: block;&quot;&gt;
+      &lt;img class=&quot;gatsby-resp-image-image&quot; style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot; alt=&quot;Postman &amp;#x437;&amp;#x430;&amp;#x43F;&amp;#x440;&amp;#x43E;&amp;#x441; &amp;#x441; &amp;apos;&quot; title=&quot;&quot; src=&quot;/static/request-hmm-f3c62dc5f8b1975c99ae5f1d70a7b4fa-8e1e9.jpg&quot; srcset=&quot;/static/request-hmm-f3c62dc5f8b1975c99ae5f1d70a7b4fa-34379.jpg 175w,
+/static/request-hmm-f3c62dc5f8b1975c99ae5f1d70a7b4fa-fd8cf.jpg 350w,
+/static/request-hmm-f3c62dc5f8b1975c99ae5f1d70a7b4fa-8e1e9.jpg 700w,
+/static/request-hmm-f3c62dc5f8b1975c99ae5f1d70a7b4fa-5b748.jpg 1050w,
+/static/request-hmm-f3c62dc5f8b1975c99ae5f1d70a7b4fa-8ede4.jpg 1400w,
+/static/request-hmm-f3c62dc5f8b1975c99ae5f1d70a7b4fa-23eb3.jpg 1920w&quot; sizes=&quot;(max-width: 700px) 100vw, 700px&quot;&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+    &lt;figcaption&gt;Postman &amp;#x437;&amp;#x430;&amp;#x43F;&amp;#x440;&amp;#x43E;&amp;#x441; &amp;#x441; &amp;apos;&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;На придет &lt;code class=&quot;language-text&quot;&gt;SQLITE_ERROR: unrecognized token: &amp;quot;&amp;#39;whatthefoxsay&amp;#39;&amp;#39;&amp;quot;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Происходит это потому, что мы используем вот такую конструкцию:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;login &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;${req.query.login}&apos;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;И в результате формирования запроса мы получим:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-sql&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; rowid &lt;span class=&quot;token keyword&quot;&gt;AS&lt;/span&gt; id&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; login&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; password
+   &lt;span class=&quot;token keyword&quot;&gt;FROM&lt;/span&gt; users
+   &lt;span class=&quot;token keyword&quot;&gt;WHERE&lt;/span&gt; login &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;whatthefoxsay&apos;&lt;/span&gt;&apos;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Где есть синтаксическая ошибка ввиде последнего знака &lt;code class=&quot;language-text&quot;&gt;&amp;#39;&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Ок. получив эту ошибку, мы можем догадаться что при обращении &lt;code class=&quot;language-text&quot;&gt;/api/v1/login&lt;/code&gt; идет запрос в БД с поиском логина и пароля.
+Значит мы можем попробовать каким-то образом немного изменить запрос и подставить туда свои данные.&lt;/p&gt;
+&lt;h3 id=&quot;union&quot;&gt;&lt;a href=&quot;#union&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;UNION&lt;/h3&gt;
+&lt;p&gt;в &lt;code class=&quot;language-text&quot;&gt;SQL&lt;/code&gt; есть оператор &lt;code class=&quot;language-text&quot;&gt;UNION&lt;/code&gt;, который позволяет объединять запрос в один по строкам. Работает он так:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-sql&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;UNION&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Выведет:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-sql&quot;&gt;&lt;code class=&quot;language-sql&quot;&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;
+&lt;span class=&quot;token number&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Давайте попробуем им воспользоваться:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-x&quot;&gt;&lt;code class=&quot;language-x&quot;&gt;/login?login=whatthefoxsay&amp;#39; union select &amp;#39;test&amp;#39;, &amp;#39;test&amp;amp;password=test&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Получим:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-x&quot;&gt;&lt;code class=&quot;language-x&quot;&gt;SQLITE_ERROR:
+SELECTs to the left and right of UNION do not have the same number of result columns&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;ага, в данном ответе нам говорят что количество колонок не совпадает. Ок. Давайте это исправим:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-x&quot;&gt;&lt;code class=&quot;language-x&quot;&gt;/login?login=whatthefoxsay&amp;#39; union select &amp;#39;test&amp;#39;, &amp;#39;test&amp;#39;, &amp;#39;test&amp;amp;password=test&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;figure style=&quot;text-aling: center;&quot;&gt;
+    
+  &lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; ; max-width: 700px; margin-left: auto; margin-right: auto;&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAIBBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAebkikj/xAAWEAEBAQAAAAAAAAAAAAAAAAARACD/2gAIAQEAAQUCZz//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAUEAEAAAAAAAAAAAAAAAAAAAAg/9oACAEBAAY/Al//xAAbEAACAQUAAAAAAAAAAAAAAAAAAREQIUFxgf/aAAgBAQABPyF3ZOhvdIIP/9oADAMBAAIAAwAAABBjz//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8QP//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQIBAT8QP//EABsQAQACAgMAAAAAAAAAAAAAAAEAESGBMVFh/9oACAEBAAE/EFcremJs3FWwB1FXlZSIGf/Z&amp;apos;); background-size: cover; display: block;&quot;&gt;
+      &lt;img class=&quot;gatsby-resp-image-image&quot; style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot; alt=&quot;hacked&quot; title=&quot;&quot; src=&quot;/static/request-hacked-32f7a7bebd6ae9f1832d2debfb64c1ad-8e1e9.jpg&quot; srcset=&quot;/static/request-hacked-32f7a7bebd6ae9f1832d2debfb64c1ad-34379.jpg 175w,
+/static/request-hacked-32f7a7bebd6ae9f1832d2debfb64c1ad-fd8cf.jpg 350w,
+/static/request-hacked-32f7a7bebd6ae9f1832d2debfb64c1ad-8e1e9.jpg 700w,
+/static/request-hacked-32f7a7bebd6ae9f1832d2debfb64c1ad-5b748.jpg 1050w,
+/static/request-hacked-32f7a7bebd6ae9f1832d2debfb64c1ad-8ede4.jpg 1400w,
+/static/request-hacked-32f7a7bebd6ae9f1832d2debfb64c1ad-23eb3.jpg 1920w&quot; sizes=&quot;(max-width: 700px) 100vw, 700px&quot;&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+    &lt;figcaption&gt;hacked&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Получаем: &lt;code class=&quot;language-text&quot;&gt;logged in&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Вуаля! мы прошли аутентификацию.&lt;/p&gt;
+&lt;p&gt;Как нам обезопаситься от таких случаев?
+Все драйвера для БД должны предоставлять инструменты для экранирования входных параметров.
+В примере с sqlite3 нам нужно использовать вместо:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;    conn&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token string&quot;&gt;`
+        SELECT rowid AS id, login, password
+           FROM users
+            WHERE login = &apos;&lt;/span&gt;&lt;span class=&quot;token interpolation&quot;&gt;&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;${&lt;/span&gt;req&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;query&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;login&lt;span class=&quot;token interpolation-punctuation punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;
+        `&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; rows&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Вот это:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;    conn&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token string&quot;&gt;`
+            SELECT rowid AS id, login, password
+            FROM users
+            WHERE login = $login
+        `&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            $login&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; req&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;body&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;login
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; rows&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Полный листинг сервера &lt;a href=&quot;https://github.com/bmsdave/talk-auth-vulnerabilities/blob/master/example/server.v3.js&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;здесь&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;В этом случае символ &lt;code class=&quot;language-text&quot;&gt;&amp;#39;&lt;/code&gt; будет экранироваться и мы получим что-то типа:
+&lt;code class=&quot;language-text&quot;&gt;login = &amp;#39;whatthefoxsay\&amp;#39; union select \&amp;#39;test\&amp;#39;, \&amp;#39;test\&amp;#39;, \&amp;#39;test&amp;#39;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Что нас спасет и при попытке отправить:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-x&quot;&gt;&lt;code class=&quot;language-x&quot;&gt;/login?login=whatthefoxsay&amp;#39; union select &amp;#39;test&amp;#39;, &amp;#39;test&amp;#39;, &amp;#39;test&amp;amp;password=test&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Получим:  &lt;code class=&quot;language-text&quot;&gt;bad news&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Драйвера всегда предоставляют возможность безопасной интерполяции параметров. Используете это!&lt;/p&gt;
+&lt;p&gt;Например в документации psycopg2 (python драйвер для работы с postgresql), написано:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Warning: Never, never, &lt;em&gt;NEVER&lt;/em&gt; use Python
+string concatenation (+) or string parameters
+interpolation (%) to pass variables to a SQL
+query string. Not even at gunpoint.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Предупреждение: Никогда, никогда, НИКОГДА не используйте конкатенацию строк (+) или (%) интерполяцию, чтобы передать параметры в SQL запрос. Даже под дулом пистолета.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Разобрались.
+Давайте пойдем дальше, и заметим, что мы отсылаем &lt;code class=&quot;language-text&quot;&gt;GET&lt;/code&gt; запрос с нашим логином и паролем.
+Мало того! Мы используем &lt;code class=&quot;language-text&quot;&gt;http&lt;/code&gt; вместо &lt;code class=&quot;language-text&quot;&gt;https&lt;/code&gt;! Нужно помнить о том, что URL запроса (часть которого - это &lt;code class=&quot;language-text&quot;&gt;GET&lt;/code&gt; параметры)гораздо чаще логируются &lt;code class=&quot;language-text&quot;&gt;HTTP&lt;/code&gt; серверами и если у злоумышленника будет доступ к логам сервера, он сможет получить их.&lt;/p&gt;
+&lt;h2 id=&quot;tcphttps-get-vs-post&quot;&gt;&lt;a href=&quot;#tcphttps-get-vs-post&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;TCP/HTTP(s) GET vs POST&lt;/h2&gt;
+&lt;p&gt;в случае, с &lt;code class=&quot;language-text&quot;&gt;HTTP&lt;/code&gt;, что с &lt;code class=&quot;language-text&quot;&gt;POST&lt;/code&gt;, что c &lt;code class=&quot;language-text&quot;&gt;GET&lt;/code&gt; возможна очень простая &lt;a href=&quot;https://ru.wikipedia.org/wiki/%D0%90%D1%82%D0%B0%D0%BA%D0%B0_%D0%BF%D0%BE%D1%81%D1%80%D0%B5%D0%B4%D0%BD%D0%B8%D0%BA%D0%B0&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;атака посредника (Man in the middle (MITM))&lt;/a&gt;,
+если конечно у нас есть возможность оказаться посередине. Как пример, вот вы пришли в кафе, подключились к wifi.
+А какой-то плохой парень взломал роутер и решил записать весь трафик проходящий через него, чтобы узнать куда ходят посетители кафе.&lt;/p&gt;
+&lt;p&gt;В этом случае он на одном из узлов записывает tcp-дамп:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; tcpdump -i lo port 3030 -w ./dump.pcap&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Здесь&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;-i lo&lt;/code&gt; - сетевой интерфейс который мы слушаем, так как у меня все развернуто локально я слушаю &lt;code class=&quot;language-text&quot;&gt;localhost&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;port 3030&lt;/code&gt; - чтобы не засорять эфир, ограничимся портом 3030, который слушает наше приложение.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;-w ./dump.pcap&lt;/code&gt; - говорит писать дамп в файл.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;После отправим два запроса и &lt;code class=&quot;language-text&quot;&gt;GET&lt;/code&gt;, и &lt;code class=&quot;language-text&quot;&gt;POST&lt;/code&gt; на наше API аутентификации &lt;code class=&quot;language-text&quot;&gt;/api/v1/login&lt;/code&gt;.
+По завершению записи мы воспользуемся &lt;code class=&quot;language-text&quot;&gt;wireshark&lt;/code&gt;, чтобы посмотреть что получилось.
+И увидим, что в дампе оказались наши два запроса с явками и паролями.&lt;/p&gt;
+&lt;figure style=&quot;text-aling: center;&quot;&gt;
+    
+  &lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; ; max-width: 700px; margin-left: auto; margin-right: auto;&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAwEBAAAAAAAAAAAAAAAAAAMEAQL/xAAVAQEBAAAAAAAAAAAAAAAAAAABAP/aAAwDAQACEAMQAAABu1/SJKwv/8QAGBAAAwEBAAAAAAAAAAAAAAAAAAECEhH/2gAIAQEAAQUC5RmjNGZEkmf/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAWEAEBAQAAAAAAAAAAAAAAAAAxABD/2gAIAQEABj8CIwjP/8QAGRABAQEBAQEAAAAAAAAAAAAAAQARQZFh/9oACAEBAAE/Ifm9t+PY7ks7nYygGb//2gAMAwEAAgADAAAAENP/AP/EABYRAQEBAAAAAAAAAAAAAAAAAAARAf/aAAgBAwEBPxCaj//EABYRAQEBAAAAAAAAAAAAAAAAAAARAf/aAAgBAgEBPxC4r//EAB0QAQACAgIDAAAAAAAAAAAAAAEAESExQdFxgcH/2gAIAQEAAT8QLKq8jqG0nJh1CGW/T8ilKtqQ5QKEIkZ//9k=&amp;apos;); background-size: cover; display: block;&quot;&gt;
+      &lt;img class=&quot;gatsby-resp-image-image&quot; style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot; alt=&quot;HTTP GET&quot; title=&quot;&quot; src=&quot;/static/wireshark_http_get-bbe55b6a3ed9b157cd21b22109fceda0-8e1e9.jpg&quot; srcset=&quot;/static/wireshark_http_get-bbe55b6a3ed9b157cd21b22109fceda0-34379.jpg 175w,
+/static/wireshark_http_get-bbe55b6a3ed9b157cd21b22109fceda0-fd8cf.jpg 350w,
+/static/wireshark_http_get-bbe55b6a3ed9b157cd21b22109fceda0-8e1e9.jpg 700w,
+/static/wireshark_http_get-bbe55b6a3ed9b157cd21b22109fceda0-5b748.jpg 1050w,
+/static/wireshark_http_get-bbe55b6a3ed9b157cd21b22109fceda0-8ede4.jpg 1400w,
+/static/wireshark_http_get-bbe55b6a3ed9b157cd21b22109fceda0-23eb3.jpg 1920w&quot; sizes=&quot;(max-width: 700px) 100vw, 700px&quot;&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+    &lt;figcaption&gt;HTTP GET&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure style=&quot;text-aling: center;&quot;&gt;
+    
+  &lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; ; max-width: 700px; margin-left: auto; margin-right: auto;&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAECBAX/xAAVAQEBAAAAAAAAAAAAAAAAAAACAf/aAAwDAQACEAMQAAAB0iTRRaDf/8QAGBAAAgMAAAAAAAAAAAAAAAAAABIBEDH/2gAIAQEAAQUCUQUna//EABURAQEAAAAAAAAAAAAAAAAAABAR/9oACAEDAQE/Aaf/xAAVEQEBAAAAAAAAAAAAAAAAAAAQEf/aAAgBAgEBPwGH/8QAGBAAAwEBAAAAAAAAAAAAAAAAABBCAUH/2gAIAQEABj8C6UUsX//EABwQAAICAgMAAAAAAAAAAAAAAAABITERkUFR8f/aAAgBAQABPyGfGqJWtDPwWS9iUTd9jP/aAAwDAQACAAMAAAAQUC//xAAVEQEBAAAAAAAAAAAAAAAAAAARAP/aAAgBAwEBPxBMX//EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oACAECAQE/EIV//8QAGxABAAMAAwEAAAAAAAAAAAAAAQARITFBgdH/2gAIAQEAAT8QLMiK5DxCrkefkK4NPTIJ2ut7E3P/2Q==&amp;apos;); background-size: cover; display: block;&quot;&gt;
+      &lt;img class=&quot;gatsby-resp-image-image&quot; style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot; alt=&quot;HTTP POST&quot; title=&quot;&quot; src=&quot;/static/wireshark_http_post-7ba6a0e9ee2d1b70f38256bb1b49333c-8e1e9.jpg&quot; srcset=&quot;/static/wireshark_http_post-7ba6a0e9ee2d1b70f38256bb1b49333c-34379.jpg 175w,
+/static/wireshark_http_post-7ba6a0e9ee2d1b70f38256bb1b49333c-fd8cf.jpg 350w,
+/static/wireshark_http_post-7ba6a0e9ee2d1b70f38256bb1b49333c-8e1e9.jpg 700w,
+/static/wireshark_http_post-7ba6a0e9ee2d1b70f38256bb1b49333c-5b748.jpg 1050w,
+/static/wireshark_http_post-7ba6a0e9ee2d1b70f38256bb1b49333c-8ede4.jpg 1400w,
+/static/wireshark_http_post-7ba6a0e9ee2d1b70f38256bb1b49333c-23eb3.jpg 1920w&quot; sizes=&quot;(max-width: 700px) 100vw, 700px&quot;&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+    &lt;figcaption&gt;HTTP POST&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Давайте подключим &lt;code class=&quot;language-text&quot;&gt;HTTPS&lt;/code&gt; и перейдем на &lt;code class=&quot;language-text&quot;&gt;POST&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Для начала создадим самоподписанные сертификаты:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;openssl req -nodes -new -x509 -keyout server.key -out server.cert&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Теперь подключим их к нашему приложению:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; express &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;express&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; app &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;express&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; bodyParser &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;body-parser&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;bodyParser&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; fs &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;fs&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; https &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;https&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; privateKey  &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; fs&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;readFileSync&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;./server.key&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;utf8&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; certificate &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; fs&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;readFileSync&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;./server.cert&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;utf8&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; credentials &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;key&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; privateKey&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; cert&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; certificate&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;/api/v1/login&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;req&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; res&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;/* здесь без изменений */&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; httpsServer &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; https&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;createServer&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;credentials&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; app&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+httpsServer&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;3030&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Полный листинг сервера &lt;a href=&quot;https://github.com/bmsdave/talk-auth-vulnerabilities/blob/master/example/server.v4.js&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;здесь&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Если мы посмотрим на &lt;code class=&quot;language-text&quot;&gt;HTTPS&lt;/code&gt; трафик, то здесь будет все хорошо, так как &lt;code class=&quot;language-text&quot;&gt;SSL/TLS&lt;/code&gt; шифрует данные &quot;между&quot; TCP и HTTP протоколами (см. картинку ниже), т.е. все данные HTTP-запроса будут зашифрованы. Кстати, с &lt;code class=&quot;language-text&quot;&gt;HTTPS&lt;/code&gt; тоже могут быть проблемы, если сотворить определенную магию с сертификатами, но мы этой темы касаться не будем, скажу одно использовать самоподписанные сертификаты в большинстве случаев является плохой практикой.&lt;/p&gt;
+&lt;figure style=&quot;text-aling: center;&quot;&gt;
+    
+  &lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; ; max-width: 700px; margin-left: auto; margin-right: auto;&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 45.20976831559173%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAJABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAIDBP/EABUBAQEAAAAAAAAAAAAAAAAAAAAB/9oADAMBAAIQAxAAAAHfSbRUYP/EABgQAAMBAQAAAAAAAAAAAAAAAAABAhEx/9oACAEBAAEFApWiS3ETyen/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAXEAADAQAAAAAAAAAAAAAAAAABECAx/9oACAEBAAY/Algj/8QAHRAAAAUFAAAAAAAAAAAAAAAAAAERITEQQVGBkf/aAAgBAQABPyEojpdxhOSCSBNuv//aAAwDAQACAAMAAAAQuC//xAAVEQEBAAAAAAAAAAAAAAAAAAAAIf/aAAgBAwEBPxBH/8QAFREBAQAAAAAAAAAAAAAAAAAAABH/2gAIAQIBAT8QiP/EAB4QAAIBAwUAAAAAAAAAAAAAAAABMREhsVGBocHR/9oACAEBAAE/EHR9Bccoho03HlSOJmYhQj//2Q==&amp;apos;); background-size: cover; display: block;&quot;&gt;
+      &lt;img class=&quot;gatsby-resp-image-image&quot; style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot; alt=&quot;&amp;#x41C;&amp;#x43E;&amp;#x434;&amp;#x435;&amp;#x43B;&amp;#x44C; OSI&quot; title=&quot;&quot; src=&quot;/static/osi-843b83e4b91312e6a75440e5b3dbb305-8e1e9.jpg&quot; srcset=&quot;/static/osi-843b83e4b91312e6a75440e5b3dbb305-34379.jpg 175w,
+/static/osi-843b83e4b91312e6a75440e5b3dbb305-fd8cf.jpg 350w,
+/static/osi-843b83e4b91312e6a75440e5b3dbb305-8e1e9.jpg 700w,
+/static/osi-843b83e4b91312e6a75440e5b3dbb305-5b748.jpg 1050w,
+/static/osi-843b83e4b91312e6a75440e5b3dbb305-8ede4.jpg 1400w,
+/static/osi-843b83e4b91312e6a75440e5b3dbb305-257ee.jpg 1597w&quot; sizes=&quot;(max-width: 700px) 100vw, 700px&quot;&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+    &lt;figcaption&gt;&amp;#x41C;&amp;#x43E;&amp;#x434;&amp;#x435;&amp;#x43B;&amp;#x44C; OSI&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;А вот что вижно в дампе:&lt;/p&gt;
+&lt;figure style=&quot;text-aling: center;&quot;&gt;
+    
+  &lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; ; max-width: 700px; margin-left: auto; margin-right: auto;&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAMCBAX/xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oADAMBAAIQAxAAAAHTFMYkWAL/xAAZEAACAwEAAAAAAAAAAAAAAAAAAQIREiH/2gAIAQEAAQUCoyzLJLsEtH//xAAVEQEBAAAAAAAAAAAAAAAAAAAQEf/aAAgBAwEBPwGn/8QAFREBAQAAAAAAAAAAAAAAAAAAEBH/2gAIAQIBAT8Bh//EABcQAAMBAAAAAAAAAAAAAAAAAAAQMQH/2gAIAQEABj8ChHi//8QAHRAAAgIBBQAAAAAAAAAAAAAAAAExURFBYXGRof/aAAgBAQABPyFFm19mx6JbzNi3GNKkf//aAAwDAQACAAMAAAAQAP8A/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAERIf/aAAgBAwEBPxBPYaf/xAAWEQEBAQAAAAAAAAAAAAAAAAARAAH/2gAIAQIBAT8QAzl//8QAHRABAAICAgMAAAAAAAAAAAAAAQARITFBUWGBkf/aAAgBAQABPxBVw99kd5K7EPH9JbeHC1RCBw6FU5gHHwJ//9k=&amp;apos;); background-size: cover; display: block;&quot;&gt;
+      &lt;img class=&quot;gatsby-resp-image-image&quot; style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot; alt=&quot;HTTPS GET&quot; title=&quot;&quot; src=&quot;/static/wireshark_https_get-89861618a97db24e37f1125081bc61e9-8e1e9.jpg&quot; srcset=&quot;/static/wireshark_https_get-89861618a97db24e37f1125081bc61e9-34379.jpg 175w,
+/static/wireshark_https_get-89861618a97db24e37f1125081bc61e9-fd8cf.jpg 350w,
+/static/wireshark_https_get-89861618a97db24e37f1125081bc61e9-8e1e9.jpg 700w,
+/static/wireshark_https_get-89861618a97db24e37f1125081bc61e9-5b748.jpg 1050w,
+/static/wireshark_https_get-89861618a97db24e37f1125081bc61e9-8ede4.jpg 1400w,
+/static/wireshark_https_get-89861618a97db24e37f1125081bc61e9-23eb3.jpg 1920w&quot; sizes=&quot;(max-width: 700px) 100vw, 700px&quot;&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+    &lt;figcaption&gt;HTTPS GET&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;figure style=&quot;text-aling: center;&quot;&gt;
+    
+  &lt;span class=&quot;gatsby-resp-image-wrapper&quot; style=&quot;position: relative; display: block; ; max-width: 700px; margin-left: auto; margin-right: auto;&quot;&gt;
+    &lt;span class=&quot;gatsby-resp-image-background-image&quot; style=&quot;padding-bottom: 56.25%; position: relative; bottom: 0; left: 0; background-image: url(&amp;apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAALABQDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAIBAwQF/8QAFAEBAAAAAAAAAAAAAAAAAAAAAv/aAAwDAQACEAMQAAAB6U1Ow5oAv//EABkQAAMAAwAAAAAAAAAAAAAAAAABEgIRIf/aAAgBAQABBQLRLJY13BKj/8QAFREBAQAAAAAAAAAAAAAAAAAAEBL/2gAIAQMBAT8Bo//EABURAQEAAAAAAAAAAAAAAAAAABAR/9oACAECAQE/AYf/xAAXEAADAQAAAAAAAAAAAAAAAAAAEDEB/9oACAEBAAY/AoR4v//EAB0QAQEAAAcBAAAAAAAAAAAAAAEAETFBUWFxkaH/2gAIAQEAAT8hHMbX7cX2NefsbrkNi//aAAwDAQACAAMAAAAQkP8A/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAERIf/aAAgBAwEBPxBNYaf/xAAWEQEBAQAAAAAAAAAAAAAAAAARAAH/2gAIAQIBAT8QAzl//8QAHRABAAIDAAMBAAAAAAAAAAAAAQARITFBUXGBkf/aAAgBAQABPxC1h78kd5PYhTz8S++tWqIYOHhVOwDj8Cf/2Q==&amp;apos;); background-size: cover; display: block;&quot;&gt;
+      &lt;img class=&quot;gatsby-resp-image-image&quot; style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot; alt=&quot;HTTPS POST&quot; title=&quot;&quot; src=&quot;/static/wireshark_https_post-3c482b90e7ff6acb87a2d0cf96702821-8e1e9.jpg&quot; srcset=&quot;/static/wireshark_https_post-3c482b90e7ff6acb87a2d0cf96702821-34379.jpg 175w,
+/static/wireshark_https_post-3c482b90e7ff6acb87a2d0cf96702821-fd8cf.jpg 350w,
+/static/wireshark_https_post-3c482b90e7ff6acb87a2d0cf96702821-8e1e9.jpg 700w,
+/static/wireshark_https_post-3c482b90e7ff6acb87a2d0cf96702821-5b748.jpg 1050w,
+/static/wireshark_https_post-3c482b90e7ff6acb87a2d0cf96702821-8ede4.jpg 1400w,
+/static/wireshark_https_post-3c482b90e7ff6acb87a2d0cf96702821-23eb3.jpg 1920w&quot; sizes=&quot;(max-width: 700px) 100vw, 700px&quot;&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+    &lt;figcaption&gt;HTTPS POST&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;Если отойти от аутентификации, архитектурный стиль &lt;code class=&quot;language-text&quot;&gt;REST API&lt;/code&gt; для получения данных рекомендует именно &lt;code class=&quot;language-text&quot;&gt;GET&lt;/code&gt;.
+Но давайте представим, что вы пишете приложение для мед.страховой, где есть API &lt;code class=&quot;language-text&quot;&gt;/users&lt;/code&gt;, которое принимает параметры:
+Имя, фамилия, отчество, дата рождения и номер полиса ДМС.
+В таком случае наш запрос должен выглядеть примерно так:
+&lt;code class=&quot;language-text&quot;&gt;/users?name=Vadim&amp;amp;last_name=Gorbachev&amp;amp;polic=123456&lt;/code&gt;.
+Соответственно эта информация осядет в логах HTTP сервера, который пример запрос, и эти в них злоумышленник сможет получить пароль в незашифрованном виде. Ах да! шифрование пароля! Это следующая часть нашего доклада.&lt;/p&gt;
+&lt;h2 id=&quot;Шифрование-crypto-vs-bcrypt&quot;&gt;&lt;a href=&quot;#%D0%A8%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-crypto-vs-bcrypt&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Шифрование (crypto vs bcrypt)&lt;/h2&gt;
+&lt;p&gt;давайте зашифруем наши пароли, чтобы не хранить в БД в открытом виде, для этого воспользуемся модулем &lt;code class=&quot;language-text&quot;&gt;crypto&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;crypto&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;createHash&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;md5&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;password&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;digest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;hex&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Окей, кажется теперь получше, да? Не совсем.&lt;/p&gt;
+&lt;p&gt;Во-первых, не используете &lt;code class=&quot;language-text&quot;&gt;MD5&lt;/code&gt;, почему спросите вы?
+А потому, что команда:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;crypto&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;createHash&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;md5&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;123456&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;digest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;hex&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;сгенерирует нам хэш: &lt;code class=&quot;language-text&quot;&gt;e10adc3949ba59abbe56e057f20f883e&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;И если мы воспользуемся таким инструментом как google, то получим:
+&lt;code class=&quot;language-text&quot;&gt;https://google.gik-team.com/?q=e10adc3949ba59abbe56e057f20f883e&lt;/code&gt;
+что ваш хэш уже даже проиндексирован в поисковике.&lt;/p&gt;
+&lt;p&gt;Этот пример, конечно утрированный, если мы введем пароль, к примеру &lt;code class=&quot;language-text&quot;&gt;whatthefoxsay&lt;/code&gt;, его будет сложнее найти, так как он не настолько простой как &lt;code class=&quot;language-text&quot;&gt;123456&lt;/code&gt;. Но тем, не менее взломать его возможно. И вообще, криптография нам дает только время. Т.е. любой хэш со временем можно взломать. Важно понимать что время может быть равно 10 секундам и 1 млн. лет. Поэтому чем более криптостойкие алгоритмы вы используете, тем надежнее у вас защита (но помните, что она никогда не будет равна 100%, хотя при хороших условиях будет к этому значению стремиться).&lt;/p&gt;
+&lt;p&gt;Кстати, хотелось бы упомянуть такой инструмент как &lt;code class=&quot;language-text&quot;&gt;katools&lt;/code&gt; который является сборником инструментов для анализа уязвимостей репозитория &lt;code class=&quot;language-text&quot;&gt;Kali Linux&lt;/code&gt;. в его состав входит такая вещь как  &lt;code class=&quot;language-text&quot;&gt;findmyhash&lt;/code&gt;.
+И с помощью команды &lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;findmyhash MD5 -h e10adc3949ba59abbe56e057f20f883e&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;мы cможем опросить популярные источники &quot;не знаю ли они такого хэша?&quot;.&lt;/p&gt;
+&lt;p&gt;И мы получим:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;***** HASH CRACKED&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt; *****
+The original string is: 123456
+
+
+The following hashes were cracked:
+----------------------------------
+
+e10adc3949ba59abbe56e057f20f883e -&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; 123456&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Крайне не рекомендую вводить в подобные инструменты боевые хэши которые вы используете на проде.&lt;/p&gt;
+&lt;p&gt;MD5 плох! Поэтому давайте воспользуемся, чем-то более надежным.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;getFuncSHA512Salt&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;salt&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;password&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; hash &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; crypto&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;createHmac&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;sha512&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; salt&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        hash&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;password&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;var&lt;/span&gt; value &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; hash&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;digest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;hex&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; value&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; cryptoSHA512Salt &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;getFuncSHA512Salt&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;HVHSNrRWpP1ZSR4bnjXpiHCS1ENYcUuHO&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Хотел отметить, что здесь мы добавляем соль &lt;code class=&quot;language-text&quot;&gt;HVHSNrRWpP1ZSR4bnjXpiHCS1ENYcUuHO&lt;/code&gt;.
+Такое использование, это минимальный способ шифрования который стоит использовать в наше время (возможно, будет не так страшно использова &lt;code class=&quot;language-text&quot;&gt;sha256&lt;/code&gt;, но все же).&lt;/p&gt;
+&lt;p&gt;В той же &lt;a href=&quot;https://nodejs.org/api/crypto.html&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;документации к crypto&lt;/a&gt;:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; secret &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;abcdefg&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; hash &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; crypto&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;createHmac&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;sha256&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; secret&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+                   &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;I love cupcakes&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+                   &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;digest&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;hex&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Они по умолчанию приводят пример хэширования уже с солью. Спасибо им! &lt;/p&gt;
+&lt;p&gt;Давайте немного отвлечемся и рассмотрим еще одну cool story.
+&lt;a href=&quot;https://www.opennet.ru/opennews/art.shtml?num=46768&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;https://www.opennet.ru/opennews/art.shtml?num=46768&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;cool-story-3&quot;&gt;&lt;a href=&quot;#cool-story-3&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Cool story 3&lt;/h3&gt;
+&lt;p&gt;Возможно, вы помните как npm отозвал пароли около 170тыс. аккаутов и вот &lt;a href=&quot;https://blog.npmjs.org/post/161515829950/credentials-resets&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;этот пост&lt;/a&gt;. А все дело в том, что очень интересный человек &lt;a href=&quot;https://github.com/ChALkeR&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Сковорода Никита Андреевич @ChALkeR&lt;/a&gt;, который сейчас состоит в рабочей группе по безопасности node.js, провел анализ уязвимости аутентификации пользователей в npm.&lt;/p&gt;
+&lt;p&gt;возможно вы использовали пакеты из списка:
+Express, EventEmitter2, mime-types, semver, npm, fstream, cookie (и cookies), Bower, Component, Connect, koa, co, tar, css, gm, csrf, keygrip, jcarousel, serialport, basic-auth, lru-cache, inflight, mochify, denodeify, и многие другие.&lt;/p&gt;
+&lt;p&gt;К которым Никита получил доступ и описал подробности в статье опубликованной &lt;a href=&quot;https://github.com/ChALkeR/notes/blob/master/Do-not-underestimate-credentials-leaks.md&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;2015-12-04&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Позже он провел еще одно исследование от опубликованное &lt;a href=&quot;https://github.com/ChALkeR/notes/blob/master/Gathering-weak-npm-credentials.md&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;2017-06-21&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;В котором рассказал что ситуация слабо изменилась. В этот раз список ТОП пакетов был такой:
+debug, qs, supports-color, yargs, commander, request, strip-ansi, chalk, form-data, mime, tunnel-agent, extend, delayed-stream, combined-stream, forever-agent, concat-stream, vinyl, co, express, escape-html, path-to-regexp, component-emitter, moment, ws, handlebars, connect, escodegen, got, gulp-util, ultron, http-proxy, dom-serializer, url-parse, vinyl-fs, configstore, coa, csso, formidable, color, winston, node-sass, react, react-dom, rx, postcss-calc, superagent, basic-auth, cheerio, jsdom, gulp, sinon, useragent, deprecated, browserify, redux, array-equal, bower, jshint, jasmine, global, mongoose, vhost, imagemin, highlight.js, tape, mysql, mz, nock, rollup, gulp-less, rework, xcode, ionic, cordova, normalize.css, electron, n, react-native, ember-cli, yeoman-generator, nunjucks, koa, modernizr, yo, mongoskin, и многие другие.&lt;/p&gt;
+&lt;p&gt;Результаты оказались ошеломляющими:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;из 126 тыс, удалось получить доступ к 17 тыс, что примерно 13%&lt;/li&gt;
+&lt;li&gt;Количество пострадавших пакетов 73983 — 14% экосистемы.&lt;/li&gt;
+&lt;li&gt;Количество пострадавших через зависимости - 54%&lt;/li&gt;
+&lt;li&gt;Получил аккаунты 4 пользователей из списка топ-20&lt;/li&gt;
+&lt;li&gt;42 пользователя имели более 10 миллионов загрузок в месяц (каждый).&lt;/li&gt;
+&lt;li&gt;13 пользователей имели более 50 миллионов.&lt;/li&gt;
+&lt;li&gt;Одним из аккаунтов с доступом к koa был &quot;password&quot;&lt;/li&gt;
+&lt;li&gt;662 - «123456», 174 — «123», 124 — password». &lt;/li&gt;
+&lt;li&gt;11% пользователей повторно использовали свои просочившиеся пароли: 10,6% - напрямую, и 0,7% — с очень незначительными изменениями.&lt;/li&gt;
+&lt;li&gt;т.е. он мог бы контролировать 1 972 421 945 загрузок в месяц (напрямую), это 20% от общего числа.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Заметьте &lt;code class=&quot;language-text&quot;&gt;662&lt;/code&gt; пользователей использовали пароль &lt;code class=&quot;language-text&quot;&gt;123456&lt;/code&gt;. А вы говорите, я утрирую =)&lt;/p&gt;
+&lt;p&gt;Один из кейсов получения паролей, был использование базы утекших паролей с других ресурсов.
+Например, вы зарегистрировались с паролем &lt;code class=&quot;language-text&quot;&gt;whatthefoxsay&lt;/code&gt; в npm и на сайте blabla.site. Если взломают сайт blabla.site и получат все явки из него. Как вы думаете злоумышлленники не захотят пройтись по ТОП-20 сайтам (таких как gmail, facebook, twitter, ..., npm, github) с попытками ввода логинов/паролей из базы?
+Чтобы проверить есть ли у вас утекшие логины, можно воспрользоваться &lt;a href=&quot;https://haveibeenpwned.com/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;https://haveibeenpwned.com/&lt;/a&gt; , который рекомендует npm.
+Будете ли вы получать спам на почту после того как введете вашу почту? Я не знаю, но если вы доверяете npm и их рекомендациям, то можете проверить =)&lt;/p&gt;
+&lt;p&gt;Возможно, хороший способ обезопасить себя от подобных ситуаций является использование менеджеров паролей.
+Можно ознакомиться с топом в &lt;a href=&quot;https://habr.com/ru/post/357192/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;этой статье&lt;/a&gt;, многие рекомндуют &lt;code class=&quot;language-text&quot;&gt;1password&lt;/code&gt;.
+Но давайте не будет на этом задерживаться и пойдем дальше.&lt;/p&gt;
+&lt;h3 id=&quot;crypto-vs-bcrypt&quot;&gt;&lt;a href=&quot;#crypto-vs-bcrypt&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;crypto vs bcrypt&lt;/h3&gt;
+&lt;p&gt;Давайте, обратимся к гуру интернетов чтобы узнать действительно ли мы делаем все правильно.
+И по запросу &lt;code class=&quot;language-text&quot;&gt;node.js best practice&lt;/code&gt; наткнемся на &lt;a href=&quot;https://github.com/i0natan/nodebestpractices#6-security-best-practices&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;репозиторий&lt;/a&gt;,
+который действительно содержит очень много нужных и полезных рекомендаций + к этим рекомендациям многие прислушиваются, о чем свидетельствуют звездочки на github, которых около 23 тыс.
+В нем есть раздел &lt;code class=&quot;language-text&quot;&gt;6-security-best-practices&lt;/code&gt;, в котором даются советы и на часть примеров которые мы рассмотрели и на многие другие ситуации.
+Среди которых есть пункт: &lt;a href=&quot;https://github.com/i0natan/nodebestpractices/tree/15_Jan_19#-68-avoid-using-the-nodejs-crypto-library-for-handling-passwords-usebcrypt&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;6.8. Avoid using the Node.js crypto library for handling passwords, use Bcrypt&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Пароли или секреты (ключи API) должны храниться с использованием безопасной функции &lt;code class=&quot;language-text&quot;&gt;hash + salt&lt;/code&gt;, такой которую предоставляет &lt;code class=&quot;language-text&quot;&gt;bcrypt&lt;/code&gt;, которая должна быть предпочтительным выбором по сравнению с реализацией JavaScript из-за соображений производительности и безопасности.&lt;/p&gt;
+&lt;p&gt;Также обратим внимание на призыв не использовать &lt;code class=&quot;language-text&quot;&gt;Math.random()&lt;/code&gt; в алгоритмах шифрования.
+Не будем углубляться, но кому интересно почитайте статью Майорова &lt;a href=&quot;https://medium.com/@frontman/%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%D0%BD%D1%8B%D0%B5-%D1%87%D0%B8%D1%81%D0%BB%D0%B0-%D0%BD%D0%B5-%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%D0%BD%D1%8B-252e08e60828&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Случайные числа не случайны&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Но вернемся к crypto vs bcrypt. Нам предлагают использовать код:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// asynchronously generate a secure password using 10 hashing rounds&lt;/span&gt;
+bcrypt&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;myPassword&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; hash&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token comment&quot;&gt;// Store secure hash in user record&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;token comment&quot;&gt;// compare a provided password input with saved hash&lt;/span&gt;
+bcrypt&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;compare&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;somePassword&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; hash&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; match&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;match&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;token comment&quot;&gt;// Passwords match&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;token comment&quot;&gt;// Passwords don&apos;t match&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Давайте же последуем совету!
+И перепишем наше API на:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;bcrypt&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;hash&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;whatthefoxsay&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; hash&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;// Store secure hash in user record&lt;/span&gt;
+    db&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;createUser&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;conn&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;v7&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; hash&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+
+app&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;/api/v1/login&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;req&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; res&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    conn&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;all&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token string&quot;&gt;`
+        SELECT rowid AS id, login, password
+           FROM users
+            WHERE login = $login
+        `&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            $login&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; req&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;body&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;login
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; rows&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                res&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;message&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;rows &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; rows&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;length &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;token comment&quot;&gt;// compare a provided password input with saved hash&lt;/span&gt;
+                    bcrypt&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;compare&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+                        req&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;body&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;password&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                        rows&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;password&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+                        &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; match&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                            res&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;match &lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;logged in&apos;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;bad news&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+                        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+                    &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+                &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                    res&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;bad news&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+                &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Кажется что все выглядит пуленепробиваемое! Но!&lt;/p&gt;
+&lt;p&gt;Заметим один нюанс. Давайте попробуем устроить небольшой брутфорс пар логин+пароль по нашему API.&lt;/p&gt;
+&lt;p&gt;Воспользуемся подобной функцией:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;token function-variable function&quot;&gt;sendRequest&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;login&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; password&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; result &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        start&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; Date&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        login&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        password
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; promise &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Promise&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;res&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; rej&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        request&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+            &lt;span class=&quot;token string&quot;&gt;&apos;https://127.0.0.1:3030/api/v1/login&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; json&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; login&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; password &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;error&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; response&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; body&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;!&lt;/span&gt;error &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; response&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;statusCode &lt;span class=&quot;token operator&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                    result&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;end &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; Date&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;now&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+                    &lt;span class=&quot;token function&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;result&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+                &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; promise&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;И отправим по 10 запросов на каждый из логинов &lt;code class=&quot;language-text&quot;&gt;v7&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;v7_wrong&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;v7_wrong2&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ node ./attaker.js 
+v7 917
+v7_wrong 40
+v7_wrong2 39&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;хмм.. давайте отправим еще раз:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ node ./attaker.js
+v7 837
+v7_wrong 42
+v7_wrong2 45&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Заметим что ответы с логином &lt;code class=&quot;language-text&quot;&gt;v7&lt;/code&gt; заметно отличаются от остальных. Что здесь происходит, а происходит то, что если пользователь мы угадали, дальше идет тяжелый, надежный алгоритм &lt;code class=&quot;language-text&quot;&gt;bcrypt&lt;/code&gt;, который шифрует нам &lt;code class=&quot;language-text&quot;&gt;password&lt;/code&gt; из запроса и пытается сравнить с хэшем из БД.
+А давайте попробуем вернуть &lt;code class=&quot;language-text&quot;&gt;crypto&lt;/code&gt; и &lt;code class=&quot;language-text&quot;&gt;sha512&lt;/code&gt; с солью:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ node ./attaker.js
+v6 54
+v6_wrong 32
+v6_wrong2 30
+finish&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Заметим, что здесь разница не такая значительная, и если мы хостились на удаленной машине, а не на &lt;code class=&quot;language-text&quot;&gt;localhost&lt;/code&gt;, то погрешность в скорости прохождения пакетов по сети просто бы съела это 20-30 мс в 10 запросов. Значит ли это что &lt;code class=&quot;language-text&quot;&gt;bcrypt&lt;/code&gt; плох? Конечно нет. Мы просто неправильно его готовим, о чем, к сожалению best practice нам не говорит. На момент написания статьи, мы обсуждаем этот момент в &lt;a href=&quot;https://github.com/i0natan/nodebestpractices/issues/325&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;issue&lt;/a&gt;, присоединяйтесь.&lt;/p&gt;
+&lt;p&gt;Но если мы изменим наш код таким образом, чтобы мы всегда вычисляли хэш.
+Например:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;rows &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; rows&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;length &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;// compare a provided password input with saved hash&lt;/span&gt;
+    bcrypt&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;compare&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;req&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;body&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;password&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; rows&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;password&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; match&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+        console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;good&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        res&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;match &lt;span class=&quot;token operator&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;logged in&apos;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;bad news&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    bcrypt&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;compare&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+        req&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;body&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;password&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;$2b$10$m.fhQdLyRI8ExS/GGh43FOkO.XTCS85QdVpn6sINdlxTGQSJe3Ydi&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;err&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; match&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+            console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;bad&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+            res&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;bad news&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;То получим:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot;&gt;
+      &lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;$ node ./attaker.js
+v7 786
+v7_wrong 778
+v7_wrong2 762
+finish&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Что вполне нас обезопасит от тайминговых атак.
+Кстати, по этой теме есть хорошая &lt;a href=&quot;https://habr.com/ru/company/alfa/blog/338170/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;статья&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;usability-vs-security&quot;&gt;&lt;a href=&quot;#usability-vs-security&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;usability vs security&lt;/h2&gt;
+&lt;p&gt;Напоследок хочется рассмотреть еще один пример. Который не связан с аутентификацией напрямую. Но связан с формой регистрации.
+Сейчас фронтендеры ослепленны лучшими практиками UX, все стараются максимально ублажить пользователя и иногда в этой спешке теряются важные нюансы, о которых не стоит забывать.&lt;/p&gt;
+&lt;p&gt;Как пример, в &lt;a href=&quot;https://habr.com/ru/post/268253/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;статье&lt;/a&gt; предлагается уведомлять пользователя, после того как он ввел почту, зарегистрирован акк на этот email или нет. Это конечно красиво, но не до конца. Конечно мы можем добавить какие-то дополнительные проверки, на то чтобы выявить что к нам за проверкой почты стучится человек, а не машина. Но вы посмотрите за окно!&lt;/p&gt;
+&lt;p&gt;Сейчас на улице другие законы! &lt;a href=&quot;https://twitter.com/bobuk/status/1082691244730535937&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;селфдрайвинг кары сбивают промороботов&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;И есть такой волшебный инструмент как puppeteer, с помощью которого притвориться человеком гораздо проще.
+И мы можем брутфорсом пройти по форме регистрации и собрать базу email&apos;ов пользователей, тех или иных ресурсов.&lt;/p&gt;
+&lt;p&gt;Для этого есть спасение - это ограничение количества запросов. Например как это делает github. На его ограничение даже можно наткнуться руками, если очень настырно пытаться его спрашивать.&lt;/p&gt;
+&lt;figure style=&quot;text-aling: center;&quot;&gt;
+    &lt;img src=&quot;/github-reg-f48357a90814b21a0328af3d9cd43302.gif&quot; alt=&quot;Github &amp;#x444;&amp;#x43E;&amp;#x440;&amp;#x43C;&amp;#x430; &amp;#x440;&amp;#x435;&amp;#x433;&amp;#x438;&amp;#x441;&amp;#x442;&amp;#x440;&amp;#x430;&amp;#x446;&amp;#x438;&amp;#x438;&quot;&gt;
+    &lt;figcaption&gt;&amp;#x433;&amp;#x434;&amp;#x435;-&amp;#x442;&amp;#x43E; &amp;#x43D;&amp;#x430; 40 github &amp;#x43D;&amp;#x430;&amp;#x447;&amp;#x43D;&amp;#x435;&amp;#x442; &amp;#x440;&amp;#x443;&amp;#x433;&amp;#x430;&amp;#x442;&amp;#x44C;&amp;#x441;&amp;#x44F;&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&quot;Ссылки-на-источники&quot;&gt;&lt;a href=&quot;#%D0%A1%D1%81%D1%8B%D0%BB%D0%BA%D0%B8-%D0%BD%D0%B0-%D0%B8%D1%81%D1%82%D0%BE%D1%87%D0%BD%D0%B8%D0%BA%D0%B8&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Ссылки на источники&lt;/h2&gt;
+&lt;ol start=&quot;0&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/bmsdave/talk-auth-vulnerabilities&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Листинги кода и примеры описанные в статье&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://habr.com/ru/company/ua-hosting/blog/354874/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Курс MIT «Безопасность компьютерных систем»&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;&quot;&gt;Ответы юриста: как избежать ответственности за поиск уязвимостей&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.itsec.pro/2012/08/blog-post_7.html&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Про Мэта Хонан&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://initd.org/psycopg/docs/usage.html#the-problem-with-the-query-parameters&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;psycopg2: The problem with the query parameters&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://habr.com/ru/company/alfa/blog/338170/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Тайминговая атака на Node.js — когда время работает против вас&lt;/a&gt; &lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.opennet.ru/opennews/art.shtml?num=46768&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Исследование @ChALkeR&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://medium.com/@frontman/%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%D0%BD%D1%8B%D0%B5-%D1%87%D0%B8%D1%81%D0%BB%D0%B0-%D0%BD%D0%B5-%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%D0%BD%D1%8B-252e08e60828&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Майоров &quot;Случайные числа не случайны&quot;&lt;/a&gt; &lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/i0natan/nodebestpractices&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Node.js best practices list&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/nodejs/security-wg&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Node.js Security Working Group&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://habr.com/ru/post/268253/&quot; target=&quot;_blank&quot; rel=&quot;nofollow noopener noreferrer&quot;&gt;Юзабилити форм авторизации&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Спасибо!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[First Post]]></title><description><![CDATA[Hello world!]]></description><link>https://bmsdave.github.io/blog/first-post</link><guid isPermaLink="false">https://bmsdave.github.io/blog/first-post</guid><category><![CDATA[first]]></category><dc:creator><![CDATA[Vadim Gorbachev]]></dc:creator><pubDate>Sat, 07 Apr 2018 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hello world!&lt;/p&gt;</content:encoded></item></channel></rss>
