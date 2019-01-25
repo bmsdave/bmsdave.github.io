@@ -2,6 +2,7 @@
 layout: post
 title: "Y: The Most Beautiful Idea in Computer Science explained in JavaScript"
 author: Lucas Fernandes da Costa
+date: "2019-01-25"
 place: London, United Kingdom
 flag: 🇬🇧
 slug: "y-combinator"
@@ -15,8 +16,7 @@ tags:
     - y-combinator
 ---
 
-
-В этом посте мы поговорим об **одной из самых красивых идей в информатике: Y-Combinator**. И нет, я не говорю о [венчурной компании в Силиконовой долине](http://www.ycombinator.com/), хотя этот пост объяснит, почему у них такое название ;)
+В этой статье мы поговорим об **одной из самых красивых идей в информатике: Y-Combinator**. И нет, я не говорю о [венчурной компании в Силиконовой долине](http://www.ycombinator.com/), хотя этот пост объяснит, почему у них такое название ;)
 
 Если говорить простыми словами, **Y-Combinator (также известный как [комбинатор неподвижной точки](https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BC%D0%B1%D0%B8%D0%BD%D0%B0%D1%82%D0%BE%D1%80_%D0%BD%D0%B5%D0%BF%D0%BE%D0%B4%D0%B2%D0%B8%D0%B6%D0%BD%D0%BE%D0%B9_%D1%82%D0%BE%D1%87%D0%BA%D0%B8))-это способ рекурсии на языке, который явно не поддерживает его**.
 

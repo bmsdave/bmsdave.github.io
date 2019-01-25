@@ -3,3 +3,7 @@
   flex-direction: column;
   justify-content: center;
 }
+
+body .css-xtpevt ol li:before {
+  background-color: #e58520;
+}

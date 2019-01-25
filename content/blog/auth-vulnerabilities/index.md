@@ -2,18 +2,18 @@
 layout: post
 title: "Анализ уязвимостей процесса аутентификации"
 author: bmsdave
+date: "2019-01-25"
 place: Saint Petersburg, Russia
 flag: 
 slug: "auth-vulnerabilities"
-draft: true
+language: "ru"
+draft: false
 cover: "./talk.jpg"
-showCoverInPost: true
+showCoverInPost: false
 tags: 
     - javascript
     - node.js
 ---
-
-# Анализ уязвимостей процесса аутентификации
 
 ## Введение
 
@@ -50,18 +50,9 @@ tags:
 
 Но давайте продолжим и рассмотрим технические детали и возможные уязвимости одного из основополагающих процессов - процесса аутентификации.
 
-Оглавление:
-
-0. [Очень простой пример](#example)
-1. [SQL инъекции](#sqlinjection)
-2. [TCP/HTTP(s) GET vs POST](#tcphttp)
-3. [Шифрование (crypto vs bcrypt)](#hash)
-4. [usability vs security](#usability)
-5. [Ссылки на источники](#source)
-
 Так же очень хочется уделить особое внимание инструментам, которые помогут нам не быть слепыми котятами и дать возможность более прозрачно видеть детали процесса отправки запросов. В частности, изначально пост назывался "Анализ уязвимостей форм для аутентификации", но я из него убрал слово "форм", так как хочется показать такой инструмент, как postman.
 
-Инструментарий:
+### Инструментарий:
 
 1. Postman
 2. tcpdump
@@ -71,14 +62,17 @@ tags:
  
 Давайте рассмотрим очень простой пример.
 
-## <a name="example">Очень простой пример</a>
+## Очень простой пример
 
 Задача: нам нужно по логину и паролю аутентифицировать пользователя.
 
 Для этого создадим табличку:
 
-```SQL
-CREATE TABLE users (login TEXT NOT NULL UNIQUE, password TEXT NOT NULL);
+```sql
+CREATE TABLE users (
+    login TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL
+);
 ```
 
 Как БД будем использовать `sqlite3`.
@@ -87,7 +81,11 @@ CREATE TABLE users (login TEXT NOT NULL UNIQUE, password TEXT NOT NULL);
 
 ```javascript
 app.get('/api/v1/login', (req, res) => {
-    db.all(`SELECT rowid AS id, login, password FROM users WHERE login = '${req.query.login}';`, function(err, rows) {
+    db.all(`
+        SELECT rowid AS id, login, password
+           FROM users
+            WHERE login = '${req.query.login}'
+        `, function(err, rows) {
         if (err) {
             res.send(err.message);
         } else {
@@ -116,7 +114,7 @@ app.get('/api/v1/login', (req, res) => {
 `127.0.0.1:3030/api/v1/login?login=v1&password=123456`.
 В ответ, мы получим `"logged in"`, если мы введем другие данные, например `127.0.0.1:3030/api/v1/login?login=whatthefoxsay&password=test`, то получим `"bad news"`, т.е. API работает и выполняет свою задачу.
 
-## <a name="sqlinjection">SQL инъекции</a>
+## SQL инъекции
 
 Но что будет, если мы отправим: `127.0.0.1:3030/api/v1/login?login=whatthefoxsay'&password=test`
 На придет `SQLITE_ERROR: unrecognized token: "'whatthefoxsay''"`
@@ -129,7 +127,7 @@ login = '${req.query.login}'
 
 И в результате формирования запроса мы получим:
 
-```SQL
+```sql
 SELECT rowid AS id, login, password
    FROM users
    WHERE login = 'whatthefoxsay'';
@@ -150,27 +148,28 @@ SELECT 1,2,3 UNION SELECT 3,2,1;
 
 Выведет:
 
-```
+```sql
 1,2,3
 3,2,1
 ```
 
 Давайте попробуем им воспользоваться:
 
-```
-127.0.0.1:3030/api/v1/login?login=whatthefoxsay' union select 'test', 'test&password=test
+```x
+/login?login=whatthefoxsay' union select 'test', 'test&password=test
 ```
 
 Получим:
 
-```
-SQLITE_ERROR: SELECTs to the left and right of UNION do not have the same number of result columns
+```x
+SQLITE_ERROR:
+SELECTs to the left and right of UNION do not have the same number of result columns
 ```
 
 ага, в данном ответе нам говорят что количество колонок не совпадает. Ок. Давайте это исправим:
 
-```
-127.0.0.1:3030/api/v1/login?login=whatthefoxsay' union select 'test', 'test', 'test&password=test
+```x
+/login?login=whatthefoxsay' union select 'test', 'test', 'test&password=test
 ```
 
 Получаем: `logged in`
@@ -210,8 +209,8 @@ SQLITE_ERROR: SELECTs to the left and right of UNION do not have the same number
 
 Что нас спасет и при попытке отправить:
 
-```
-127.0.0.1:3030/api/v1/login?login=whatthefoxsay' union select 'test', 'test', 'test&password=test
+```x
+/login?login=whatthefoxsay' union select 'test', 'test', 'test&password=test
 ```
 
 Получим:  `bad news`
@@ -220,22 +219,18 @@ SQLITE_ERROR: SELECTs to the left and right of UNION do not have the same number
 
 Например в документации psycopg2 (python драйвер для работы с postgresql), написано:
 
-```
-Warning: Never, never, *NEVER* use Python
+> Warning: Never, never, *NEVER* use Python
 string concatenation (+) or string parameters
 interpolation (%) to pass variables to a SQL
 query string. Not even at gunpoint.
-```
 
-```
-Предупреждение: Никогда, никогда, НИКОГДА не используйте конкатенацию строк (+) или (%) интерполяцию, чтобы передать параметры в SQL запрос. Даже под дулом пистолета.
-```
+> Предупреждение: Никогда, никогда, НИКОГДА не используйте конкатенацию строк (+) или (%) интерполяцию, чтобы передать параметры в SQL запрос. Даже под дулом пистолета.
 
 Разобрались.
 Давайте пойдем дальше, и заметим, что мы отсылаем `GET` запрос с нашим логином и паролем.
 Мало того! Мы используем `http` вместо `https`! Нужно помнить о том, что URL запроса (часть которого - это `GET` параметры)гораздо чаще логируются `HTTP` серверами и если у злоумышленника будет доступ к логам сервера, он сможет получить их.
 
-## <a name="tcphttp">TCP/HTTP(s) GET vs POST</a>
+## TCP/HTTP(s) GET vs POST
 
 в случае, с `HTTP`, что с `POST`, что c `GET` возможна очень простая [атака посредника (Man in the middle (MITM))](https://ru.wikipedia.org/wiki/%D0%90%D1%82%D0%B0%D0%BA%D0%B0_%D0%BF%D0%BE%D1%81%D1%80%D0%B5%D0%B4%D0%BD%D0%B8%D0%BA%D0%B0), если конечно у нас есть возможность оказаться посередине. Как пример, вот вы пришли в кафе, подключились к wifi. А какой-то плохой парень взломал роутер и решил записать весь трафик проходящий через него, чтобы узнать куда ходят посетители кафе.
 
@@ -264,7 +259,7 @@ sudo tcpdump -i lo port 3030 -w ./dump.pcap
 `/users?name=Vadim&last_name=Gorbachev&polic=123456`.
 Соответственно эта информация осядет в логах HTTP сервера, который пример запрос, и эти в них злоумышленник сможет получить пароль в незашифрованном виде. Ах да! шифрование пароля! Это следующая часть нашего доклада.
 
-## <a name="hash">Шифрование (crypto vs bcrypt)</a>
+## Шифрование (crypto vs bcrypt)
 
 давайте зашифруем наши пароли, чтобы не хранить в БД в открытом виде, для этого воспользуемся модулем `crypto`:
 
@@ -349,20 +344,15 @@ https://www.opennet.ru/opennews/art.shtml?num=46768
 Возможно, вы помните как npm отозвал пароли около 170тыс. аккаутов и вот [этот пост](https://blog.npmjs.org/post/161515829950/credentials-resets). А все дело в том, что очень интересный человек [Сковорода Никита Андреевич @ChALkeR](https://github.com/ChALkeR), который сейчас состоит в рабочей группе по безопасности node.js, провел анализ уязвимости аутентификации пользователей в npm.
 
 возможно вы использовали пакеты из списка: 
-
-```
 Express, EventEmitter2, mime-types, semver, npm, fstream, cookie (и cookies), Bower, Component, Connect, koa, co, tar, css, gm, csrf, keygrip, jcarousel, serialport, basic-auth, lru-cache, inflight, mochify, denodeify, и многие другие.
-```
 
 К которым Никита получил доступ и описал подробности в статье опубликованной [2015-12-04](https://github.com/ChALkeR/notes/blob/master/Do-not-underestimate-credentials-leaks.md).
 
 Позже он провел еще одно исследование от опубликованное [2017-06-21](https://github.com/ChALkeR/notes/blob/master/Gathering-weak-npm-credentials.md)
 
 В котором рассказал что ситуация слабо изменилась. В этот раз список ТОП пакетов был такой:
-
-```
 debug, qs, supports-color, yargs, commander, request, strip-ansi, chalk, form-data, mime, tunnel-agent, extend, delayed-stream, combined-stream, forever-agent, concat-stream, vinyl, co, express, escape-html, path-to-regexp, component-emitter, moment, ws, handlebars, connect, escodegen, got, gulp-util, ultron, http-proxy, dom-serializer, url-parse, vinyl-fs, configstore, coa, csso, formidable, color, winston, node-sass, react, react-dom, rx, postcss-calc, superagent, basic-auth, cheerio, jsdom, gulp, sinon, useragent, deprecated, browserify, redux, array-equal, bower, jshint, jasmine, global, mongoose, vhost, imagemin, highlight.js, tape, mysql, mz, nock, rollup, gulp-less, rework, xcode, ionic, cordova, normalize.css, electron, n, react-native, ember-cli, yeoman-generator, nunjucks, koa, modernizr, yo, mongoskin, и многие другие.
-```
+
 
 Результаты оказались ошеломляющими:
 
@@ -442,9 +432,13 @@ app.post('/api/v1/login', (req, res) => {
             } else {
                 if (rows && rows.length > 0) {
                     // compare a provided password input with saved hash
-                    bcrypt.compare(req.body.password, rows[0].password, function(err, match) {
-                        res.send(match ? 'logged in' : 'bad news');
-                    });
+                    bcrypt.compare(
+                        req.body.password,
+                        rows[0].password,
+                        function(err, match) {
+                            res.send(match ? 'logged in' : 'bad news');
+                        }
+                    );
                 } else {
                     res.send('bad news');
                 }
@@ -517,18 +511,22 @@ finish
 Например:
 
 ```javascript
-                if (rows && rows.length > 0) {
-                    // compare a provided password input with saved hash
-                    bcrypt.compare(req.body.password, rows[0].password, function(err, match) {
-                        console.log('good');
-                        res.send(match ? 'logged in' : 'bad news');
-                    });
-                } else {
-                    bcrypt.compare(req.body.password, "$2b$10$m.fhQdLyRI8ExS/GGh43FOkO.XTCS85QdVpn6sINdlxTGQSJe3Ydi", function(err, match) {
-                        console.log('bad');
-                        res.send('bad news');
-                    });
-                }
+if (rows && rows.length > 0) {
+    // compare a provided password input with saved hash
+    bcrypt.compare(req.body.password, rows[0].password, function(err, match) {
+        console.log('good');
+        res.send(match ? 'logged in' : 'bad news');
+    });
+} else {
+    bcrypt.compare(
+        req.body.password,
+        "$2b$10$m.fhQdLyRI8ExS/GGh43FOkO.XTCS85QdVpn6sINdlxTGQSJe3Ydi",
+        function(err, match) {
+            console.log('bad');
+            res.send('bad news');
+        }
+    );
+}
 ```
 
 То получим:
@@ -544,7 +542,7 @@ finish
 Что вполне нас обезопасит от тайминговых атак.
 Кстати, по этой теме есть хорошая [статья](https://habr.com/ru/company/alfa/blog/338170/)
 
-##  <a name="usability">usability vs security</a>
+## usability vs security
 
 Напоследок хочется рассмотреть еще один пример. Который не связан с аутентификацией напрямую. Но связан с формой регистрации.
 Сейчас фронтендеры ослепленны лучшими практиками UX, все стараются максимально ублажить пользователя и иногда в этой спешке теряются важные нюансы, о которых не стоит забывать.
@@ -558,6 +556,6 @@ finish
 
 Для этого есть спасение - это ограничение количества запросов. Например как это делает github. На его ограничение даже можно наткнуться руками, если очень настырно пытаться его спрашивать.
 
-## <a name="source">Ссылки на источники</a>
+## Ссылки на источники
 
 Спасибо!
