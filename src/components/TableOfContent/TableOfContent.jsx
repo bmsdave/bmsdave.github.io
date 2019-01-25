@@ -21,10 +21,6 @@ const Container = styled("div")`
     display: none;
   }
 
-  ul li ul {
-    display: none;
-  }
-
   ul li {
     margin-bottom: 5px;
   }
