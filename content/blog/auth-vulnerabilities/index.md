@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "bla"
+title: "Анализ уязвимостей процесса аутентификации"
 author: bmsdave
-place: 
+place: Saint Petersburg, Russia
 flag: 
-slug: ""
+slug: "auth-vulnerabilities"
 draft: true
-cover: ""
-showCoverInPost: false
+cover: "./talk.jpg"
+showCoverInPost: true
 tags: 
     - javascript
     - node.js
