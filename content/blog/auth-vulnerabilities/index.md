@@ -358,6 +358,8 @@ httpsServer.listen(3030);
 crypto.createHash('md5').update(password).digest('hex');
 ```
 
+Полный листинг сервера [здесь](https://github.com/bmsdave/talk-auth-vulnerabilities/blob/master/example/server.v5.js).
+
 Окей, кажется теперь получше, да? Не совсем.
 
 Во-первых, не используете `MD5`, почему спросите вы?
@@ -412,6 +414,8 @@ const getFuncSHA512Salt = (salt) => {
 };
 const cryptoSHA512Salt = getFuncSHA512Salt("HVHSNrRWpP1ZSR4bnjXpiHCS1ENYcUuHO")
 ```
+
+[Листинг](https://github.com/bmsdave/talk-auth-vulnerabilities/blob/master/example/server.v6.js).
 
 Хотел отметить, что здесь мы добавляем соль `HVHSNrRWpP1ZSR4bnjXpiHCS1ENYcUuHO`.
 Такое использование, это минимальный способ шифрования который стоит использовать в наше время (возможно, будет не так страшно использова `sha256`, но все же).
