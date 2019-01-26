@@ -542,6 +542,8 @@ app.post('/api/v1/login', (req, res) => {
 })
 ```
 
+[Листинг сервера](https://github.com/bmsdave/talk-auth-vulnerabilities/blob/master/example/server.v7.js).
+
 Кажется что все выглядит пуленепробиваемое! Но!
 
 Заметим один нюанс. Давайте попробуем устроить небольшой брутфорс пар логин+пароль по нашему API.
