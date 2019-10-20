@@ -128,7 +128,77 @@ export default class ExperienceBlock extends React.Component {
           <ul>
             <li>
               <EventTime>
-                <time>Nov 2016 — present</time>
+                <time>Dec 2018 — present</time>
+              </EventTime>
+              <Event>
+                <EventTitle>Product Owner / Software Engineer</EventTitle>
+                <EventSubtitle>
+                  <a
+                    href="http://www.openwaygroup.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    OpenWay Group
+                  </a>, Saint Petersburg, Russia
+                </EventSubtitle>
+                <EventDescription>
+                  <p>
+                    <strong>Project</strong>: WAY4WEB
+                  </p>
+                  <p>
+                    <strong>Roles</strong>: Product Owner, Developer,
+                    Information Security Officer (PCI DSS)
+                  </p>
+                  <p>
+                    <strong>Scope of project</strong>: The standard delivery of
+                    the project consists of more than 10 thousand screens (forms
+                    of display of certain entities, such as information about a
+                    client, a cardholder, a merchant, etc.). In addition to
+                    this, we provide powerful tools for customization of the
+                    interface.
+                  </p>
+                  <p>
+                    <strong>Clients</strong>: quensWorldline, SIX Payment
+                    Services, Credorax, Comdata, ACB, Network International,
+                    Asbanda, Finnet Indonesia, Raiffeisenbank Int. Halyk Bank,
+                    etc.
+                  </p>
+                  <p>
+                    <strong>Job Responsibilities:</strong>
+                    <br />
+                    - Participation in the development of a WAY4 product web
+                    part.<br />
+                    - Supports product development according to the Roadmap.<br />
+                    - Product quality assurance, including:<br />
+                    * monitoring the quality of software code;<br />
+                    * ensuring the required level of software code test
+                    coverage;<br />
+                    * ensuring high quality Release Notes (including CRN and
+                    CUN);<br />
+                    * developing software to facilitate manual/automated product
+                    testing<br />
+                    * applying current and reliable software development
+                    technologies (for developing products)<br />
+                    * observing PA DSS / PCI DSS requirements<br />
+                    * Controlling usage of 3rd party libraries in terms of
+                    absense of known security vulnerabilities and ensuring
+                    license compliance.<br />
+                    - Fixing defects according to regulations (SLA).<br />
+                    - Ensures implementation of non-functional requirements for
+                    the product.<br />
+                    - Performing the duties of the Information Security Officer
+                    (PCI DSS).<br />
+                  </p>
+                  <p>
+                    <strong>Technologies</strong>: JavaScript, Typescript,
+                    AngularJS, Java, SQL, TeamCity, Windows
+                  </p>
+                </EventDescription>
+              </Event>
+            </li>
+            <li>
+              <EventTime>
+                <time>Nov 2016 — Dec 2018</time>
               </EventTime>
               <Event>
                 <EventTitle>Software Engineer</EventTitle>
@@ -146,8 +216,8 @@ export default class ExperienceBlock extends React.Component {
                     <strong>Project</strong>: WAY4WEB
                   </p>
                   <p>
-                    <strong>Roles</strong>: Product Owner WAY4WEB, Information
-                    Security Officer (PCI DSS) WAY4WEB
+                    <strong>Roles</strong>: Developer, Information Security
+                    Officer (PCI DSS)
                   </p>
                   <p>
                     <strong>Scope of project</strong>: The standard delivery of
