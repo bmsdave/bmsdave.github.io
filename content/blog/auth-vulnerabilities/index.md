@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Vulnerability analysis in the auth process / RU"
-author: bmsdave
+author: Vadim Gorbachev (bmsdave)
 date: "2019-01-25"
 place: Saint Petersburg, Russia
 flag: 
@@ -9,13 +9,17 @@ slug: "auth-vulnerabilities"
 language: "ru"
 draft: false
 cover: "./talk.jpg"
-showCoverInPost: false
+showCoverInPost: true
 tags: 
     - javascript
     - node.js
+    - security
+    - SQL injection
 ---
 
 ## Введение
+
+UPD: На основе данной статьи сделал [доклад на CodeFest](https://www.youtube.com/watch?v=__-NRORYk2s)
 
 Приветствую.
 
@@ -102,6 +106,8 @@ app.get('/api/v1/login', (req, res) => {
 ```
 
 Полный листинг сервера [здесь](https://github.com/bmsdave/talk-auth-vulnerabilities/blob/master/example/server.v2.js).
+
+UPD: Никогда! Никогда! НИКОГДА! не выводите “голые” ошибки и стэктрейсы в ответ. Так как это даст дополнителную информацию злоумышленнику. Например, в нашем примере`res.send(err.message);` даст информацию о том, что мы используем SQLite.
 
 Что здесь происходит, по `GET` запросу, мы идем в БД и ищем запись по логину.
 Если такая есть, сверяем пароль который к нам пришел с тем, который записан в БД.

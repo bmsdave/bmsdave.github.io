@@ -3,7 +3,7 @@ layout: post
 title: "Y: The Most Beautiful Idea in Computer Science explained in JavaScript / RU"
 author: Lucas Fernandes da Costa
 date: "2019-01-25"
-place: London, United Kingdom
+place: Saint Petersburg, Russia
 flag: 🇬🇧
 slug: "y-combinator"
 language: "ru"
