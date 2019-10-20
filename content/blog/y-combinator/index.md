@@ -1,20 +1,22 @@
 ---
 layout: post
-title: "Y: The Most Beautiful Idea in Computer Science explained in JavaScript"
+title: "Y: The Most Beautiful Idea in Computer Science explained in JavaScript / RU"
 author: Lucas Fernandes da Costa
 date: "2019-01-25"
 place: London, United Kingdom
 flag: 🇬🇧
 slug: "y-combinator"
-draft: true
+language: "ru"
+draft: false
 cover: "./test.jpg"
 showCoverInPost: false
 tags: 
-    - functional-programming
-    - combinators
     - javascript
     - y-combinator
 ---
+
+
+Перевод статьи [Lucas Fernandes da Costa "Y: The Most Beautiful Idea in Computer Science explained in JavaScript"](https://lucasfcosta.com/2018/05/20/Y-The-Most-Beautiful-Idea-in-Computer-Science.html)
 
 В этой статье мы поговорим об **одной из самых красивых идей в информатике: Y-Combinator**. И нет, я не говорю о [венчурной компании в Силиконовой долине](http://www.ycombinator.com/), хотя этот пост объяснит, почему у них такое название ;)
 
@@ -703,9 +705,9 @@ console.log(fibonacci(5)); // 8
 
 <br>
 
-## Фирма ВК в Силликон-Вэлли
+## Фирма в кремниевой долине
 
-Сам Пол Грэм известен своей удивительной работой на Лиспе, так что он, очевидно, очень опытный, когда дело доходит до функционального программирования и, следовательно, знает Y-Combinator.
+Сам Пол Грэм известен своей удивительной работой на lisp, так что он, очевидно, очень опытный, когда дело доходит до функционального программирования и, следовательно, знает Y-Combinator.
 
 Согласно собственному веб-сайту YC, именно поэтому они выбрали имя:
 
@@ -734,6 +736,6 @@ console.log(fibonacci(5)); // 8
 
 <br>
 
-## особая благодарность
+## Особая благодарность
 
 * Я бы хотел поблагодарить моего друга [Морган Родерик](https://twitter.com/mrgnrdrck) для просмотра этого блога и для всех удивительные работы он делал на Sinon.js. Спасибо, приятель :)

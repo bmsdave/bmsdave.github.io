@@ -1,10 +1,26 @@
 [
   {
-    "title": "Vulnerability analysis in the authentication process",
+    "title": "Event-Driven Architecture: Event Loop implementation details",
+    "place": "FrontendConf, Moscow, Russia",
+    "url": "https://bmsdave.github.io/talk-eda-slides/#/",
+    "date": "14.10.2019",
+    "language": "RU"
+  },
+  {
+    "title": "Vulnerability analysis in the auth process 2",
+    "place": "CodeFest X, Novosibirsk, Russia",
+    "url": "https://drive.google.com/file/d/1HJgh-0X6hWXUs_A5eUdUJbetf6beSS5T/view?usp=sharing",
+    "video": "https://youtu.be/__-NRORYk2s",
+    "date": "30.03.2019",
+    "language": "RU"
+  },
+  {
+    "title": "Vulnerability analysis in the auth process",
     "place": "PiterJS #33, Saint Petersburg, Russia",
     "url": "https://docs.google.com/presentation/d/1Euv_etttjtSrGLb9GlytLCvXmxiTmsQ0h5w8WjuvWYw/edit?usp=sharing",
+    "video": "https://youtu.be/Zfdy5VHfGZk",
     "date": "17.01.2019",
-    "language": "Russian"
+    "language": "RU"
   },
   {
     "title": "RxJS",
@@ -12,50 +28,49 @@
     "url": "https://bmsdave.github.io/talk-rxjs",
     "date": "07.04.2017",
     "video": "https://youtu.be/LTpznz2wcgY?t=1h32m5s",
-    "language": "Russian"
+    "language": "RU"
   },
   {
     "title": "Documentation",
     "place": "PiterJS #13, Saint Petersburg, Russia",
     "url": "https://bmsdave.github.io/talk-jsdoc/",
     "date": "23.03.2017",
-    "language": "Russian"
+    "language": "RU"
   },
   {
     "title": "Module Bundlers and Task Runners",
     "place": "Openway Group, Saint Petersburg, Russia",
     "url": "https://bmsdave.github.io/talk-moduleBundlers-and-taskRunners",
     "date": "17.02.2017",
-    "language": "Russian"
+    "language": "RU"
   },
   {
     "title": "Mercurial: Workflows",
     "place": "Openway Group, Saint Petersburg, Russia",
     "url": "https://bmsdave.github.io/talk-mercurial",
     "date": "17.02.2017",
-    "language": "Russian"
+    "language": "RU"
   },
-
   {
     "title": "Content Security Policy",
     "place": "PiterJS #9, Saint Petersburg, Russia",
     "url": "https://bmsdave.github.io/talk-csp",
     "video": "https://youtu.be/kKoZIjdjd7o",
     "date": "22.09.2016",
-    "language": "Russian"
+    "language": "RU"
   },
   {
     "title": "Use and create Angular Directives",
     "place": "i-Free, Saint Petersburg, Russia",
     "url": "https://bmsdave.github.io/talk-angular-directive",
     "date": "06.04.2016",
-    "language": "Russian"
+    "language": "RU"
   },
   {
     "title": "Inheritance in JavaScript",
     "place": "i-Free, Saint Petersburg, Russia",
     "url": "https://bmsdave.github.io/talk-inheritance-js",
     "date": "06.04.2016",
-    "language": "Russian"
+    "language": "RU"
   }
 ]

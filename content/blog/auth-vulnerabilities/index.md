@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Анализ уязвимостей процесса аутентификации"
+title: "Vulnerability analysis in the auth process / RU"
 author: bmsdave
 date: "2019-01-25"
 place: Saint Petersburg, Russia
