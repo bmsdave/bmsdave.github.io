@@ -1,0 +1,120 @@
+{
+  "assetsByChunkName": {
+    "path---blog-tags-y-combinator": [
+      "path---blog-tags-y-combinator-8c857a6d49f9b3fa875f.js",
+      "path---blog-tags-y-combinator-8c857a6d49f9b3fa875f.js.map"
+    ],
+    "path---blog": [
+      "path---blog-53f50600d9fb25f99269.js",
+      "path---blog-53f50600d9fb25f99269.js.map"
+    ],
+    "path---blog-y-combinator": [
+      "path---blog-y-combinator-5bfc51b973fd61c52c3e.js",
+      "path---blog-y-combinator-5bfc51b973fd61c52c3e.js.map"
+    ],
+    "component---src-pages-resume-jsx": [
+      "component---src-pages-resume-jsx-2aae9b53467b05cdd414.js",
+      "component---src-pages-resume-jsx-2aae9b53467b05cdd414.js.map"
+    ],
+    "path---": [
+      "path----557518bd178906f8d58a.js",
+      "path----557518bd178906f8d58a.js.map"
+    ],
+    "component---src-layouts-index-jsx": [
+      "component---src-layouts-index-jsx-34b318e43a5aa20d21ec.js",
+      "component---src-layouts-index-jsx-34b318e43a5aa20d21ec.js.map"
+    ],
+    "path---blog-tags-node-js": [
+      "path---blog-tags-node-js-108a3a37ec4a0eecff94.js",
+      "path---blog-tags-node-js-108a3a37ec4a0eecff94.js.map"
+    ],
+    "path---blog-y-combinator-eng": [
+      "path---blog-y-combinator-eng-cfff54b927ea3473da93.js",
+      "path---blog-y-combinator-eng-cfff54b927ea3473da93.js.map"
+    ],
+    "component---node-modules-gatsby-plugin-offline-app-shell-js": [
+      "component---node-modules-gatsby-plugin-offline-app-shell-js-5c4c5a0f7af9dc69d6d7.js",
+      "component---node-modules-gatsby-plugin-offline-app-shell-js-5c4c5a0f7af9dc69d6d7.js.map"
+    ],
+    "path---index": [
+      "path---index-895d92d9df56472554b5.js",
+      "path---index-895d92d9df56472554b5.js.map"
+    ],
+    "path---blog-tags-javascript": [
+      "path---blog-tags-javascript-4782852ad0a86e4ab10d.js",
+      "path---blog-tags-javascript-4782852ad0a86e4ab10d.js.map"
+    ],
+    "commons": [
+      "commons-ae155a02df68856824da.js",
+      "build-js-styles.css",
+      "commons-ae155a02df68856824da.js.map",
+      "build-js-styles.css.map"
+    ],
+    "path---404-html": [
+      "path---404-html-a0e39f21c11f6a62c5ab.js",
+      "path---404-html-a0e39f21c11f6a62c5ab.js.map"
+    ],
+    "path---blog-tags-first": [
+      "path---blog-tags-first-0ee93dc28471c8133b9a.js",
+      "path---blog-tags-first-0ee93dc28471c8133b9a.js.map"
+    ],
+    "component---src-pages-404-jsx": [
+      "component---src-pages-404-jsx-1ed97307bfcd81aa8d95.js",
+      "component---src-pages-404-jsx-1ed97307bfcd81aa8d95.js.map"
+    ],
+    "component---src-templates-tag-jsx": [
+      "component---src-templates-tag-jsx-891b7304163fb4c33f52.js",
+      "component---src-templates-tag-jsx-891b7304163fb4c33f52.js.map"
+    ],
+    "component---src-pages-blog-jsx": [
+      "component---src-pages-blog-jsx-8cd6383ea3e1e597023d.js",
+      "component---src-pages-blog-jsx-8cd6383ea3e1e597023d.js.map"
+    ],
+    "path---talks": [
+      "path---talks-5772f79575e1b81c1255.js",
+      "path---talks-5772f79575e1b81c1255.js.map"
+    ],
+    "path---offline-plugin-app-shell-fallback": [
+      "path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js",
+      "path---offline-plugin-app-shell-fallback-a0e39f21c11f6a62c5ab.js.map"
+    ],
+    "component---src-templates-post-jsx": [
+      "component---src-templates-post-jsx-961c3e48873fe9d81044.js",
+      "component---src-templates-post-jsx-961c3e48873fe9d81044.js.map"
+    ],
+    "component---src-pages-index-jsx": [
+      "component---src-pages-index-jsx-98cbe73b204065ea502f.js",
+      "component---src-pages-index-jsx-98cbe73b204065ea502f.js.map"
+    ],
+    "path---resume": [
+      "path---resume-1a281e8b3d5183432b9c.js",
+      "path---resume-1a281e8b3d5183432b9c.js.map"
+    ],
+    "app": [
+      "app-29110b41dc40be2622aa.js",
+      "build-js-styles.css",
+      "app-29110b41dc40be2622aa.js.map",
+      "build-js-styles.css.map"
+    ],
+    "path---blog-auth-vulnerabilities": [
+      "path---blog-auth-vulnerabilities-c69f9015675b4cb3db85.js",
+      "path---blog-auth-vulnerabilities-c69f9015675b4cb3db85.js.map"
+    ],
+    "path---404": [
+      "path---404-a0e39f21c11f6a62c5ab.js",
+      "path---404-a0e39f21c11f6a62c5ab.js.map"
+    ],
+    "path---blog-tags-functional-programming-combinators-javascript-y-combinator": [
+      "path---blog-tags-functional-programming-combinators-javascript-y-combinator-9dfdbb59d05d765c32ab.js",
+      "path---blog-tags-functional-programming-combinators-javascript-y-combinator-9dfdbb59d05d765c32ab.js.map"
+    ],
+    "component---src-pages-talks-jsx": [
+      "component---src-pages-talks-jsx-30a868a8612af3ec7497.js",
+      "component---src-pages-talks-jsx-30a868a8612af3ec7497.js.map"
+    ],
+    "path---blog-first-post": [
+      "path---blog-first-post-e9023ff3e8a3a004cfff.js",
+      "path---blog-first-post-e9023ff3e8a3a004cfff.js.map"
+    ]
+  }
+}
