@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["/app-29110b41dc40be2622aa.js","0d4580fb1846cc61b505c73d59a2bddb"],["/commons-ae155a02df68856824da.js","5b24a855e52ee8c002f1d7ced7a67ab3"],["/index.html","5a1e43a1d1f920416c597a82c26efe85"],["/offline-plugin-app-shell-fallback/index.html","e1cb133bb457948c8564e4899e23caa2"]];
+var precacheConfig = [["/app-29110b41dc40be2622aa.js","0d4580fb1846cc61b505c73d59a2bddb"],["/app-e5ab37376ce34fd74e6c.js","7a01f243e6cf36daa82fb23a6a7c767f"],["/commons-ae155a02df68856824da.js","5b24a855e52ee8c002f1d7ced7a67ab3"],["/index.html","2ae938aca4b0aaa8304b5e88c04be57f"],["/offline-plugin-app-shell-fallback/index.html","2bce300caf50e2f5662fbf72c68a9aab"]];
 var cacheName = 'sw-precache-v3-gatsby-plugin-offline-10-' + (self.registration ? self.registration.scope : '');
 
 
@@ -229,11 +229,11 @@ self.addEventListener('fetch', function(event) {
 
     // If shouldRespond is still false, check to see if this is a navigation
     // request, and if so, whether the URL matches navigateFallbackWhitelist.
-    var navigateFallback = '';
+    var navigateFallback = '/offline-plugin-app-shell-fallback/index.html';
     if (!shouldRespond &&
         navigateFallback &&
         (event.request.mode === 'navigate') &&
-        isPathWhitelisted([], event.request.url)) {
+        isPathWhitelisted(["^.*([^.]{5}|.html)$"], event.request.url)) {
       url = new URL(navigateFallback, self.location).toString();
       shouldRespond = urlsToCacheKeys.has(url);
     }
