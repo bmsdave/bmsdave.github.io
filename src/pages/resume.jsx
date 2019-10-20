@@ -87,14 +87,14 @@ class Resume extends React.Component {
           </div>
         </Row>
         <Download
-          href="../assets/vgorbachev_cv.docx"
+          href="../assets/cv/vgorbachev_cv.docx"
           alt="*.docx"
           target="_blank"
         >
           *.docx
         </Download>
         <Download
-          href="../assets/vgorbachev_cv.pdf"
+          href="../assets/cv/vgorbachev_cv.pdf"
           alt="*.pdf"
           target="_blank"
         >
