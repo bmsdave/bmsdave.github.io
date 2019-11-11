@@ -117,7 +117,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-offline`,
       options: {
-        cacheId: 'gatsby-plugin-offline-10',
+        cacheId: 'gatsby-plugin-offline-11',
       },
     },
     {
