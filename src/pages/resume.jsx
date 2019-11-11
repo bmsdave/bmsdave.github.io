@@ -3,12 +3,18 @@ import Helmet from 'react-helmet'
 import styled from 'react-emotion'
 import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
 import Config from '../../config'
-import { FancyH1 } from '../components/FancyHeader/FancyHeader'
+import { css } from 'emotion'
+import {
+  FancyH1,
+  FancyPrintH1,
+  FancyPrintH2,
+} from '../components/FancyHeader/FancyHeader'
 import ExperienceBlock from '../components/ExperienceBlock/ExperienceBlock'
 import EducationBlock from '../components/EducationBlock/EducationBlock'
-import SkillsBlock from '../components/SkillsBlock/SkillsBlock'
 import CoursesBlock from '../components/CoursesBlock/CoursesBlock'
 import AwardsBlock from '../components/AwardsBlock/AwardsBlock'
+import VolunteerBlock from '../components/VolunteerBlock/VolunteerBlock'
+import ContactsBlock from '../components/ContactsBlock/ContactsBlock'
 
 const Row = styled('div')`
   display: flex;
@@ -44,11 +50,37 @@ const Row = styled('div')`
 
 const Download = styled('a')`
   margin-left: 20px;
+
+  @media print {
+    display: none;
+  }
 `
+
+const classes = {
+  leadContacts: css`
+    min-width: 250px;
+
+    ${TABLET_MEDIA_QUERY} {
+      width: 100%;
+    }
+  `,
+  leadText: css`
+    flex-grow: 0;
+    margin-right: 60px;
+
+    ${TABLET_MEDIA_QUERY} {
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+  `,
+}
 
 class Resume extends React.Component {
   render() {
     const awards = this.props.data.allAwardsJson.edges.map(edge => edge.node)
+    const volunteer = this.props.data.allVolunteerJson.edges.map(
+      edge => edge.node
+    )
     const courses = this.props.data.allCoursesJson.edges.map(edge => edge.node)
     const languages = this.props.data.allLanguagesJson.edges.map(
       edge => edge.node
@@ -66,22 +98,27 @@ class Resume extends React.Component {
       <div>
         <Helmet title={Config.siteTitle} />
         <FancyH1>Resume</FancyH1>
-        <Row style={{ marginTop: 50 }}>
+        <Row>
           <div>
+            <FancyPrintH1>Vadim Gorbachev</FancyPrintH1>
             <ExperienceBlock />
             <EducationBlock />
           </div>
           <div>
-            <SkillsBlock
+            {/* <SkillsBlock
               languages={languages}
               personalQualities={personalQualities}
               sysadminSkills={sysadminSkills}
               developmentSkills={developmentSkills}
+            /> */}
+            <ContactsBlock
+              links={Config.userLinks}
+              className={classes.leadContacts}
             />
             <br />
+            <VolunteerBlock volunteer={volunteer} />
             <br />
             <CoursesBlock courses={courses} />
-            <br />
             <br />
             <AwardsBlock awards={awards} />
           </div>
@@ -137,6 +174,16 @@ export const pageQuery = graphql`
         node {
           label
           value
+        }
+      }
+    }
+    allVolunteerJson {
+      edges {
+        node {
+          title
+          organization
+          organizationLink
+          date
         }
       }
     }

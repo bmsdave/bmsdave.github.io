@@ -1,19 +1,19 @@
-import React from "react";
-import { css } from "emotion";
-import styled from "react-emotion";
-import Link from "gatsby-link";
+import React from 'react'
+import { css } from 'emotion'
+import styled from 'react-emotion'
+import Link from 'gatsby-link'
 import {
   DEFAULT_WIDTH,
-  DEFAULT_MEDIA_QUERY
-} from "typography-breakpoint-constants";
-import HexImage from "../HexImage/HexImage";
-import Config from "../../../config";
+  DEFAULT_MEDIA_QUERY,
+} from 'typography-breakpoint-constants'
+import HexImage from '../HexImage/HexImage'
+import Config from '../../../config'
 
 const activeLinkClass = css`
   color: black;
   text-decoration: none;
   box-shadow: none;
-`;
+`
 
 const ProfileHexImage = styled(HexImage)`
   width: 70px;
@@ -23,19 +23,23 @@ const ProfileHexImage = styled(HexImage)`
   &:hover {
     transform: rotate(-3deg);
   }
-`;
+`
 
-const Nav = styled("nav")`
+const Nav = styled('nav')`
   display: flex;
   margin: 10px auto 40px auto;
   max-width: ${DEFAULT_WIDTH};
 
+  @media print {
+    display: none !important;
+  }
+
   ${DEFAULT_MEDIA_QUERY} {
     margin: 10px 10px 40px 10px;
   }
-`;
+`
 
-const Menu = styled("ul")`
+const Menu = styled('ul')`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -43,11 +47,11 @@ const Menu = styled("ul")`
   margin-left: 16px;
   padding: 0;
   list-style: none;
-`;
+`
 
-const MenuItem = styled("li")`
+const MenuItem = styled('li')`
   margin: 0 20px 0 0;
-`;
+`
 
 const LogoLink = styled(Link)`
   display: inline-flex;
@@ -56,7 +60,7 @@ const LogoLink = styled(Link)`
   &:focus {
     outline: none;
   }
-`;
+`
 
 export default class Header extends React.Component {
   render() {
@@ -68,7 +72,7 @@ export default class Header extends React.Component {
         <Menu>
           <MenuItem>
             <Link
-              isActive={(match, location) => location.pathname === "/"}
+              isActive={(match, location) => location.pathname === '/'}
               activeClassName={activeLinkClass}
               to="/"
             >
@@ -78,7 +82,7 @@ export default class Header extends React.Component {
           <MenuItem>
             <Link
               isActive={(match, location) =>
-                location.pathname.indexOf("/blog") === 0
+                location.pathname.indexOf('/blog') === 0
               }
               to="/blog"
               activeClassName={activeLinkClass}
@@ -89,7 +93,7 @@ export default class Header extends React.Component {
           <MenuItem>
             <Link
               isActive={(match, location) =>
-                location.pathname.indexOf("/talks") === 0
+                location.pathname.indexOf('/talks') === 0
               }
               to="/talks"
               activeClassName={activeLinkClass}
@@ -100,7 +104,7 @@ export default class Header extends React.Component {
           <MenuItem>
             <Link
               isActive={(match, location) =>
-                location.pathname.indexOf("/resume") === 0
+                location.pathname.indexOf('/resume') === 0
               }
               to="/resume"
               activeClassName={activeLinkClass}
@@ -110,6 +114,6 @@ export default class Header extends React.Component {
           </MenuItem>
         </Menu>
       </Nav>
-    );
+    )
   }
 }

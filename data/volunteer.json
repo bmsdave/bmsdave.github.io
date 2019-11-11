@@ -1,0 +1,32 @@
+[
+    {
+      "title": "Organizer",
+      "organization": "PiterJS",
+      "organizationLink": "https://medium.com/piterjs",
+      "date": "Mar 2017 - present"
+    },
+    {
+        "title": "Contributor",
+        "organization": "v8",
+        "organizationLink": "https://chromium-review.googlesource.com/q/owner:bmsdave%2540gmail.com",
+        "date": "Jan 2019 - present"
+    },
+    {
+      "title": "",
+      "organization": "Speaker",
+      "organizationLink": "https://bmsdave.github.io/talks",
+      "date": "Mar 2016 - present"
+  },
+    {
+      "title": "Program committee",
+      "organization": "HolyJS",
+      "organizationLink": "https://holyjs.ru/en/",
+      "date": "Jul 2017 - Jan 2019"
+    },
+    {
+      "title": "Mentor",
+      "organization": "NodeSchool",
+      "organizationLink": "https://nodeschool.io/spb/",
+      "date": "Feb 2017 - Jan 2018"
+    }
+  ]

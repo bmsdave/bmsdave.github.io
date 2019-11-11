@@ -8,6 +8,10 @@ const Footer = styled('footer')`
   align-content: center;
   padding: 10px 5px 20px;
 
+  @media print {
+    display: none;
+  }
+
   h5 {
     font-size: 0.9em;
     line-height: 1.3em;

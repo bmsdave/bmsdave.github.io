@@ -20,27 +20,32 @@ module.exports = {
   // Links to social profiles/projects you want to display in the author segment/navigation bar.
   userLinks: [
     {
+      label: 'bmsdave.github.io',
+      href: 'https://bmsdave.github.io/',
+      type: 'site',
+    },
+    {
       label: 'bmsdave@gmail.com',
       href: 'mailto:bmsdave@gmail.com',
       type: 'gmail',
     },
     {
-      label: 'Twitter',
+      label: '@_bmsdave',
       href: 'https://twitter.com/_bmsdave',
       type: 'twitter',
     },
     {
-      label: 'GitHub',
+      label: '@bmsdave',
       href: 'https://github.com/bmsdave',
       type: 'github',
     },
     {
-      label: 'LinkedIn',
+      label: '@bmsdave',
       href: 'https://www.linkedin.com/in/bmsdave/',
       type: 'linkedin',
     },
     {
-      label: 'LastFM',
+      label: '@bmsdave',
       href: 'https://www.last.fm/user/bmsdave',
       type: 'lastfm',
     },

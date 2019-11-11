@@ -5,7 +5,6 @@ import monokaiColors from '../../../monokaiColors'
 
 const Timeline = styled('section')`
   position: relative;
-  margin-top: 30px;
   min-height: 100px;
   width: 100%;
   font-size: 0.9em;
@@ -20,11 +19,11 @@ const Timeline = styled('section')`
     list-style-type: none;
     position: relative;
     margin: 0;
-    max-width: 330px;
-    margin-left: 110px;
-    padding-left: 10px;
+    max-width: 730px;
+    margin-left: 0px;
+    padding-left: 0;
     padding-right: 10px;
-    padding-bottom: 50px;
+    padding-bottom: 10px;
   }
 
   ul li::after {
@@ -47,45 +46,29 @@ const Event = styled('div')`
   margin: 0;
 `
 
-const EventTime = styled('div')`
-  height: 30px;
-  width: 120px;
-  position: absolute;
-  left: -120px;
-  text-align: center;
-  top: 1px;
-  z-index: 99;
-  font-size: 0.85em;
-  line-height: 30px;
-  white-space: nowrap;
-  overflow: hidden;
+const EventTitle = styled('div')`
+  display: inline-block;
+  font-size: 1.1em;
+  font-weight: bold;
 
-  time {
-    position: relative;
-  }
-  time:before {
+  :before {
     content: '';
-    width: 100%;
-    height: 7px;
+    width: 15px;
+    height: 15px;
     position: absolute;
-    left: -5px;
-    bottom: 0px;
-    background-color: ${monokaiColors.colors['list.focusBackground']};
+    left: -10px;
+    top: 10px;
+    background-color: #b0b0b0;
     opacity: 0.6;
     z-index: -2;
   }
 `
-
-const EventTitle = styled('div')`
-  font-size: 1.1em;
-`
-
-const MoveToEvent = styled('div')`
-  font-size: 0.9em;
-  border-top: 1px solid #888;
-  border-bottom: 1px solid #888;
-  color: #888;
+const EventTime = styled('div')`
   display: inline-block;
+  font-size: 0.9em;
+  color: #999;
+  padding-left: 10px;
+  line-height: 1.4em;
 `
 
 const EventSubtitle = styled('div')`
@@ -103,32 +86,19 @@ const EventDescription = styled('div')`
   font-family: 'Open Sans', 'Helvetica Neue', serif;
 `
 
-const Line = styled('div')`
-  position: absolute;
-  left: 50px;
-  top: -40px;
-  height: 100%;
-  z-index: -2;
-  width: 1px;
-  border-left: 2px solid #000;
-`
-
 export default class EducationBlock extends React.Component {
   render() {
     return (
       <React.Fragment>
         <FancyH2>Education</FancyH2>
         <Timeline>
-          <Line />
           <ul>
             <li>
-              <EventTime>
-                <time>2011 - 2016</time>
-              </EventTime>
               <Event>
                 <EventTitle>
                   Bachelor's degree, System analysis and management
                 </EventTitle>
+                <EventTime>2011 - 2016</EventTime>
                 <EventSubtitle>
                   <a
                     href="http://english.spbstu.ru/"
@@ -142,13 +112,11 @@ export default class EducationBlock extends React.Component {
               </Event>
             </li>
             <li>
-              <EventTime>
-                <time>2005 - 2007</time>
-              </EventTime>
               <Event>
                 <EventTitle>
-                  Associate's degree, Mathematics and Computer Science
+                  Associate's degree, Math and Computer Science
                 </EventTitle>
+                <EventTime>2005 - 2007</EventTime>
                 <EventSubtitle>
                   <a
                     href="http://en.bru.by"

@@ -5,7 +5,6 @@ import monokaiColors from '../../../monokaiColors'
 
 const Timeline = styled('section')`
   position: relative;
-  margin-top: 30px;
   min-height: 600px;
   width: 100%;
   font-size: 0.9em;
@@ -24,11 +23,11 @@ const Timeline = styled('section')`
     list-style-type: none;
     position: relative;
     margin: 0;
-    max-width: 630px;
-    margin-left: 110px;
-    padding-left: 10px;
+    max-width: 730px;
+    margin-left: 0px;
+    padding-left: 0;
     padding-right: 10px;
-    padding-bottom: 50px;
+    padding-bottom: 10px;
   }
 
   ul li::after {
@@ -51,46 +50,29 @@ const Event = styled('div')`
   margin: 0;
 `
 
-const EventTime = styled('div')`
-  height: 30px;
-  width: 120px;
-  position: absolute;
-  left: -120px;
-  text-align: center;
-  top: 1px;
-  z-index: 99;
-  font-size: 0.85em;
-  line-height: 30px;
-  white-space: nowrap;
-  overflow: hidden;
+const EventTitle = styled('div')`
+  display: inline-block;
+  font-size: 1.1em;
+  font-weight: bold;
 
-  time {
-    position: relative;
-    font-size: 1em;
-  }
-  time:before {
+  :before {
     content: '';
-    width: 100%;
-    height: 7px;
+    width: 15px;
+    height: 15px;
     position: absolute;
-    left: -5px;
-    bottom: 0px;
-    background-color: ${monokaiColors.colors['list.focusBackground']};
+    left: -10px;
+    top: 10px;
+    background-color: #b0b0b0;
     opacity: 0.6;
     z-index: -2;
   }
 `
-
-const EventTitle = styled('div')`
-  font-size: 1.1em;
-`
-
-const MoveToEvent = styled('div')`
-  font-size: 0.9em;
-  border-top: 1px solid #888;
-  border-bottom: 1px solid #888;
-  color: #888;
+const EventTime = styled('div')`
   display: inline-block;
+  font-size: 0.9em;
+  color: #999;
+  padding-left: 10px;
+  line-height: 1.4em;
 `
 
 const EventSubtitle = styled('div')`
@@ -108,30 +90,17 @@ const EventDescription = styled('div')`
   font-family: 'Open Sans', 'Helvetica Neue', serif;
 `
 
-const Line = styled('div')`
-  position: absolute;
-  left: 50px;
-  top: -40px;
-  height: 100%;
-  z-index: -2;
-  width: 1px;
-  border-left: 2px solid #000;
-`
-
 export default class ExperienceBlock extends React.Component {
   render() {
     return (
       <React.Fragment>
         <FancyH2>Experience</FancyH2>
         <Timeline>
-          <Line />
           <ul>
             <li>
-              <EventTime>
-                <time>Dec 2018 — present</time>
-              </EventTime>
               <Event>
                 <EventTitle>Product Owner / Software Engineer</EventTitle>
+                <EventTime>Dec 2018 — present</EventTime>
                 <EventSubtitle>
                   <a
                     href="http://www.openwaygroup.com/"
@@ -143,65 +112,41 @@ export default class ExperienceBlock extends React.Component {
                 </EventSubtitle>
                 <EventDescription>
                   <p>
-                    <strong>Project</strong>: WAY4WEB
-                  </p>
-                  <p>
-                    <strong>Roles</strong>: Product Owner, Developer,
-                    Information Security Officer (PCI DSS)
-                  </p>
-                  <p>
-                    <strong>Scope of project</strong>: The standard delivery of
-                    the project consists of more than 10 thousand screens (forms
-                    of display of certain entities, such as information about a
-                    client, a cardholder, a merchant, etc.). In addition to
-                    this, we provide powerful tools for customization of the
-                    interface.
-                  </p>
-                  <p>
-                    <strong>Clients</strong>: quensWorldline, SIX Payment
-                    Services, Credorax, Comdata, ACB, Network International,
-                    Asbanda, Finnet Indonesia, Raiffeisenbank Int. Halyk Bank,
-                    etc.
-                  </p>
-                  <p>
-                    <strong>Job Responsibilities:</strong>
+                    <strong>Responsibilities:</strong>
                     <br />
-                    - Participation in the development of a WAY4 product web
-                    part.<br />
-                    - Supports product development according to the Roadmap.<br />
-                    - Product quality assurance, including:<br />
-                    * monitoring the quality of software code;<br />
-                    * ensuring the required level of software code test
-                    coverage;<br />
-                    * ensuring high quality Release Notes (including CRN and
-                    CUN);<br />
-                    * developing software to facilitate manual/automated product
-                    testing<br />
-                    * applying current and reliable software development
-                    technologies (for developing products)<br />
-                    * observing PA DSS / PCI DSS requirements<br />
-                    * Controlling usage of 3rd party libraries in terms of
+                    - Developing. Monitoring the quality of code.<br />
+                    {/* - Supports product development according to the Roadmap.<br /> */}
+                    {/* - Product quality assurance, including:<br /> */}
+                    {/* * monitoring the quality of code;<br /> */}
+                    - Ensuring the required level of test coverage, high quality
+                    Release Notes.<br />
+                    {/* - Ensuring high quality Release Notes.<br /> */}
+                    {/** developing software to facilitate manual/automated product
+                     testing<br /> */}
+                    {/** applying current and reliable software development
+                     technologies (for developing products)<br /> */}
+                    - Maintaining PA DSS/PCI DSS requirements, a high level of
+                    security.
+                    {/* * Controlling usage of 3rd party libraries in terms of
                     absense of known security vulnerabilities and ensuring
-                    license compliance.<br />
-                    - Fixing defects according to regulations (SLA).<br />
-                    - Ensures implementation of non-functional requirements for
-                    the product.<br />
-                    - Performing the duties of the Information Security Officer
-                    (PCI DSS).<br />
+                    license compliance.<br /> */}
+                    {/* - Fixing defects according to regulations (SLA).<br /> */}
+                    {/* - Ensures implementation of non-functional requirements for
+                    the product.<br /> */}
+                    {/* - Performing the functions of the Information Security Officer
+                    (PCI DSS). */}
                   </p>
                   <p>
-                    <strong>Technologies</strong>: JavaScript, Typescript,
-                    AngularJS, Java, SQL, TeamCity, Windows
+                    <strong>Technologies</strong>: JS, TS, Angular, Java, SQL,
+                    TeamCity
                   </p>
                 </EventDescription>
               </Event>
             </li>
             <li>
-              <EventTime>
-                <time>Nov 2016 — Dec 2018</time>
-              </EventTime>
               <Event>
                 <EventTitle>Software Engineer</EventTitle>
+                <EventTime>Nov 2016 — Dec 2018</EventTime>
                 <EventSubtitle>
                   <a
                     href="http://www.openwaygroup.com/"
@@ -213,50 +158,25 @@ export default class ExperienceBlock extends React.Component {
                 </EventSubtitle>
                 <EventDescription>
                   <p>
-                    <strong>Project</strong>: WAY4WEB
-                  </p>
-                  <p>
-                    <strong>Roles</strong>: Developer, Information Security
-                    Officer (PCI DSS)
-                  </p>
-                  <p>
-                    <strong>Scope of project</strong>: The standard delivery of
-                    the project consists of more than 10 thousand screens (forms
-                    of display of certain entities, such as information about a
-                    client, a cardholder, a merchant, etc.). In addition to
-                    this, we provide powerful tools for customization of the
-                    interface.
-                  </p>
-                  <p>
-                    <strong>Clients</strong>: quensWorldline, SIX Payment
-                    Services, Credorax, Comdata, ACB, Network International,
-                    Asbanda, Finnet Indonesia, Raiffeisenbank Int. Halyk Bank,
-                    etc.
-                  </p>
-                  <p>
                     <strong>Job Responsibilities:</strong>
                     <br />
-                    - Participation in the development of a WAY4 product web
-                    part.<br />
-                    - Stress testing and optimization of web applications.<br />
-                    - Web applications penetration testing.<br />
-                    - Analysis and review of commits included in the project for
-                    the presence of the impact of changes in PA-DSS
-                    certification.
+                    - Developing.<br />
+                    - Stress/penetration testing and optimization of web
+                    applications.<br />
+                    - Maintaining PA DSS/PCI DSS requirements, a high level of
+                    security.
                   </p>
                   <p>
-                    <strong>Technologies</strong>: JavaScript, Typescript,
-                    AngularJS, Java, SQL, TeamCity, Windows
+                    <strong>Technologies</strong>: JS, TS, Angular, Java, SQL,
+                    TeamCity
                   </p>
                 </EventDescription>
               </Event>
             </li>
             <li>
-              <EventTime>
-                <time>Feb 2015 — Nov 2016</time>
-              </EventTime>
               <Event>
                 <EventTitle>Full-Stack Web Developer</EventTitle>
+                <EventTime>Feb 2015 — Nov 2016</EventTime>
                 <EventSubtitle>
                   <a
                     href="http://www.i-free.com/en"
@@ -268,54 +188,34 @@ export default class ExperienceBlock extends React.Component {
                 </EventSubtitle>
                 <EventDescription>
                   <p>
-                    <strong>Projects</strong>: BackOffice, Messaging
-                  </p>
-                  <p>
-                    <strong>Scope of projects</strong>: Messaging is a
-                    high-performance SMS sending system (3000 SMS per second at
-                    peak load). BackOffice - billing system working in real time
-                    (deals with billing and invoicing for the sent SMS via
-                    Messaging).
-                  </p>
-                  <p>
-                    <strong>Clients</strong>: i-Free, Channel One Russia,
-                    MailRu, Facebook, Google, Alfabank, Raiffeisen Bank, VTB24,
-                    etc.
-                  </p>
-                  <p>
                     <strong>Job Responsibilities</strong>:<br />
-                    - Developing UI of the operational accounting platform.<br />
-                    - Writing stored procedures and views in PostgreSQL.<br />
-                    - Architecture development and writing server-side and
-                    client-side parts of the platform.<br />
-                    - Developing clients’ personal accounts.<br />
-                    - Architecture development and writing server-side and
+                    - Architecture development. development of server-side,
+                    client-side, DB of the platform.<br />
+                    {/* - Developing clients’ personal accounts.<br /> */}
+                    {/* - Architecture development and writing server-side and
                     client-side parts of the platform according to the external
-                    customers’ requirements.<br />
-                    - Integration of the operational accounting platform with a
-                    number of external and internal systems.<br />
-                    - Implementation of applications for data synchronization
-                    via REST, SOAP, SMTP.<br />
-                    - Developed applications deployment.<br />
-                    - Setting up the production environment.<br />
-                    - Configuration and optimization of web servers.<br />
-                    - Configure nginx, apache, puppet configurations.
+                    customers’ requirements.<br /> */}
+                    - Integration of the platform with external and internal
+                    systems.<br />
+                    {/* - Implementation of applications for data synchronization
+                    via REST, SOAP, SMTP.<br /> */}
+                    {/* - Developed applications deployment.<br /> */}
+                    - Setting up CI/CD. Configure nginx, apache, puppet
+                    configurations. <br />
+                    {/* - Configuration and optimization of web servers.<br /> */}
+                    {/* - Configure nginx, apache, puppet configurations. */}
                   </p>
                   <p>
-                    <strong>Technologies</strong>: JS, Dart, Typescript,
-                    Angular(1,2), React, Backbone.js, Polymer, Ampersand
-                    Python2.7, PL/SQL, Flask, SqlAlchemy, PostrgreSQL, GIT,
-                    Nginx, Apache2, Debian, Puppet
+                    <strong>Technologies</strong>: JS, TS, Angular, React,
+                    Backbone.js, Python, PL/SQL, Nginx, Apache2, Debian, Puppet
                   </p>
                 </EventDescription>
               </Event>
             </li>
             <li>
-              <EventTime>
-                <time>Sep 2014 — Feb 2015</time>
-              </EventTime>
               <Event>
                 <EventTitle>Monitoring System Administrator</EventTitle>
+                <EventTime>Sep 2014 — Feb 2015</EventTime>
                 <EventSubtitle>
                   <a
                     href="http://www.i-free.com/en"
@@ -325,19 +225,7 @@ export default class ExperienceBlock extends React.Component {
                     i-Free
                   </a>, Saint Petersburg, Russia
                 </EventSubtitle>
-                <EventDescription>
-                  <p>
-                    <strong>Project</strong>: Messaging
-                  </p>
-                  <p>
-                    <strong>Scope of project</strong>: Messaging is a
-                    high-performance SMS sending system (3000 SMS per second at
-                    peak load).
-                  </p>
-                  <p>
-                    <strong>Clients</strong>: Channel One Russia, MailRu,
-                    Facebook, Google, Alfabank, Raiffeisen Bank, VTB24, etc.
-                  </p>
+                {/* <EventDescription>
                   <p>
                     <strong>Job Responsibilities</strong>:<br />
                     - Monitoring and optimization of the IT systems performance.<br />
@@ -363,15 +251,13 @@ export default class ExperienceBlock extends React.Component {
                     Apache/Nginx/Tomcat, SQL, TCP/IP, Zabbix, Java, Python,
                     Bash.
                   </p>
-                </EventDescription>
+                </EventDescription> */}
               </Event>
             </li>
             <li>
-              <EventTime>
-                <time>Feb 2013 — Sep 2014</time>
-              </EventTime>
               <Event>
                 <EventTitle>Technical Support Engineer</EventTitle>
+                <EventTime>Feb 2013 — Sep 2014</EventTime>
                 <EventSubtitle>
                   <a
                     href="http://www.i-free.com/en"
@@ -381,19 +267,7 @@ export default class ExperienceBlock extends React.Component {
                     i-Free
                   </a>, Saint Petersburg, Russia
                 </EventSubtitle>
-                <EventDescription>
-                  <p>
-                    <strong>Project</strong>: Messaging
-                  </p>
-                  <p>
-                    <strong>Scope of project</strong>: Messaging is a
-                    high-performance SMS sending system. (3000 SMS per second at
-                    peak load).
-                  </p>
-                  <p>
-                    <strong>Clients</strong>: Channel One Russia, MailRu,
-                    Facebook, Google, Alfabank, Raiffeisen Bank, VTB24, etc.
-                  </p>
+                {/* <EventDescription>
                   <p>
                     <strong>Job Responsibilities</strong>:<br />
                     - Providing support for the uninterrupted operation of
@@ -416,66 +290,13 @@ export default class ExperienceBlock extends React.Component {
                     <strong>Technologies</strong>: Debian, SMPP, Apache, Nginx,
                     Tomcat, SQL, TCP/IP, Zabbix, Python, Bash
                   </p>
-                </EventDescription>
+                </EventDescription> */}
               </Event>
             </li>
             <li>
-              <EventTime>
-                <time>Sep 2012 — Dec 2012</time>
-              </EventTime>
-              <Event>
-                <EventTitle>Industrial climber</EventTitle>
-                <EventSubtitle>
-                  <a
-                    href="http://www.gazprom.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Gazprom
-                  </a>, Ust-Luga, Russia
-                </EventSubtitle>
-              </Event>
-            </li>
-            <li>
-              <EventTime>
-                <time>Jan 2011 — Aug 2012</time>
-              </EventTime>
-              <Event>
-                <EventTitle>Sapper</EventTitle>
-                <EventSubtitle>
-                  <a
-                    href="http://www.mil.by/en/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Armed Forces of the Republic of Belarus
-                  </a>, Mogilev, Belarus
-                </EventSubtitle>
-              </Event>
-            </li>
-            <li>
-              <EventTime>
-                <time>Aug 2010 — Jan 2011</time>
-              </EventTime>
-              <Event>
-                <EventTitle>Road Worker of the Second Category</EventTitle>
-                <EventSubtitle>
-                  <a
-                    href="http://www.belcement.by/en/index.html"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Belarusian Cement Plant
-                  </a>, Kastsyukovichy, Belarus
-                </EventSubtitle>
-              </Event>
-            </li>
-            <li>
-              <EventTime>
-                <time>Jan 2010 — May 2010</time>
-              </EventTime>
               <Event>
                 <EventTitle>Technical Support Engineer</EventTitle>
+                <EventTime>Jan 2010 — May 2010</EventTime>
                 <EventSubtitle>
                   <a
                     href="https://www.majordomo.ru/"
@@ -485,7 +306,7 @@ export default class ExperienceBlock extends React.Component {
                     Majordomo
                   </a>, Saint Petersburg, Russia
                 </EventSubtitle>
-                <EventDescription>
+                {/* <EventDescription>
                   <p>
                     <strong>Job Responsibilities</strong>:<br />
                     - Consulting clients on technical issues.<br />
@@ -508,26 +329,24 @@ export default class ExperienceBlock extends React.Component {
                     ability to formulate the thoughts and deliver them in a
                     clear way to the interlocutor.
                   </p>
-                </EventDescription>
+                </EventDescription> */}
               </Event>
             </li>
             <li>
-              <EventTime>
-                <time>Jan 2009 — Dec 2009</time>
-              </EventTime>
               <Event>
                 <EventTitle>Hardware System Administrator</EventTitle>
+                <EventTime>Jan 2009 — Dec 2009</EventTime>
                 <EventSubtitle>
                   Rosplat Invest, Saint Petersburg, Russia
                 </EventSubtitle>
-                <EventDescription>
+                {/* <EventDescription>
                   <p>
                     <strong>Job Responsibilities</strong>:<br />
                     - Technical support of terminals.<br />
                     - Hardware and software troubleshooting.<br />
                     - Replacement of the IT components.
                   </p>
-                </EventDescription>
+                </EventDescription> */}
               </Event>
             </li>
           </ul>
