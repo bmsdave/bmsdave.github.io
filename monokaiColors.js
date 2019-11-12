@@ -6,7 +6,7 @@ module.exports = {
     'list.focusBackground': '#b0b0b0',
     'list.inactiveSelectionBackground': '#4e4e4e',
     'list.hoverBackground': '#444444',
-    'list.highlightForeground': '#e58520',
+    'list.highlightForeground': '#4d11ff',
     'button.background': '#565656',
     'editor.background': '#1e1e1e',
     'editor.foreground': '#c5c8c6',

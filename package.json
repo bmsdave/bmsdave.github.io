@@ -82,6 +82,7 @@
     "eslint-plugin-import": "2.10.0",
     "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-react": "7.7.0",
+    "gatsby-remark-normalize-paths": "^1.0.0",
     "gh-pages": "1.1.0",
     "husky": "0.14.3",
     "lint-staged": "^7.3.0",
@@ -99,7 +100,7 @@
   "scripts": {
     "start": "gatsby develop",
     "serve": "gatsby serve",
-    "build": "gatsby build",
+    "build": "gatsby build --prefix-paths",
     "clean": "rm -rf public && rm -rf .cache",
     "lint:js": "eslint --ext .js,.jsx .",
     "lint:md": "remark content/blog/",

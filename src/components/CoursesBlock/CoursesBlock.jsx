@@ -16,14 +16,6 @@ const EventTitle = styled('div')`
   line-height: 1.5em;
 `
 
-const EventSubtitle = styled('div')`
-  display: inline-block;
-  font-size: 0.6em;
-  color: #999;
-  padding-left: 10px;
-  line-height: 1em;
-`
-
 export default class CoursesBlock extends React.Component {
   render() {
     return (

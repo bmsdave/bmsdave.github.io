@@ -17,7 +17,7 @@ const EventTitle = styled('div')`
 
 const EventSubtitle = styled('div')`
   font-size: 0.6em;
-  color: #999;
+  color: #666;
   padding-left: 10px;
   line-height: 1.3em;
 `

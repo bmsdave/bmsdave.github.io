@@ -66,14 +66,14 @@ const EventTitle = styled('div')`
 const EventTime = styled('div')`
   display: inline-block;
   font-size: 0.9em;
-  color: #999;
+  color: #666;
   padding-left: 10px;
   line-height: 1.4em;
 `
 
 const EventSubtitle = styled('div')`
   font-size: 0.9em;
-  color: #999;
+  color: #666;
   padding-left: 10px;
   line-height: 1.5em;
 `
