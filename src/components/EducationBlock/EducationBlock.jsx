@@ -23,7 +23,7 @@ const Timeline = styled('section')`
     margin-left: 0px;
     padding-left: 0;
     padding-right: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 4px;
   }
 
   ul li::after {
@@ -79,7 +79,7 @@ const EventSubtitle = styled('div')`
 `
 
 const EventDescription = styled('div')`
-  margin-top: 10px;
+  margin-top: 2px;
   margin-left: 10px;
   font-size: 0.9em;
   line-height: 1.3em;
@@ -96,7 +96,7 @@ export default class EducationBlock extends React.Component {
             <li>
               <Event>
                 <EventTitle>
-                  Bachelor's degree, System analysis and management
+                  Bachelor's degree in CS, System analysis and management
                 </EventTitle>
                 <EventTime>2011 - 2016</EventTime>
                 <EventSubtitle>

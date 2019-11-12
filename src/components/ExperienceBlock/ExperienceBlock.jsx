@@ -27,7 +27,7 @@ const Timeline = styled('section')`
     margin-left: 0px;
     padding-left: 0;
     padding-right: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 4px;
   }
 
   ul li::after {
@@ -89,7 +89,7 @@ const EventSubtitle = styled('div')`
 `
 
 const EventDescription = styled('div')`
-  margin-top: 10px;
+  margin-top: 2px;
   margin-left: 10px;
   font-size: 0.9em;
   line-height: 1.3em;
@@ -122,9 +122,8 @@ export default class ExperienceBlock extends React.Component {
                 </EventSubtitle>
                 <EventDescription>
                   <p>
-                    <strong>Responsibilities:</strong>
-                    <br />
-                    - Developing. Monitoring the quality of code.<br />
+                    - Developing a front-end of platform and a DSL-translator.
+                    Monitoring the quality of code.<br />
                     {/* - Supports product development according to the Roadmap.<br /> */}
                     {/* - Product quality assurance, including:<br /> */}
                     {/* * monitoring the quality of code;<br /> */}
@@ -171,13 +170,10 @@ export default class ExperienceBlock extends React.Component {
                 </EventSubtitle>
                 <EventDescription>
                   <p>
-                    <strong>Responsibilities:</strong>
-                    <br />
-                    - Developing.<br />
+                    - Developed the front-end processing platform.<br />
+                    - Developed the translator from DSL to UI screens.<br />
                     - Stress/penetration testing and optimization of web
-                    applications.<br />
-                    - Maintaining PA DSS/PCI DSS requirements and a high level
-                    of security.
+                    applications.
                   </p>
                   <p>
                     <strong>Technologies</strong>: JS, TS, Angular, Java, SQL,
@@ -204,20 +200,19 @@ export default class ExperienceBlock extends React.Component {
                 </EventSubtitle>
                 <EventDescription>
                   <p>
-                    <strong>Responsibilities</strong>:<br />
-                    - Architecture development. development of server-side,
-                    client-side, DB of the platform.<br />
+                    - Developed high performed real-time billing platform
+                    architecture. Developed server-side, client-side, DB parts
+                    of the platform.<br />
                     {/* - Developing clients’ personal accounts.<br /> */}
                     {/* - Architecture development and writing server-side and
                     client-side parts of the platform according to the external
                     customers’ requirements.<br /> */}
-                    - Integration of the platform with external and internal
+                    - Integrated the platform with external and internal
                     systems.<br />
                     {/* - Implementation of applications for data synchronization
                     via REST, SOAP, SMTP.<br /> */}
                     {/* - Developed applications deployment.<br /> */}
-                    - Setting up CI/CD. Configure nginx, apache, puppet
-                    configurations. <br />
+                    - Set up CI/CD. Configured nginx, apache, puppet.
                     {/* - Configuration and optimization of web servers.<br /> */}
                     {/* - Configure nginx, apache, puppet configurations. */}
                   </p>
@@ -243,6 +238,17 @@ export default class ExperienceBlock extends React.Component {
                     i-Free
                   </a>, Saint Petersburg, Russia
                 </EventSubtitle>
+                <EventDescription>
+                  <p>
+                    - Monitored and optimized of the IT systems performance.<br />
+                    - Set up a monitoring system for technical support.<br />
+                  </p>
+                  <p>
+                    <strong>Technologies</strong>: Debian, Puppet,
+                    Apache/Nginx/Tomcat, SQL, TCP/IP, Zabbix, Java, Python,
+                    Bash.
+                  </p>
+                </EventDescription>
                 {/* <EventDescription>
                   <p>
                     <strong>Job Responsibilities</strong>:<br />
@@ -288,6 +294,16 @@ export default class ExperienceBlock extends React.Component {
                     i-Free
                   </a>, Saint Petersburg, Russia
                 </EventSubtitle>
+                <EventDescription>
+                  <p>
+                    - Provided support for the uninterrupted operation of
+                    servers, websites and other services of the company.<br />
+                  </p>
+                  <p>
+                    <strong>Technologies</strong>: Debian, SMPP, Apache, Nginx,
+                    Tomcat, SQL, TCP/IP, Zabbix, Python, Bash
+                  </p>
+                </EventDescription>
                 {/* <EventDescription>
                   <p>
                     <strong>Job Responsibilities</strong>:<br />
