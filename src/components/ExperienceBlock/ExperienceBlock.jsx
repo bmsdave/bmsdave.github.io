@@ -67,6 +67,12 @@ const EventTitle = styled('div')`
     z-index: -2;
   }
 `
+
+const EventTimeMain = styled('div')`
+  display: inline-block;
+  color: hsla(0, 0%, 0%, 0.9);
+`
+
 const EventTime = styled('div')`
   display: inline-block;
   font-size: 0.9em;
@@ -94,13 +100,17 @@ export default class ExperienceBlock extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <FancyH2>Experience</FancyH2>
+        <FancyH2>
+          Experience <EventTimeMain>(9 yrs)</EventTimeMain>
+        </FancyH2>
         <Timeline>
           <ul>
             <li>
               <Event>
                 <EventTitle>Product Owner / Software Engineer</EventTitle>
-                <EventTime>Dec 2018 — present</EventTime>
+                <EventTime>
+                  <EventTimeMain>(1 yr)</EventTimeMain> Dec 2018 — present
+                </EventTime>
                 <EventSubtitle>
                   <a
                     href="http://www.openwaygroup.com/"
@@ -146,7 +156,10 @@ export default class ExperienceBlock extends React.Component {
             <li>
               <Event>
                 <EventTitle>Software Engineer</EventTitle>
-                <EventTime>Nov 2016 — Dec 2018</EventTime>
+                <EventTime>
+                  <EventTimeMain>(2 yrs 2 mos)</EventTimeMain> Nov 2016 — Dec
+                  2018
+                </EventTime>
                 <EventSubtitle>
                   <a
                     href="http://www.openwaygroup.com/"
@@ -176,7 +189,10 @@ export default class ExperienceBlock extends React.Component {
             <li>
               <Event>
                 <EventTitle>Full-Stack Web Developer</EventTitle>
-                <EventTime>Feb 2015 — Nov 2016</EventTime>
+                <EventTime>
+                  <EventTimeMain>(1 yr 10 mos)</EventTimeMain> Feb 2015 — Nov
+                  2016
+                </EventTime>
                 <EventSubtitle>
                   <a
                     href="http://www.i-free.com/en"
@@ -215,7 +231,9 @@ export default class ExperienceBlock extends React.Component {
             <li>
               <Event>
                 <EventTitle>Monitoring System Administrator</EventTitle>
-                <EventTime>Sep 2014 — Feb 2015</EventTime>
+                <EventTime>
+                  <EventTimeMain>(6 mos)</EventTimeMain> Sep 2014 — Feb 2015
+                </EventTime>
                 <EventSubtitle>
                   <a
                     href="http://www.i-free.com/en"
@@ -257,7 +275,10 @@ export default class ExperienceBlock extends React.Component {
             <li>
               <Event>
                 <EventTitle>Technical Support Engineer</EventTitle>
-                <EventTime>Feb 2013 — Sep 2014</EventTime>
+                <EventTime>
+                  <EventTimeMain>(1 yr 8 mos)</EventTimeMain> Feb 2013 — Sep
+                  2014
+                </EventTime>
                 <EventSubtitle>
                   <a
                     href="http://www.i-free.com/en"
@@ -296,7 +317,9 @@ export default class ExperienceBlock extends React.Component {
             <li>
               <Event>
                 <EventTitle>Technical Support Engineer</EventTitle>
-                <EventTime>Jan 2010 — May 2010</EventTime>
+                <EventTime>
+                  <EventTimeMain>(5 mos)</EventTimeMain> Jan 2010 — May 2010
+                </EventTime>
                 <EventSubtitle>
                   <a
                     href="https://www.majordomo.ru/"
@@ -335,7 +358,9 @@ export default class ExperienceBlock extends React.Component {
             <li>
               <Event>
                 <EventTitle>Hardware System Administrator</EventTitle>
-                <EventTime>Jan 2009 — Dec 2009</EventTime>
+                <EventTime>
+                  <EventTimeMain>(1 yr)</EventTimeMain> Jan 2009 — Dec 2009
+                </EventTime>
                 <EventSubtitle>
                   Rosplat Invest, Saint Petersburg, Russia
                 </EventSubtitle>
