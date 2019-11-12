@@ -17,8 +17,8 @@
       "path---blog-y-combinator-5bfc51b973fd61c52c3e.js.map"
     ],
     "component---src-pages-resume-jsx": [
-      "component---src-pages-resume-jsx-19229ea5986a6ca39635.js",
-      "component---src-pages-resume-jsx-19229ea5986a6ca39635.js.map"
+      "component---src-pages-resume-jsx-7a177584bcdeb285187c.js",
+      "component---src-pages-resume-jsx-7a177584bcdeb285187c.js.map"
     ],
     "path---": [
       "path----557518bd178906f8d58a.js",
@@ -115,9 +115,9 @@
       "path---resume-66c97bd6953a304c0d05.js.map"
     ],
     "app": [
-      "app-1738f2765685ec5bcd57.js",
+      "app-dfc64f6c70e5b2355f70.js",
       "build-js-styles.css",
-      "app-1738f2765685ec5bcd57.js.map",
+      "app-dfc64f6c70e5b2355f70.js.map",
       "build-js-styles.css.map"
     ],
     "path---blog-auth-vulnerabilities": [
