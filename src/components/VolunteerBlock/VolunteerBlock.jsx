@@ -7,7 +7,7 @@ const Event = styled('div')`
   bottom: -2px;
   padding: 0;
   margin: 0;
-  padding-bottom: 8px;
+  padding-bottom: 4px;
 `
 
 const EventTitle = styled('div')`
@@ -19,7 +19,7 @@ const EventSubtitle = styled('div')`
   font-size: 0.6em;
   color: #999;
   padding-left: 10px;
-  line-height: 1em;
+  line-height: 1.3em;
 `
 
 export default class VolunteerBlock extends React.Component {

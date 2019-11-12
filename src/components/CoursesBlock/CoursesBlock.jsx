@@ -7,7 +7,7 @@ const Event = styled('div')`
   bottom: -2px;
   padding: 0;
   margin: 0;
-  padding-bottom: 8px;
+  padding-bottom: 4px;
 `
 
 const EventTitle = styled('div')`

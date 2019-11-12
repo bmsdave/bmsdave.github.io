@@ -56,6 +56,20 @@ const Download = styled('a')`
   }
 `
 
+const ContactsHeaderBlock = styled(ContactsBlock)`
+  display: block;
+  ${TABLET_MEDIA_QUERY} {
+    display: none;
+  }
+`
+
+const ContactsFooterBlock = styled(ContactsBlock)`
+  display: none;
+  ${TABLET_MEDIA_QUERY} {
+    display: block;
+  }
+`
+
 const classes = {
   leadContacts: css`
     min-width: 250px;
@@ -111,7 +125,7 @@ class Resume extends React.Component {
               sysadminSkills={sysadminSkills}
               developmentSkills={developmentSkills}
             /> */}
-            <ContactsBlock
+            <ContactsHeaderBlock
               links={Config.userLinks}
               className={classes.leadContacts}
             />
@@ -121,6 +135,11 @@ class Resume extends React.Component {
             <CoursesBlock courses={courses} />
             <br />
             <AwardsBlock awards={awards} />
+            <br />
+            <ContactsFooterBlock
+              links={Config.userLinks}
+              className={classes.leadContacts}
+            />
           </div>
         </Row>
         <Download

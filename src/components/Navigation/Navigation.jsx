@@ -12,7 +12,7 @@ import Config from '../../../config'
 const activeLinkClass = css`
   color: black;
   text-decoration: none;
-  box-shadow: none;
+  border-bottom: none;
 `
 
 const ProfileHexImage = styled(HexImage)`
@@ -55,7 +55,7 @@ const MenuItem = styled('li')`
 
 const LogoLink = styled(Link)`
   display: inline-flex;
-  box-shadow: none;
+  border-bottom: none;
 
   &:focus {
     outline: none;

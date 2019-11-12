@@ -135,7 +135,7 @@ export default class ExperienceBlock extends React.Component {
                      testing<br /> */}
                     {/** applying current and reliable software development
                      technologies (for developing products)<br /> */}
-                    - Maintaining PA DSS/PCI DSS requirements, a high level of
+                    - Maintaining PA DSS/PCI DSS requirements and high level of
                     security.
                     {/* * Controlling usage of 3rd party libraries in terms of
                     absense of known security vulnerabilities and ensuring
@@ -171,13 +171,13 @@ export default class ExperienceBlock extends React.Component {
                 </EventSubtitle>
                 <EventDescription>
                   <p>
-                    <strong>Job Responsibilities:</strong>
+                    <strong>Responsibilities:</strong>
                     <br />
                     - Developing.<br />
                     - Stress/penetration testing and optimization of web
                     applications.<br />
-                    - Maintaining PA DSS/PCI DSS requirements, a high level of
-                    security.
+                    - Maintaining PA DSS/PCI DSS requirements and a high level
+                    of security.
                   </p>
                   <p>
                     <strong>Technologies</strong>: JS, TS, Angular, Java, SQL,
@@ -204,7 +204,7 @@ export default class ExperienceBlock extends React.Component {
                 </EventSubtitle>
                 <EventDescription>
                   <p>
-                    <strong>Job Responsibilities</strong>:<br />
+                    <strong>Responsibilities</strong>:<br />
                     - Architecture development. development of server-side,
                     client-side, DB of the platform.<br />
                     {/* - Developing clients’ personal accounts.<br /> */}
@@ -222,7 +222,7 @@ export default class ExperienceBlock extends React.Component {
                     {/* - Configure nginx, apache, puppet configurations. */}
                   </p>
                   <p>
-                    <strong>Technologies</strong>: JS, TS, Angular, React,
+                    <strong>Technologies</strong>: JS, TS, Dart, Angular, React,
                     Backbone.js, Python, PL/SQL, Nginx, Apache2, Debian, Puppet
                   </p>
                 </EventDescription>

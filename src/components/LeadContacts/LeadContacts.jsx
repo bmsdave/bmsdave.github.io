@@ -144,7 +144,7 @@ export default class LeadContacts extends React.Component {
             return (
               <li key={link.type}>
                 <a
-                  style={{ boxShadow: 'none' }}
+                  style={{ borderBottom: 'none' }}
                   target={target}
                   rel="noopener noreferrer"
                   href={link.href}

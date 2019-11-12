@@ -1,14 +1,14 @@
-import React from "react";
-import styled from "react-emotion";
-import YoutubeIcon from "./Icons/YoutubeIcon";
-import monokaiColors from "../../monokaiColors";
+import React from 'react'
+import styled from 'react-emotion'
+import YoutubeIcon from './Icons/YoutubeIcon'
+import monokaiColors from '../../monokaiColors'
 
-const TalkContainer = styled("div")``;
+const TalkContainer = styled('div')``
 
-const TalkVideoLink = styled("a")`
-  box-shadow: none;
+const TalkVideoLink = styled('a')`
+  border-bottom: none;
   opacity: 0.6;
-  color: ${monokaiColors.colors["list.focusBackground"]};
+  color: ${monokaiColors.colors['list.focusBackground']};
 
   :hover,
   :focus {
@@ -18,7 +18,7 @@ const TalkVideoLink = styled("a")`
   span {
     display: none;
   }
-`;
+`
 
 const TalkVideoIcon = styled(YoutubeIcon)`
   width: 25px;
@@ -26,17 +26,17 @@ const TalkVideoIcon = styled(YoutubeIcon)`
   display: inline-block;
   margin-left: 10px;
   vertical-align: middle;
-`;
+`
 
-type TalkProps = {
-  talk: {
-    title: string
-  }
-};
+// type TalkProps = {
+//   talk: {
+//     title: string
+//   }
+// };
 
-export default class Talk extends React.Component<TalkProps> {
+export default class Talk extends React.Component {
   render() {
-    const { title, date, place, video, url, language } = this.props.talk;
+    const { title, date, place, video, url, language } = this.props.talk
     return (
       <TalkContainer>
         <div>
@@ -57,6 +57,6 @@ export default class Talk extends React.Component<TalkProps> {
           {date}, {place}
         </small>
       </TalkContainer>
-    );
+    )
   }
 }
