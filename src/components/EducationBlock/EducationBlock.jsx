@@ -93,42 +93,24 @@ export default class EducationBlock extends React.Component {
         <FancyH2>Education</FancyH2>
         <Timeline>
           <ul>
-            <li>
-              <Event>
-                <EventTitle>
-                  Bachelor's degree in CS, System analysis and management
-                </EventTitle>
-                <EventTime>2011 - 2016</EventTime>
-                <EventSubtitle>
-                  <a
-                    href="http://english.spbstu.ru/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Peter the Great St.Petersburg Polytechnic University
-                  </a>, Saint Petersburg, Russia
-                </EventSubtitle>
-                <EventDescription />
-              </Event>
-            </li>
-            <li>
-              <Event>
-                <EventTitle>
-                  Associate's degree, Math and Computer Science
-                </EventTitle>
-                <EventTime>2005 - 2007</EventTime>
-                <EventSubtitle>
-                  <a
-                    href="http://en.bru.by"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Belarusian-Russian University
-                  </a>, Mogilev, Belarus
-                </EventSubtitle>
-                <EventDescription />
-              </Event>
-            </li>
+            {this.props.educations.map(education => (
+              <li>
+                <Event key={education.organizationLink}>
+                  <EventTitle>{education.title}</EventTitle>
+                  <EventTime>{education.date}</EventTime>
+                  <EventSubtitle>
+                    <a
+                      href={education.organizationLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {education.organization}
+                    </a>, {education.location}
+                  </EventSubtitle>
+                  <EventDescription />
+                </Event>
+              </li>
+            ))}
           </ul>
         </Timeline>
       </React.Fragment>

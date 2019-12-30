@@ -96,6 +96,9 @@ class Resume extends React.Component {
       edge => edge.node
     )
     const courses = this.props.data.allCoursesJson.edges.map(edge => edge.node)
+    const educations = this.props.data.allEducationJson.edges.map(
+      edge => edge.node
+    )
     const languages = this.props.data.allLanguagesJson.edges.map(
       edge => edge.node
     )
@@ -116,7 +119,7 @@ class Resume extends React.Component {
           <div>
             <FancyPrintH1>Vadim Gorbachev</FancyPrintH1>
             <ExperienceBlock />
-            <EducationBlock />
+            <EducationBlock educations={educations} />
           </div>
           <div>
             {/* <SkillsBlock
@@ -213,6 +216,17 @@ export const pageQuery = graphql`
           link
           organization
           organizationLink
+          date
+        }
+      }
+    }
+    allEducationJson {
+      edges {
+        node {
+          title
+          organization
+          organizationLink
+          location
           date
         }
       }
