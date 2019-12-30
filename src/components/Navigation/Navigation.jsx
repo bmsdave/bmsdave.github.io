@@ -101,7 +101,7 @@ export default class Header extends React.Component {
               Talks
             </Link>
           </MenuItem>
-          <MenuItem>
+          {/* <MenuItem>
             <Link
               isActive={(match, location) =>
                 location.pathname.indexOf('/resume') === 0
@@ -111,7 +111,7 @@ export default class Header extends React.Component {
             >
               Resume
             </Link>
-          </MenuItem>
+          </MenuItem> */}
         </Menu>
       </Nav>
     )

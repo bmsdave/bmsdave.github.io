@@ -50,15 +50,6 @@ export default class extends Component {
         <NoticeContainer>
           <h5>
             © {currentYear} {config.userName}
-            <br />
-            the site is based on{' '}
-            <a href="https://www.gatsbyjs.org/" target="_blank">
-              Gatsby
-            </a>{' '}
-            and{' '}
-            <a href="https://www.suevalov.com/" target="_blank">
-              Alex Suevalov Blog
-            </a>
           </h5>
           <Link to={url}>Subscribe</Link>
         </NoticeContainer>

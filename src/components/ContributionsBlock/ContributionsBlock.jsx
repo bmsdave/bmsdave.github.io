@@ -22,20 +22,20 @@ const EventSubtitle = styled('div')`
   line-height: 1.3em;
 `
 
-export default class VolunteerBlock extends React.Component {
+export default class ContributionsBlock extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <FancyH2>Volunteer Experience</FancyH2>
-        {this.props.volunteer.map(volunteer => (
-          <Event key={volunteer.organizationLink}>
+        <FancyH2>Community Contributions</FancyH2>
+        {this.props.contributions.map(contribution => (
+          <Event key={contribution.organizationLink}>
             <EventTitle>
-              {volunteer.title}{' '}
-              <a href={volunteer.organizationLink} target="_blank">
-                {volunteer.organization}
+              {contribution.title}{' '}
+              <a href={contribution.organizationLink} target="_blank">
+                {contribution.organization}
               </a>
             </EventTitle>
-            <EventSubtitle>{volunteer.date}</EventSubtitle>
+            <EventSubtitle>{contribution.date}</EventSubtitle>
           </Event>
         ))}
       </React.Fragment>

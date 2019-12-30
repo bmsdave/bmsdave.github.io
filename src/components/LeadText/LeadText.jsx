@@ -42,8 +42,8 @@ export default class LeadText extends React.Component {
           <a href="https://piterjs.org/" target="_blank">
             PiterJS
           </a>{' '}
-          – monthly JavaScript Meetup in Saint Petersburg, volunteer as a mentor
-          at{' '}
+          – monthly JavaScript Meetup in Saint Petersburg, contributor as a
+          mentor at{' '}
           <a href="https://nodeschool.io/spb/" target="_blank">
             NodeSchool/SPB
           </a>{' '}

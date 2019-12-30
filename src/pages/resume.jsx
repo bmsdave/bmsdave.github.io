@@ -13,7 +13,7 @@ import ExperienceBlock from '../components/ExperienceBlock/ExperienceBlock'
 import EducationBlock from '../components/EducationBlock/EducationBlock'
 import CoursesBlock from '../components/CoursesBlock/CoursesBlock'
 import AwardsBlock from '../components/AwardsBlock/AwardsBlock'
-import VolunteerBlock from '../components/VolunteerBlock/VolunteerBlock'
+import ContributionsBlock from '../components/ContributionsBlock/ContributionsBlock'
 import ContactsBlock from '../components/ContactsBlock/ContactsBlock'
 
 const Row = styled('div')`
@@ -92,7 +92,7 @@ const classes = {
 class Resume extends React.Component {
   render() {
     const awards = this.props.data.allAwardsJson.edges.map(edge => edge.node)
-    const volunteer = this.props.data.allVolunteerJson.edges.map(
+    const contributions = this.props.data.allContributionsJson.edges.map(
       edge => edge.node
     )
     const courses = this.props.data.allCoursesJson.edges.map(edge => edge.node)
@@ -130,7 +130,7 @@ class Resume extends React.Component {
               className={classes.leadContacts}
             />
             <br />
-            <VolunteerBlock volunteer={volunteer} />
+            <ContributionsBlock contributions={contributions} />
             <br />
             <CoursesBlock courses={courses} />
             <br />
@@ -196,7 +196,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allVolunteerJson {
+    allContributionsJson {
       edges {
         node {
           title

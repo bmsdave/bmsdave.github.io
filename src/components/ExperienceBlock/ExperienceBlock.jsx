@@ -107,7 +107,7 @@ export default class ExperienceBlock extends React.Component {
           <ul>
             <li>
               <Event>
-                <EventTitle>Product Owner / Software Engineer</EventTitle>
+                <EventTitle>Software Engineer / Product Owner</EventTitle>
                 <EventTime>
                   <EventTimeMain>(1 yr)</EventTimeMain> Dec 2018 — present
                 </EventTime>
@@ -123,11 +123,11 @@ export default class ExperienceBlock extends React.Component {
                 <EventDescription>
                   <p>
                     - Developing a front-end of platform and a DSL-translator.
-                    Monitoring the quality of code.<br />
+                    Monitoring a quality of code.<br />
                     {/* - Supports product development according to the Roadmap.<br /> */}
                     {/* - Product quality assurance, including:<br /> */}
                     {/* * monitoring the quality of code;<br /> */}
-                    - Ensuring the required level of test coverage, high quality
+                    - Ensuring a required level of test coverage, high quality
                     Release Notes.<br />
                     {/* - Ensuring high quality Release Notes.<br /> */}
                     {/** developing software to facilitate manual/automated product
@@ -170,8 +170,8 @@ export default class ExperienceBlock extends React.Component {
                 </EventSubtitle>
                 <EventDescription>
                   <p>
-                    - Developed the front-end processing platform.<br />
-                    - Developed the translator from DSL to UI screens.<br />
+                    - Developed a front-end processing platform.<br />
+                    - Developed a translator from DSL to UI screens.<br />
                     - Stress/penetration testing and optimization of web
                     applications.
                   </p>
@@ -207,8 +207,7 @@ export default class ExperienceBlock extends React.Component {
                     {/* - Architecture development and writing server-side and
                     client-side parts of the platform according to the external
                     customers’ requirements.<br /> */}
-                    - Integrated the platform with external and internal
-                    systems.<br />
+                    - Integrated a platform with external and internal systems.<br />
                     {/* - Implementation of applications for data synchronization
                     via REST, SOAP, SMTP.<br /> */}
                     {/* - Developed applications deployment.<br /> */}

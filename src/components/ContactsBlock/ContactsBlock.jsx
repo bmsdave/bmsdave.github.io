@@ -29,6 +29,11 @@ const LeadContactsContainer = styled('div')`
       margin-right: 10px;
     }
 
+    svg:hover {
+      color: #4d11ff;
+      stroke: #4d11ff;
+    }
+
     small {
       display: block;
       margin-left: 34px;
@@ -38,10 +43,10 @@ const LeadContactsContainer = styled('div')`
   ${TABLET_MEDIA_QUERY} {
     li {
       display: inline-block;
-      margin-right: 20px;
-      margin-bottom: 10px;
+      margin-right: 0;
+      margin-bottom: 0;
 
-      > a:first-child {
+      .social-login {
         display: none;
       }
 
@@ -106,7 +111,12 @@ export default class ContactsBlock extends React.Component {
                 >
                   <IconComponent className={classes.icon} />
                 </a>
-                <a target={target} rel="noopener noreferrer" href={link.href}>
+                <a
+                  target={target}
+                  className="social-login"
+                  rel="noopener noreferrer"
+                  href={link.href}
+                >
                   {link.label}
                 </a>
               </li>
