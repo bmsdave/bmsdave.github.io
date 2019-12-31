@@ -1,30 +1,30 @@
-import React from "react";
-import Helmet from "react-helmet";
-import styled from "react-emotion";
-import Image from "gatsby-image";
+import React from 'react'
+import Helmet from 'react-helmet'
+import styled from 'react-emotion'
+import Image from 'gatsby-image'
 import {
   DEFAULT_MEDIA_QUERY,
   MOBILE_MEDIA_QUERY,
-  TABLET_MEDIA_QUERY
-} from "typography-breakpoint-constants";
-import PostTags from "../components/PostTags/PostTags";
-import SocialLinks from "../components/SocialLinks/SocialLinks";
-import SEO from "../components/SEO/SEO";
-import { FancyH1 } from "../components/FancyHeader/FancyHeader";
-import config from "../../config";
-import "./code-highlight.css";
-import "./post.css";
-import TableOfContents from "../components/TableOfContent/TableOfContent";
-import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
-import monokaiColors from "../../monokaiColors";
+  TABLET_MEDIA_QUERY,
+} from 'typography-breakpoint-constants'
+import PostTags from '../components/postTags/postTags'
+import SocialLinks from '../components/socialLinks/socialLinks'
+import SEO from '../components/SEO/SEO'
+import { FancyH1 } from '../components/elements/fancyHeader'
+import config from '../../config'
+import './code-highlight.css'
+import './post.css'
+import TableOfContents from '../components/tableOfContent/tableOfContent'
+import ScrollToTop from '../components/scrollToTop/scrollToTop'
+import monokaiColors from '../../monokaiColors'
 
-const HiddenOnTablet = styled("div")`
+const HiddenOnTablet = styled('div')`
   ${TABLET_MEDIA_QUERY} {
     display: none;
   }
-`;
+`
 
-const PostContainer = styled("div")`
+const PostContainer = styled('div')`
   max-width: 660px;
   margin: 0 auto;
 
@@ -97,13 +97,13 @@ const PostContainer = styled("div")`
     display: inline-block;
 
     :before {
-      content: "";
+      content: '';
       width: 90%;
       height: 15px;
       position: absolute;
       left: -10px;
       bottom: -5px;
-      background-color: ${monokaiColors.colors["list.focusBackground"]};
+      background-color: ${monokaiColors.colors['list.focusBackground']};
       opacity: 0.6;
       z-index: -2;
     }
@@ -149,13 +149,13 @@ const PostContainer = styled("div")`
   @media only screen and (max-width: 700px) {
     margin: 0 10px;
   }
-`;
+`
 
-const MetaRow = styled("div")`
+const MetaRow = styled('div')`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  font-size: 0.9em;
+  font-size: 12px;
   margin-bottom: 10px;
 
   & > * {
@@ -163,12 +163,12 @@ const MetaRow = styled("div")`
   }
 
   time {
-    font-size: 0.9em;
+    font-size: 12px;
     color: rgba(0, 0, 0, 0.54);
   }
 
   span:after {
-    content: "\\00B7";
+    content: '\\00B7';
     color: rgba(0, 0, 0, 0.54);
   }
 
@@ -180,22 +180,22 @@ const MetaRow = styled("div")`
   ${MOBILE_MEDIA_QUERY} {
     flex-direction: column;
   }
-`;
+`
 
 export default class PostTemplate extends React.Component {
   render() {
-    const { slug } = this.props.pathContext;
-    const postNode = this.props.data.markdownRemark;
-    const post = postNode.frontmatter;
-    const timeToRead = postNode.timeToRead;
+    const { slug } = this.props.pathContext
+    const postNode = this.props.data.markdownRemark
+    const post = postNode.frontmatter
+    const timeToRead = postNode.timeToRead
     const headings = (postNode.headings || []).filter(
       heading => heading.depth === 2
-    );
-    const showCoverInPost = postNode.fields.showCoverInPost;
-    const hasTableOfContents = headings.length > 2;
-    const tableOfContents = postNode.tableOfContents;
+    )
+    const showCoverInPost = postNode.fields.showCoverInPost
+    const hasTableOfContents = headings.length > 2
+    const tableOfContents = postNode.tableOfContents
     if (!post.id) {
-      post.id = slug;
+      post.id = slug
     }
     return (
       <React.Fragment>
@@ -224,7 +224,7 @@ export default class PostTemplate extends React.Component {
               post.cover && (
                 <div
                   style={{
-                    marginBottom: 30
+                    marginBottom: 30,
                   }}
                 >
                   <Image sizes={post.cover.childImageSharp.sizes} />
@@ -232,7 +232,7 @@ export default class PostTemplate extends React.Component {
               )}
             <article dangerouslySetInnerHTML={{ __html: postNode.html }} />
             <SocialLinks postPath={slug} postNode={postNode} />
-            <div style={{ textAlign: "center" }}>
+            <div style={{ textAlign: 'center' }}>
               <PostTags tags={post.tags} />
             </div>
           </PostContainer>
@@ -241,7 +241,7 @@ export default class PostTemplate extends React.Component {
           <ScrollToTop />
         </HiddenOnTablet>
       </React.Fragment>
-    );
+    )
   }
 }
 
@@ -278,4 +278,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`

@@ -1,15 +1,15 @@
-import React from "react";
-import Helmet from "react-helmet";
-import PostListing from "../components/PostListing/PostListing";
-import SEO from "../components/SEO/SEO";
-import config from "../../config";
-import { FancyH1 } from "../components/FancyHeader/FancyHeader";
+import React from 'react'
+import Helmet from 'react-helmet'
+import PostListing from '../components/postListing/postListing'
+import SEO from '../components/SEO/SEO'
+import config from '../../config'
+import { FancyH1 } from '../components/elements/fancyHeader'
 
 class Blog extends React.Component {
   render() {
     const postEdges = this.props.data.allMarkdownRemark
       ? this.props.data.allMarkdownRemark.edges
-      : [];
+      : []
     return (
       <div>
         <Helmet title={config.siteTitle} />
@@ -17,11 +17,11 @@ class Blog extends React.Component {
         <FancyH1>Blog</FancyH1>
         <PostListing postEdges={postEdges} />
       </div>
-    );
+    )
   }
 }
 
-export default Blog;
+export default Blog
 
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
@@ -46,4 +46,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`

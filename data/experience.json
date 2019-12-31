@@ -1,16 +1,161 @@
 [
   {
-    "title": "Bachelor's degree in CS, System analysis and management",
-    "organization": "Peter the Great St.Petersburg Polytechnic University",
-    "organizationLink": "http://english.spbstu.ru/",
+    "title": "Software Engineer / Product Owner",
+    "organization": "OpenWay Group",
+    "organizationLink": "http://www.openwaygroup.com/",
     "location": "Saint Petersburg, Russia",
-    "date": "2011 - 2016"
+    "description": [
+      "Developing a front-end of platform and a DSL-translator. Monitoring a quality of code.",
+      "Ensuring a required level of test coverage, high quality Release Notes.",
+      "Maintaining PA DSS/PCI DSS requirements and high level of security."
+    ],
+    "responsibilities": [
+      "Supports product development according to the Roadmap.",
+      "Product quality assurance, including: monitoring the quality of code;",
+      "Ensuring a required level of test coverage, high qualityRelease Notes.",
+      "Ensuring high quality Release Notes.",
+      "developing software to facilitate manual/automated product testing",
+      "applying current and reliable software development technologies (for developing products)",
+      
+      "Controlling usage of 3rd party libraries in terms of absense of known security vulnerabilities and ensuring license compliance.",
+      "Fixing defects according to regulations (SLA).",
+      "Ensures implementation of non-functional requirements for the product.",
+      "Performing the functions of the Information Security Officer (PCI DSS)."
+    ],
+    "technologies": [
+      "JS", "TS", "Angular", "Java", "SQL", "TeamCity"
+    ],
+    "dateStart": [2018,12],
+    "dateEnd": []
+  },
+
+  {
+    "title": "Software Engineer",
+    "organization": "OpenWay Group",
+    "organizationLink": "http://www.openwaygroup.com/",
+    "location": "Saint Petersburg, Russia",
+    "description": [
+      "Developed a front-end processing platform.",
+      "Developed a translator from DSL to UI screens.",
+      "Stress/penetration testing and optimization of web applications."
+    ],
+    "responsibilities": [
+    ],
+    "technologies": [
+      "JS", "TS", "Angular", "Java", "SQL", "TeamCity"
+    ],
+    "dateStart": [2016, 11],
+    "dateEnd": [2018, 12]
+  },
+
+  {
+    "title": "Full-Stack Web Developer",
+    "organization": "i-Free",
+    "organizationLink": "http://www.i-free.com/en",
+    "location": "Saint Petersburg, Russia",
+    "description": [
+      "Developed high performed real-time billing platform architecture. Developed server-side, client-side, DB parts of the platform.",
+      "Integrated a platform with external and internal systems.",
+      "Set up CI/CD. Configured nginx, apache, puppet."
+    ],
+    "responsibilities": [
+      "Developing clients personal accounts.",
+      "Architecture development and writing server-side and client-side parts of the platform according to the external customers’ requirements.",
+      "Implementation of applications for data synchronization via REST, SOAP, SMTP.",
+      "Developed applications deployment.",
+      "Configuration and optimization of web servers.",
+      "Configure nginx, apache, puppet configurations."
+    ],
+    "technologies": [
+      "JS", "TS", "Dart", "Angular", "React", "Backbone.js", "Python", "PL/SQL", "Nginx", "Apache2", "Debian", "Puppet"
+    ],
+    "dateStart": [2015,2],
+    "dateEnd": [2016,11]
+  },
+
+  {
+    "title": "Monitoring System Administrator",
+    "organization": "i-Free",
+    "organizationLink": "http://www.i-free.com/en",
+    "location": "Saint Petersburg, Russia",
+    "description": [
+      "Monitored and optimized of the IT systems performance.",
+      "Set up a monitoring system for technical support."
+    ],
+    "responsibilities": [
+      "Monitoring and optimization of the IT systems performance.",
+      "Participation in the elimination of emergencies in the server software workflow (regardless of the time of day).",
+      "Improvement of existing emergency response processes."
+    ],
+    "functions": [
+      "Setting up a monitoring system to display the necessary information for technical support staff and specialists responsible for the respective systems.",
+      "Supporting uninterrupted operation of the monitoring system.",
+      "Performing tasks on maintaining company’s services in operation.",
+      "Eliminating errors in the company's systems.",
+      "Providing technical recommendations to internal divisions of the company."
+    ],
+    "technologies": [
+      "Debian", "Puppet", "Apache/Nginx/Tomcat", "SQL", "TCP/IP", "Zabbix", "Java", "Python", "Bash"
+    ],
+    "dateStart": [2014, 9],
+    "dateEnd": [2015, 2]
   },
   {
-    "title": "Associate's degree, Math and Computer Science",
-    "organization": "Belarusian-Russian University",
-    "organizationLink": "http://en.bru.by",
-    "location": "Mogilev, Belarus",
-    "date": "2005 - 2007"
+    "title": "Technical Support Engineer",
+    "organization": "i-Free",
+    "organizationLink": "http://www.i-free.com/en",
+    "location": "Saint Petersburg, Russia",
+    "description": [
+      "Provided support for the uninterrupted operation of servers, websites and other services of the company."
+    ],
+    "responsibilities": [
+      "Round-the-clock monitoring of the company's servers and services and rapid response to the occurred problems.",
+      "Maintenance, configuration and improvement of the monitoring system.",
+      "Elimination of errors in the company's systems (independently or with the assistance of specialists).",
+      "Providing technical consultations to corporate clients of the company.",
+      "Providing technical recommendations to the company’s internal divisions."
+    ],
+    "technologies": [
+      "Debian", "SMPP", "Apache", "Nginx", "Tomcat", "SQL", "TCP/IP", "Zabbix", "Python", "Bash"
+    ],
+    "dateStart": [2013, 2],
+    "dateEnd": [2014, 9]
+  },
+  {
+    "title": "Technical Support Engineer",
+    "organization": "Majordomo",
+    "organizationLink": "https://www.majordomo.ru/",
+    "location": "Saint Petersburg, Russia",
+    "description": [
+    ],
+    "responsibilities": [
+      "Consulting clients on technical issues.",
+      "Localization and elimination of problems related to the functioning of the services provided by the company."
+    ],
+    "functions": [
+      "Debugging and analysis of application traffic in the interaction of the main protocols (DNS, FTP, SSH, POP3, SMTP, HTTP).",
+      "Configuration and monitoring of the Linux/FreeBSD operating system group, configuration and monitoring of services (Apache, Nginx, MySQL, exim/postfix).",
+      "Work on the bash, vi command line with the main GNU utilities.",
+      "Administration of web servers and organization of websites.",
+      "Competent written and oral communication with clients, ability to formulate the thoughts and deliver them in a clear way to the interlocutor."
+    ],
+    "technologies": [],
+    "dateStart": [2010, 1],
+    "dateEnd": [2010, 5]
+  },
+  {
+    "title": "Hardware System Administrator",
+    "organization": "Rosplat Invest",
+    "organizationLink": null,
+    "location": "Saint Petersburg, Russia",
+    "description": [],
+    "responsibilities": [
+      "Technical support of terminals.",
+      "Hardware and software troubleshooting.",
+      "Replacement of the IT components."
+    ],
+    "technologies": [],
+    "dateStart": [2009, 1],
+    "dateEnd": [2009, 12]
   }
 ]

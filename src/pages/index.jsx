@@ -4,16 +4,15 @@ import Link from 'gatsby-link'
 import { css } from 'emotion'
 import styled from 'react-emotion'
 import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
-import LeadText from '../components/LeadText/LeadText'
-import LeadContacts from '../components/LeadContacts/LeadContacts'
+import LeadText from '../components/leadText/leadText'
+import LeadContacts from '../components/leadContacts/leadContacts'
 import Config from '../../config'
-import Talk from '../components/Talk'
+import Talk from '../components/talk'
 
 const Row = styled('div')`
   display: flex;
   flex-direction: row;
   justify-content: ${props => props.justifyContent};
-  margin-bottom: 20px;
 
   ${TABLET_MEDIA_QUERY} {
     flex-direction: column;
@@ -21,7 +20,7 @@ const Row = styled('div')`
 `
 
 const TalksList = styled('div')`
-  font-size: 0.9em;
+  font-size: 12px;
 
   min-width: 50%;
   margin-top: 40px;

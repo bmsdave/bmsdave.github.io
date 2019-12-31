@@ -4,23 +4,18 @@ import styled from 'react-emotion'
 import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
 import Config from '../../config'
 import { css } from 'emotion'
-import {
-  FancyH1,
-  FancyPrintH1,
-  FancyPrintH2,
-} from '../components/FancyHeader/FancyHeader'
-import ExperienceBlock from '../components/ExperienceBlock/ExperienceBlock'
-import EducationBlock from '../components/EducationBlock/EducationBlock'
-import CoursesBlock from '../components/CoursesBlock/CoursesBlock'
-import AwardsBlock from '../components/AwardsBlock/AwardsBlock'
-import ContributionsBlock from '../components/ContributionsBlock/ContributionsBlock'
-import ContactsBlock from '../components/ContactsBlock/ContactsBlock'
+import { FancyH1, FancyPrintH1 } from '../components/elements/fancyHeader'
+import ExperienceBlock from '../components/blocks/experienceBlock'
+import EducationBlock from '../components/blocks/educationBlock'
+import CoursesBlock from '../components/blocks/coursesBlock'
+import AwardsBlock from '../components/blocks/awardsBlock'
+import ContributionsBlock from '../components/blocks/contributionsBlock'
+import ContactsBlock from '../components/blocks/contactsBlock'
 
 const Row = styled('div')`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  margin-bottom: 20px;
 
   ${TABLET_MEDIA_QUERY} {
     flex-direction: column;
@@ -28,13 +23,12 @@ const Row = styled('div')`
 
   > div:first-child {
     position: relative;
-    margin-right: 20px;
-    width: 70%;
+    width: 60%;
   }
 
   > div:last-child {
     position: relative;
-    width: 30%;
+    width: 40%;
   }
 
   ${TABLET_MEDIA_QUERY} {
@@ -49,8 +43,6 @@ const Row = styled('div')`
 `
 
 const Download = styled('a')`
-  margin-left: 20px;
-
   @media print {
     display: none;
   }
@@ -80,11 +72,8 @@ const classes = {
   `,
   leadText: css`
     flex-grow: 0;
-    margin-right: 60px;
 
     ${TABLET_MEDIA_QUERY} {
-      margin-right: 0;
-      margin-bottom: 20px;
     }
   `,
 }
@@ -97,6 +86,9 @@ class Resume extends React.Component {
     )
     const courses = this.props.data.allCoursesJson.edges.map(edge => edge.node)
     const educations = this.props.data.allEducationJson.edges.map(
+      edge => edge.node
+    )
+    const experiences = this.props.data.allExperienceJson.edges.map(
       edge => edge.node
     )
     const languages = this.props.data.allLanguagesJson.edges.map(
@@ -118,7 +110,7 @@ class Resume extends React.Component {
         <Row>
           <div>
             <FancyPrintH1>Vadim Gorbachev</FancyPrintH1>
-            <ExperienceBlock />
+            <ExperienceBlock experiences={experiences} />
             <EducationBlock educations={educations} />
           </div>
           <div>
@@ -132,13 +124,9 @@ class Resume extends React.Component {
               links={Config.userLinks}
               className={classes.leadContacts}
             />
-            <br />
             <ContributionsBlock contributions={contributions} />
-            <br />
             <CoursesBlock courses={courses} />
-            <br />
             <AwardsBlock awards={awards} />
-            <br />
             <ContactsFooterBlock
               links={Config.userLinks}
               className={classes.leadContacts}
@@ -172,6 +160,32 @@ export const pageQuery = graphql`
         node {
           label
           value
+        }
+      }
+    }
+    allExperienceJson {
+      edges {
+        node {
+          title
+          organization
+          organizationLink
+          location
+          description
+          responsibilities
+          technologies
+          dateStart
+          dateEnd
+        }
+      }
+    }
+    allEducationJson {
+      edges {
+        node {
+          title
+          organization
+          organizationLink
+          location
+          date
         }
       }
     }
@@ -216,17 +230,6 @@ export const pageQuery = graphql`
           link
           organization
           organizationLink
-          date
-        }
-      }
-    }
-    allEducationJson {
-      edges {
-        node {
-          title
-          organization
-          organizationLink
-          location
           date
         }
       }

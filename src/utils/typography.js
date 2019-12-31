@@ -4,8 +4,8 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 import monokaiColors from '../../monokaiColors'
 
 const typography = new Typography({
-  baseFontSize: '16px',
-  baseLineHeight: 1.75,
+  baseFontSize: '12px',
+  baseLineHeight: 1.5,
   scaleRatio: 5 / 2,
   googleFonts: [],
   headerFontFamily: [
@@ -35,9 +35,9 @@ const typography = new Typography({
       ...scale(1 / 5),
       color: gray(41),
       fontStyle: 'italic',
-      paddingLeft: rhythm(13 / 16),
-      marginLeft: rhythm(-1),
-      borderLeft: `${rhythm(3 / 16)} solid ${gray(10)}`,
+      paddingLeft: 0 /*rhythm(13 / 16), */,
+      marginLeft: 0 /*rhythm(-1), */,
+      borderLeft: 0 /*`${rhythm(3 / 16)} solid ${gray(10)}`, */,
     },
     'blockquote > :last-child': {
       marginBottom: 0,
@@ -53,21 +53,31 @@ const typography = new Typography({
     ul: {
       listStyle: 'disc',
     },
-    'ul,ol': {
+    'ul,ol,li': {
       marginLeft: 0,
+      marginBottom: 0,
+    },
+    p: {
+      margin: 0,
     },
     [MOBILE_MEDIA_QUERY]: {
       'ul,ol': {
-        marginLeft: rhythm(1),
+        margin: 0,
+        // marginLeft: 0,
+        // marginLeft: rhythm(1),
       },
       blockquote: {
-        marginLeft: rhythm(-3 / 4),
+        marginLeft: 0,
         marginRight: 0,
-        paddingLeft: rhythm(9 / 16),
+        paddingLeft: 0,
+        // marginLeft: rhythm(-3 / 4),
+        // marginRight: 0,
+        // paddingLeft: rhythm(9 / 16),
       },
     },
     'h1,h2,h3,h4,h5,h6': {
-      marginTop: rhythm(2),
+      margin: 0,
+      // marginTop: rhythm(2),
     },
     h4: {
       letterSpacing: '0.140625em',
@@ -92,7 +102,8 @@ const typography = new Typography({
     'mark,ins': {
       background: monokaiColors.colors['list.highlightForeground'],
       color: 'white',
-      padding: `${rhythm(1 / 16)} ${rhythm(1 / 8)}`,
+      padding: 0,
+      // padding: `${rhythm(1 / 16)} ${rhythm(1 / 8)}`,
       textDecoration: 'none',
     },
   }),

@@ -1,0 +1,16 @@
+.social-links {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.social-links > div {
+  cursor: pointer;
+}
+
+.share-count {
+  text-align: center;
+}
