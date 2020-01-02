@@ -1,2 +1,0 @@
-webpackJsonp([0xfabc74b670c1],{426:function(t,o){t.exports={data:{markdownRemark:{html:"<p>Hello world!</p>",timeToRead:1,excerpt:"Hello world!",tableOfContents:"",headings:[],frontmatter:{title:"First Post",date:"April 7th, 2018",cover:"./test.jpg",tags:["first"]},fields:{slug:"/blog/first-post",showCoverInPost:!0}}},pathContext:{slug:"/blog/first-post"}}}});
-//# sourceMappingURL=path---blog-first-post-ae31b4d9cdfee6f914af.js.map
