@@ -6,6 +6,7 @@ const Timeline = styled('section')`
   width: 100%;
 
   ul {
+    list-style-type: none;
   }
 
   ul li {
@@ -38,6 +39,10 @@ const EventTitleStrong = styled('strong')`
   font-size: 1.2em;
 `
 
+const EventTitleGray = styled('span')`
+  color: #666;
+`
+
 const EventSubtitle = styled('div')`
   color: #666;
 `
@@ -59,6 +64,7 @@ export {
   Event,
   EventTitle,
   EventTitleStrong,
+  EventTitleGray,
   EventSubtitle,
   EventTime,
   EventTimeMain,

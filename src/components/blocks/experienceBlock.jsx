@@ -60,7 +60,7 @@ export default class ExperienceBlock extends React.Component {
                   </EventSubtitle>
                   <EventDescription>
                     {experience.description.map((desc, index) => {
-                      return <p key={index}> - {desc}</p>
+                      return <p key={index}>{desc}</p>
                     })}
                     {experience.technologies.length > 0 && (
                       <p>

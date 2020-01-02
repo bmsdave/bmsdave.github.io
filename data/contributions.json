@@ -1,32 +1,56 @@
 [
-    {
-      "title": "Organizer",
-      "organization": "PiterJS",
-      "organizationLink": "https://medium.com/piterjs",
-      "date": "Mar 2017 - present"
-    },
-    {
-      "title": "",
-      "organization": "Speaker",
-      "organizationLink": "https://bmsdave.github.io/talks",
-      "date": "Mar 2016 - present"
-    },
-    {
-        "title": "Contributor",
-        "organization": "v8",
-        "organizationLink": "https://chromium-review.googlesource.com/q/owner:bmsdave%2540gmail.com",
-        "date": "Jan 2019 - present"
-    },
-    {
-      "title": "Program committee",
-      "organization": "HolyJS",
-      "organizationLink": "https://holyjs.ru/en/",
-      "date": "Jul 2017 - Jan 2019"
-    },
-    {
-      "title": "Mentor",
-      "organization": "NodeSchool",
-      "organizationLink": "https://nodeschool.io/spb/",
-      "date": "Feb 2017 - Jan 2018"
-    }
-  ]
+  {
+    "title": "Organizer",
+    "description": [
+      "help speakers prepare technically competent reports.",
+      "Together with a team of enthusiasts, we organized 40+ meetups and 1 conference.",
+      "We have grown a community of 5000+ developers."
+    ],
+    "organization": "PiterJS",
+    "organizationLink": "https://medium.com/piterjs",
+    "dateStart": "2017-6",
+    "dateEnd": null
+  },
+  {
+    "title": "",
+    "description": [],
+    "organization": "Speaker",
+    "organizationLink": "https://bmsdave.github.io/talks",
+    "dateStart": "2016-5",
+    "dateEnd": null
+  },
+  {
+    "title": "Contributor",
+    "description": [
+      "Help with compatibility of python2 and python3 in the code base."
+    ],
+    "organization": "v8",
+    "organizationLink": "https://chromium-review.googlesource.com/q/owner:bmsdave%2540gmail.com",
+    "dateStart": "2019-1",
+    "dateEnd": null
+  },
+  {
+    "title": "Program committee",
+    "description": [
+      "Worked on improving the conference program.",
+      "Helped speakers to improve the technical competence of the reports."
+    ],
+    "organization": "HolyJS",
+    "organizationLink": "https://holyjs.ru/en/",
+    "date": "Jul 2017 - Jan 2019",
+    "dateStart": "2017-6",
+    "dateEnd": "2019-1"
+  },
+  {
+    "title": "Mentor",
+    "description": [
+      "Organized 2 Node.js Code & Learn workshop.",
+      "Helped junior developers learn JavaScript."
+    ],
+    "organization": "NodeSchool",
+    "organizationLink": "https://nodeschool.io/spb/",
+    "date": "Feb 2017 - Jan 2018",
+    "dateStart": "2017-2",
+    "dateEnd": "2018-1"
+  }
+]

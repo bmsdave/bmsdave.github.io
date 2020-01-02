@@ -15,8 +15,7 @@ const LeadContactsContainer = styled('div')`
   }
 
   li {
-    display: inline-block;
-    line-height: 2;
+    line-height: 2.4;
     margin: 10px;
 
     a {
@@ -169,7 +168,7 @@ const Row = styled('div')`
   }
 `
 
-const Download = styled('a')`
+const Download = styled('button')`
   margin: 10px;
   @media print {
     display: none;

@@ -21,13 +21,13 @@ const RowResume = styled(Row)`
 
   > div:first-child {
     position: relative;
-    width: 60%;
+    width: 65%;
     padding-right: 32px;
   }
 
   > div:last-child {
     position: relative;
-    width: 40%;
+    width: 35%;
   }
 `
 
@@ -62,20 +62,6 @@ class Resume extends React.Component {
             <ContactsFooterBlock links={Config.userLinks} />
           </div>
         </RowResume>
-        <Download
-          href="../assets/cv/vgorbachev_cv.docx"
-          alt="*.docx"
-          target="_blank"
-        >
-          *.docx
-        </Download>
-        <Download
-          href="../assets/cv/vgorbachev_cv.pdf"
-          alt="*.pdf"
-          target="_blank"
-        >
-          *.pdf
-        </Download>
       </div>
     )
   }
@@ -114,9 +100,11 @@ export const pageQuery = graphql`
       edges {
         node {
           title
+          description
           organization
           organizationLink
-          date
+          dateStart
+          dateEnd
         }
       }
     }

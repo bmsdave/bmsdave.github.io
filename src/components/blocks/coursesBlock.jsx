@@ -8,9 +8,9 @@ export default class CoursesBlock extends React.Component {
       <React.Fragment>
         <FancyH2>Courses</FancyH2>
         {this.props.courses.map(course => (
-          <Event key={course.link}>
+          <Event key={course.link} style={{lineHeight:1.7}}>
             <EventTitle>
-              <EventTime>{'2015'}</EventTime>
+              <EventTime>{course.date.split(' ')[1]}</EventTime>{' '}
               <a href={course.link} target="_blank">
                 {course.title}
               </a>

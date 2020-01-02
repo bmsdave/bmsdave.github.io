@@ -7,19 +7,19 @@ import sortBy from 'lodash/sortBy'
 import keys from 'lodash/keys'
 
 const getIntervalOfEvent = event => {
-  const start = format(new Date(...event.dateStart), 'MMM yyyy')
+  const start = format(new Date(event.dateStart), 'MMM yyyy')
   const end =
-    event.dateEnd.length === 0
+    event.dateEnd === null
       ? 'present'
-      : format(new Date(...event.dateEnd), 'MMM yyyy')
+      : format(new Date(event.dateEnd), 'MMM yyyy')
   return `${start} - ${end}`
 }
 
 const getFullEventTimeCount = events => {
   return Math.ceil(
     events.reduce((count, event) => {
-      const start = new Date(...event.dateStart)
-      const end = addMonths(new Date(...event.dateEnd), 1)
+      const start = new Date(event.dateStart)
+      const end = addMonths(event.dateEnd ? new Date(event.dateEnd) : new Date(), 1)
       return count + differenceInMonths(end, start)
     }, 0) / 12
   )
@@ -27,8 +27,8 @@ const getFullEventTimeCount = events => {
 
 const getCountOfEvent = event => {
   let count = ''
-  const start = new Date(...event.dateStart)
-  const end = addMonths(new Date(...event.dateEnd), 1)
+  const start = new Date(event.dateStart)
+  const end = addMonths(event.dateEnd ? new Date(event.dateEnd) : new Date(), 1)
 
   const years = differenceInYears(end, start)
   const months = differenceInMonths(end, start) % 12
