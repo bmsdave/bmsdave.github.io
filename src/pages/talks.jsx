@@ -1,50 +1,11 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import styled from 'react-emotion'
-import keys from 'lodash/keys'
-import sortBy from 'lodash/sortBy'
-import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
 import config from '../../config'
+import { Group, GroupsContainer } from '../components/elements/elements'
 import { FancyH1, FancyH2 } from '../components/elements/fancyHeader'
 import Talk from '../components/talk'
-
-const groupTalksByYear = talks => {
-  const groups = {}
-  talks.forEach(talk => {
-    const date = talk.date
-    const year = date.split('.')[2]
-    if (groups[year]) {
-      groups[year].push(talk)
-    } else {
-      groups[year] = [talk]
-    }
-  })
-  const years = sortBy(keys(groups), year => -year)
-  return years.map(year => ({
-    label: year,
-    talks: groups[year],
-  }))
-}
-
-const GroupsContainer = styled('div')`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
-  ${TABLET_MEDIA_QUERY} {
-    flex-direction: column;
-  }
-`
-
-const Group = styled('div')`
-  width: 50%;
-  padding: 10px;
-
-  ${TABLET_MEDIA_QUERY} {
-    width: 100%;
-  }
-`
-
+import { groupByYear } from '../utils/timeIntervals'
 const TalksList = styled('ul')`
   list-style: none;
 `
@@ -52,7 +13,7 @@ const TalksList = styled('ul')`
 class Talks extends React.Component {
   render() {
     const talks = this.props.data.allTalksJson.edges.map(edge => edge.node)
-    const groupedTalks = groupTalksByYear(talks)
+    const groupedTalks = groupByYear(talks)
     return (
       <div>
         <Helmet title={config.siteTitle} />
@@ -62,9 +23,9 @@ class Talks extends React.Component {
             <Group key={group.label}>
               <FancyH2>{group.label}</FancyH2>
               <TalksList>
-                {group.talks.map(talk => (
-                  <li key={talk.title}>
-                    <Talk talk={talk} />
+                {group.items.map(item => (
+                  <li key={item.title}>
+                    <Talk talk={item} />
                   </li>
                 ))}
               </TalksList>

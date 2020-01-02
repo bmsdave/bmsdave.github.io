@@ -16,6 +16,12 @@ const LeadContactsContainer = styled('div')`
 
   li {
     display: inline-block;
+    line-height: 2;
+    margin: 10px;
+
+    a {
+      margin-left: 4px;
+    }
 
     > a:first-child {
       float: left;
@@ -118,6 +124,7 @@ const Menu = styled('ul')`
 
 const MenuItem = styled('li')`
   padding: 0 20px 0 0;
+  margin: 0;
 `
 
 const LogoLink = styled(Link)`
@@ -140,28 +147,25 @@ const Row = styled('div')`
   flex-direction: row;
   justify-content: flex-start;
 
-  ${TABLET_MEDIA_QUERY} {
-    flex-direction: column;
-  }
-
   > div:first-child {
     position: relative;
-    width: 60%;
+    width: 70%;
+    padding-right: 16px;
+    ${TABLET_MEDIA_QUERY} {
+      width: 100% !important;
+    }
   }
 
   > div:last-child {
     position: relative;
-    width: 40%;
+    width: 30%;
+    ${TABLET_MEDIA_QUERY} {
+      width: 100% !important;
+    }
   }
 
   ${TABLET_MEDIA_QUERY} {
-    > div:first-child {
-      width: 100%;
-    }
-
-    > div:last-child {
-      width: 90%;
-    }
+    flex-direction: column;
   }
 `
 
@@ -174,8 +178,22 @@ const Download = styled('a')`
 
 const ContactsHeaderBlock = styled(ContactsBlock)`
   display: block;
+  ul {
+    max-width: 350px;
+  }
+
+  li {
+    margin: 0px;
+  }
+
   ${TABLET_MEDIA_QUERY} {
     display: none;
+  }
+
+  @media print {
+    svg {
+      width: 14px;
+    }
   }
 `
 
@@ -225,10 +243,29 @@ const TalksList = styled('div')`
   }
 `
 
+const GroupsContainer = styled('div')`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  ${TABLET_MEDIA_QUERY} {
+    flex-direction: column;
+  }
+`
+
+const Group = styled('div')`
+  width: 50%;
+  font-size: 1.2rem;
+  padding: 10px;
+
+  ${TABLET_MEDIA_QUERY} {
+    width: 100%;
+  }
+`
+
 const classes = {
   resume: css`
     font-size: 12px;
-    margin: 10px;
   `,
   icon: css`
     width: 25px;
@@ -246,6 +283,10 @@ const classes = {
   `,
   leadContacts: css`
     min-width: 250px;
+
+    li {
+      display: block;
+    }
 
     ${TABLET_MEDIA_QUERY} {
       width: 100%;
@@ -281,4 +322,6 @@ export {
   Download,
   Row,
   TalksList,
+  GroupsContainer,
+  Group,
 }

@@ -9,7 +9,7 @@ import Footer from '../components/footer/footer'
 import PageContainer from '../components/elements/pageContainer'
 
 const PageWrapper = styled('div')`
-  min-height: calc(100vh - 152px);
+  min-height: calc(100vh - 180px);
   margin: 10px;
 `
 

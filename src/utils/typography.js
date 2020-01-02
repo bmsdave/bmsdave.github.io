@@ -5,7 +5,7 @@ import monokaiColors from '../../monokaiColors'
 
 const typography = new Typography({
   baseFontSize: '14px',
-  baseLineHeight: 1.5,
+  baseLineHeight: 1.75,
   scaleRatio: 5 / 2,
   googleFonts: [],
   headerFontFamily: ['Fira Sans', 'sans-serif'],
@@ -60,7 +60,7 @@ const typography = new Typography({
       marginBottom: rhythm(0.5),
     },
     h4: {
-      letterSpacing: '0.140625em',
+      letterSpacing: '`0.140625em',
       textTransform: 'uppercase',
     },
     h6: {

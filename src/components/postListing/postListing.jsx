@@ -1,27 +1,8 @@
 import React from 'react'
-import sortBy from 'lodash/sortBy'
-import keys from 'lodash/keys'
 import Link from 'gatsby-link'
 import { FancyH2 } from '../elements/fancyHeader'
-
-const groupPostsByYear = posts => {
-  const groups = {}
-  posts.forEach(post => {
-    const date = post.date
-    const year = date.split('-')[0]
-    if (groups[year]) {
-      groups[year].push(post)
-    } else {
-      groups[year] = [post]
-    }
-  })
-  const years = sortBy(keys(groups), year => -year)
-  return years.map(year => ({
-    label: year,
-    posts: groups[year],
-  }))
-}
-
+import { Group } from '../elements/elements'
+import { groupByYear } from '../../utils/timeIntervals'
 class PostListing extends React.Component {
   getPostList() {
     const postList = []
@@ -40,20 +21,20 @@ class PostListing extends React.Component {
   }
   render() {
     const postList = this.getPostList()
-    const groupsPostList = groupPostsByYear(postList)
+    const groupsPostList = groupByYear(postList)
     return (
       <div style={{ marginTop: 60 }}>
         {groupsPostList.map(group => (
-          <div key={group.label}>
+          <Group key={group.label}>
             <div>
               <FancyH2>{group.label}</FancyH2>
             </div>
-            {group.posts.map(post => (
+            {group.items.map(post => (
               <div key={post.title} style={{ marginBottom: 10 }}>
                 <Link to={post.path}>{post.title}</Link>
               </div>
             ))}
-          </div>
+          </Group>
         ))}
       </div>
     )

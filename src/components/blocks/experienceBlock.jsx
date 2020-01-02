@@ -15,17 +15,22 @@ import {
   EventSubtitle,
   EventDescription,
 } from '../elements/events'
+import styled from 'react-emotion'
+
+const FancyH2Exp = styled(FancyH2)`
+  margin-top: 0;
+`
 
 export default class ExperienceBlock extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <FancyH2>
+        <FancyH2Exp>
           Experience{' '}
           <EventTimeMain>
             ({getFullEventTimeCount(this.props.experiences)} yrs)
           </EventTimeMain>
-        </FancyH2>
+        </FancyH2Exp>
         <Timeline>
           <ul>
             {this.props.experiences.map((experience, index) => (

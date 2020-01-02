@@ -14,6 +14,22 @@ import EducationBlock from '../components/blocks/educationBlock'
 import CoursesBlock from '../components/blocks/coursesBlock'
 import AwardsBlock from '../components/blocks/awardsBlock'
 import ContributionsBlock from '../components/blocks/contributionsBlock'
+import styled from 'react-emotion'
+
+const RowResume = styled(Row)`
+  line-height: 1.2;
+
+  > div:first-child {
+    position: relative;
+    width: 60%;
+    padding-right: 32px;
+  }
+
+  > div:last-child {
+    position: relative;
+    width: 40%;
+  }
+`
 
 class Resume extends React.Component {
   render() {
@@ -32,26 +48,20 @@ class Resume extends React.Component {
       <div className={classes.resume}>
         <Helmet title={Config.siteTitle} />
         <FancyH1>Resume</FancyH1>
-        <Row>
+        <RowResume>
           <div>
             <FancyPrintH1>Vadim Gorbachev</FancyPrintH1>
             <ExperienceBlock experiences={experiences} />
             <EducationBlock educations={educations} />
           </div>
           <div>
-            <ContactsHeaderBlock
-              links={Config.userLinks}
-              className={classes.leadContacts}
-            />
+            <ContactsHeaderBlock links={Config.userLinks} />
             <ContributionsBlock contributions={contributions} />
             <CoursesBlock courses={courses} />
             <AwardsBlock awards={awards} />
-            <ContactsFooterBlock
-              links={Config.userLinks}
-              className={classes.leadContacts}
-            />
+            <ContactsFooterBlock links={Config.userLinks} />
           </div>
-        </Row>
+        </RowResume>
         <Download
           href="../assets/cv/vgorbachev_cv.docx"
           alt="*.docx"
