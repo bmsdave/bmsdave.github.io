@@ -7,6 +7,7 @@ import {
 } from 'typography-breakpoint-constants'
 import HexImage from '../hexImage/hexImage'
 import Link from 'gatsby-link'
+import ContactsBlock from '../blocks/contactsBlock'
 
 const LeadContactsContainer = styled('div')`
   ul {
@@ -46,23 +47,6 @@ const LeadContactsContainer = styled('div')`
     }
   }
 `
-
-const classes = {
-  icon: css`
-    width: 25px;
-    height: 25px;
-    opacity: 0.6;
-    color: ${monokaiColors.colors['list.focusBackground']};
-    vertical-align: middle;
-  `,
-  container: css`
-    width: 30px;
-    height: 30px;
-    background-color: ${monokaiColors.colors['list.focusBackground']};
-    border-radius: 50%;
-    opacity: 0.6;
-  `,
-}
 
 const Footer = styled('footer')`
   justify-content: center;
@@ -143,6 +127,128 @@ const PostTagsContainer = styled('div')`
   }
 `
 
+const Row = styled('div')`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+  ${TABLET_MEDIA_QUERY} {
+    flex-direction: column;
+  }
+
+  > div:first-child {
+    position: relative;
+    width: 60%;
+  }
+
+  > div:last-child {
+    position: relative;
+    width: 40%;
+  }
+
+  ${TABLET_MEDIA_QUERY} {
+    > div:first-child {
+      width: 100%;
+    }
+
+    > div:last-child {
+      width: 90%;
+    }
+  }
+`
+
+const Download = styled('a')`
+  @media print {
+    display: none;
+  }
+`
+
+const ContactsHeaderBlock = styled(ContactsBlock)`
+  display: block;
+  ${TABLET_MEDIA_QUERY} {
+    display: none;
+  }
+`
+
+const ContactsFooterBlock = styled(ContactsBlock)`
+  display: none;
+  ${TABLET_MEDIA_QUERY} {
+    display: block;
+  }
+`
+
+// const Row = styled('div')`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: ${props => props.justifyContent};
+//
+//   ${TABLET_MEDIA_QUERY} {
+//     flex-direction: column;
+//   }
+// `
+
+const TalksList = styled('div')`
+  font-size: 12px;
+
+  min-width: 50%;
+  margin-top: 40px;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+
+    a {
+      margin-left: 10px;
+      font-size: 0.6em;
+      vertical-align: middle;
+      font-family: 'Open Sans', 'Helvetica Neue', serif;
+    }
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+  }
+
+  ul li {
+    display: block;
+  }
+
+  li:last-child {
+    margin: 0;
+  }
+`
+
+const classes = {
+  icon: css`
+    width: 25px;
+    height: 25px;
+    opacity: 0.6;
+    color: ${monokaiColors.colors['list.focusBackground']};
+    vertical-align: middle;
+  `,
+  container: css`
+    width: 30px;
+    height: 30px;
+    background-color: ${monokaiColors.colors['list.focusBackground']};
+    border-radius: 50%;
+    opacity: 0.6;
+  `,
+  leadContacts: css`
+    min-width: 250px;
+
+    ${TABLET_MEDIA_QUERY} {
+      width: 100%;
+    }
+  `,
+  leadText: css`
+    flex-grow: 0;
+
+    ${TABLET_MEDIA_QUERY} {
+    }
+  `,
+}
+
 export {
   LeadContactsContainer,
   classes,
@@ -157,4 +263,9 @@ export {
   MenuItem,
   LogoLink,
   PostTagsContainer,
+  ContactsFooterBlock,
+  ContactsHeaderBlock,
+  Download,
+  Row,
+  TalksList,
 }

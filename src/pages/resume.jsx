@@ -1,82 +1,19 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-import styled from 'react-emotion'
-import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
 import Config from '../../config'
-import { css } from 'emotion'
 import { FancyH1, FancyPrintH1 } from '../components/elements/fancyHeader'
+import {
+  classes,
+  ContactsFooterBlock,
+  ContactsHeaderBlock,
+  Download,
+  Row,
+} from '../components/elements/elements'
 import ExperienceBlock from '../components/blocks/experienceBlock'
 import EducationBlock from '../components/blocks/educationBlock'
 import CoursesBlock from '../components/blocks/coursesBlock'
 import AwardsBlock from '../components/blocks/awardsBlock'
 import ContributionsBlock from '../components/blocks/contributionsBlock'
-import ContactsBlock from '../components/blocks/contactsBlock'
-
-const Row = styled('div')`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-
-  ${TABLET_MEDIA_QUERY} {
-    flex-direction: column;
-  }
-
-  > div:first-child {
-    position: relative;
-    width: 60%;
-  }
-
-  > div:last-child {
-    position: relative;
-    width: 40%;
-  }
-
-  ${TABLET_MEDIA_QUERY} {
-    > div:first-child {
-      width: 100%;
-    }
-
-    > div:last-child {
-      width: 90%;
-    }
-  }
-`
-
-const Download = styled('a')`
-  @media print {
-    display: none;
-  }
-`
-
-const ContactsHeaderBlock = styled(ContactsBlock)`
-  display: block;
-  ${TABLET_MEDIA_QUERY} {
-    display: none;
-  }
-`
-
-const ContactsFooterBlock = styled(ContactsBlock)`
-  display: none;
-  ${TABLET_MEDIA_QUERY} {
-    display: block;
-  }
-`
-
-const classes = {
-  leadContacts: css`
-    min-width: 250px;
-
-    ${TABLET_MEDIA_QUERY} {
-      width: 100%;
-    }
-  `,
-  leadText: css`
-    flex-grow: 0;
-
-    ${TABLET_MEDIA_QUERY} {
-    }
-  `,
-}
 
 class Resume extends React.Component {
   render() {
@@ -91,18 +28,6 @@ class Resume extends React.Component {
     const experiences = this.props.data.allExperienceJson.edges.map(
       edge => edge.node
     )
-    const languages = this.props.data.allLanguagesJson.edges.map(
-      edge => edge.node
-    )
-    const personalQualities = this.props.data.allPersonalQualitiesJson.edges.map(
-      edge => edge.node
-    )
-    const sysadminSkills = this.props.data.allSysadminSkillsJson.edges.map(
-      edge => edge.node
-    )
-    const developmentSkills = this.props.data.allDevelopmentSkillsJson.edges.map(
-      edge => edge.node
-    )
     return (
       <div>
         <Helmet title={Config.siteTitle} />
@@ -114,12 +39,6 @@ class Resume extends React.Component {
             <EducationBlock educations={educations} />
           </div>
           <div>
-            {/* <SkillsBlock
-              languages={languages}
-              personalQualities={personalQualities}
-              sysadminSkills={sysadminSkills}
-              developmentSkills={developmentSkills}
-            /> */}
             <ContactsHeaderBlock
               links={Config.userLinks}
               className={classes.leadContacts}
@@ -155,14 +74,6 @@ class Resume extends React.Component {
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
   query ResumeQuery {
-    allPersonalQualitiesJson {
-      edges {
-        node {
-          label
-          value
-        }
-      }
-    }
     allExperienceJson {
       edges {
         node {
@@ -186,30 +97,6 @@ export const pageQuery = graphql`
           organizationLink
           location
           date
-        }
-      }
-    }
-    allSysadminSkillsJson {
-      edges {
-        node {
-          label
-          value
-        }
-      }
-    }
-    allLanguagesJson {
-      edges {
-        node {
-          label
-          value
-        }
-      }
-    }
-    allDevelopmentSkillsJson {
-      edges {
-        node {
-          label
-          value
         }
       }
     }

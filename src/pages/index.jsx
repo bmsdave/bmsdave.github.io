@@ -1,74 +1,11 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import Link from 'gatsby-link'
-import { css } from 'emotion'
-import styled from 'react-emotion'
-import { TABLET_MEDIA_QUERY } from 'typography-breakpoint-constants'
 import LeadText from '../components/leadText/leadText'
 import LeadContacts from '../components/leadContacts/leadContacts'
 import Config from '../../config'
 import Talk from '../components/talk'
-
-const Row = styled('div')`
-  display: flex;
-  flex-direction: row;
-  justify-content: ${props => props.justifyContent};
-
-  ${TABLET_MEDIA_QUERY} {
-    flex-direction: column;
-  }
-`
-
-const TalksList = styled('div')`
-  font-size: 12px;
-
-  min-width: 50%;
-  margin-top: 40px;
-
-  h3 {
-    margin-top: 0;
-    margin-bottom: 20px;
-
-    a {
-      margin-left: 10px;
-      font-size: 0.6em;
-      vertical-align: middle;
-      font-family: 'Open Sans', 'Helvetica Neue', serif;
-    }
-  }
-
-  ul {
-    list-style: none;
-    margin: 0;
-  }
-
-  ul li {
-    display: block;
-  }
-
-  li:last-child {
-    margin: 0;
-  }
-`
-
-const classes = {
-  leadContacts: css`
-    min-width: 250px;
-
-    ${TABLET_MEDIA_QUERY} {
-      width: 100%;
-    }
-  `,
-  leadText: css`
-    flex-grow: 0;
-    margin-right: 60px;
-
-    ${TABLET_MEDIA_QUERY} {
-      margin-right: 0;
-      margin-bottom: 20px;
-    }
-  `,
-}
+import { classes, Row, TalksList } from '../components/elements/elements'
 
 class Index extends React.Component {
   render() {
