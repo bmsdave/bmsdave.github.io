@@ -95,12 +95,15 @@ const ProfileHexImage = styled(HexImage)`
 const Nav = styled('nav')`
   display: flex;
   max-width: ${DEFAULT_WIDTH};
+  font-size: 16px;
+  margin: 10px auto 40px auto;
 
   @media print {
     display: none !important;
   }
 
   ${DEFAULT_MEDIA_QUERY} {
+    margin: 10px 10px 40px 10px;
   }
 `
 
@@ -109,9 +112,13 @@ const Menu = styled('ul')`
   flex-wrap: wrap;
   align-items: center;
   list-style: none;
+  margin: 0 0 0 16px;
+  padding: 0;
 `
 
-const MenuItem = styled('li')``
+const MenuItem = styled('li')`
+  padding: 0 20px 0 0;
+`
 
 const LogoLink = styled(Link)`
   display: inline-flex;
@@ -124,6 +131,7 @@ const LogoLink = styled(Link)`
 
 const PostTagsContainer = styled('div')`
   a {
+    margin-right: 10px;
   }
 `
 
@@ -158,6 +166,7 @@ const Row = styled('div')`
 `
 
 const Download = styled('a')`
+  margin: 10px;
   @media print {
     display: none;
   }
@@ -188,8 +197,6 @@ const ContactsFooterBlock = styled(ContactsBlock)`
 // `
 
 const TalksList = styled('div')`
-  font-size: 12px;
-
   min-width: 50%;
   margin-top: 40px;
 
@@ -201,7 +208,6 @@ const TalksList = styled('div')`
       margin-left: 10px;
       font-size: 0.6em;
       vertical-align: middle;
-      font-family: 'Open Sans', 'Helvetica Neue', serif;
     }
   }
 
@@ -220,6 +226,10 @@ const TalksList = styled('div')`
 `
 
 const classes = {
+  resume: css`
+    font-size: 12px;
+    margin: 10px;
+  `,
   icon: css`
     width: 25px;
     height: 25px;
@@ -246,6 +256,9 @@ const classes = {
 
     ${TABLET_MEDIA_QUERY} {
     }
+  `,
+  blog: css`
+    padding: 10px;
   `,
 }
 

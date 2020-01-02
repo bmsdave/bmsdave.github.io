@@ -29,7 +29,7 @@ class Resume extends React.Component {
       edge => edge.node
     )
     return (
-      <div>
+      <div className={classes.resume}>
         <Helmet title={Config.siteTitle} />
         <FancyH1>Resume</FancyH1>
         <Row>

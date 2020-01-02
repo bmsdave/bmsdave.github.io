@@ -37,7 +37,8 @@ const GroupsContainer = styled('div')`
 `
 
 const Group = styled('div')`
-  width: 40%;
+  width: 50%;
+  padding: 10px;
 
   ${TABLET_MEDIA_QUERY} {
     width: 100%;

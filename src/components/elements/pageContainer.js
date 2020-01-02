@@ -6,6 +6,7 @@ import {
 
 const PageContainer = styled('div')`
   max-width: ${DEFAULT_WIDTH};
+  margin: 0 auto;
 
   ${DEFAULT_MEDIA_QUERY} {
   }

@@ -34,7 +34,13 @@ const Event = styled('div')`
 
 const EventTitle = styled('div')``
 
-const EventSubtitle = styled('div')``
+const EventTitleStrong = styled('strong')`
+  font-size: 1.2em;
+`
+
+const EventSubtitle = styled('div')`
+  color: #666;
+`
 
 const EventTime = styled('div')`
   display: inline-block;
@@ -44,12 +50,15 @@ const EventTimeMain = styled('div')`
   display: inline-block;
 `
 
-const EventDescription = styled('div')``
+const EventDescription = styled('div')`
+  padding: 4px 0 0 4px;
+`
 
 export {
   Timeline,
   Event,
   EventTitle,
+  EventTitleStrong,
   EventSubtitle,
   EventTime,
   EventTimeMain,

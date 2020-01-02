@@ -70,6 +70,7 @@ const PostContainer = styled('div')`
       position: relative;
       counter-increment: step-counter;
       padding-left: 5px;
+      padding-top: 5px;
       margin-bottom: 5px;
       margin-left: 25px;
 
@@ -155,7 +156,6 @@ const MetaRow = styled('div')`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  font-size: 12px;
   margin-bottom: 10px;
 
   & > * {
@@ -163,7 +163,6 @@ const MetaRow = styled('div')`
   }
 
   time {
-    font-size: 12px;
     color: rgba(0, 0, 0, 0.54);
   }
 

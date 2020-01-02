@@ -7,6 +7,7 @@ import {
   EventTime,
   EventSubtitle,
   EventDescription,
+  EventTitleStrong,
 } from '../elements/events'
 
 export default class EducationBlock extends React.Component {
@@ -20,7 +21,7 @@ export default class EducationBlock extends React.Component {
               <li key={education.organizationLink}>
                 <Event>
                   <EventTitle>
-                    {education.title}
+                    <EventTitleStrong>{education.title}</EventTitleStrong>{' '}
                     <EventTime>{education.date}</EventTime>
                   </EventTitle>
                   <EventSubtitle>

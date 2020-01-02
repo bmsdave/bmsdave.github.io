@@ -3,6 +3,7 @@ import monokaiColors from '../../../monokaiColors'
 
 export const FancyH1 = styled('h1')`
   position: relative;
+  padding: 10px;
 
   @media print {
     display: none !important;
@@ -12,8 +13,10 @@ export const FancyH1 = styled('h1')`
 export const FancyH2 = styled(`h2`)`
   position: relative;
   display: inline-block;
+  margin: 0 0 10px 0;
 
   @media print {
+    margin: 0 0 10px 0;
   }
 
   :before {
@@ -35,26 +38,5 @@ export const FancyPrintH1 = styled('h1')`
 
   @media print {
     display: block;
-  }
-`
-
-export const FancyPrintH2 = styled(`h2`)`
-  position: relative;
-  display: none;
-
-  @media print {
-    display: inline-block;
-  }
-
-  :before {
-    content: '';
-    width: 90%;
-    height: 15px;
-    position: absolute;
-    left: -10px;
-    bottom: -5px;
-    background-color: ${monokaiColors.colors['list.focusBackground']};
-    opacity: 0.6;
-    z-index: -2;
   }
 `

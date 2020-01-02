@@ -4,28 +4,12 @@ import { MOBILE_MEDIA_QUERY } from 'typography-breakpoint-constants'
 import monokaiColors from '../../monokaiColors'
 
 const typography = new Typography({
-  baseFontSize: '12px',
+  baseFontSize: '14px',
   baseLineHeight: 1.5,
   scaleRatio: 5 / 2,
   googleFonts: [],
-  headerFontFamily: [
-    'Fira Sans',
-    'HelveticaNeue-Light',
-    'Helvetica Neue Light',
-    'Helvetica Neue',
-    'Helvetica',
-    'Arial',
-    'Lucida Grande',
-    'sans-serif',
-  ],
-  bodyFontFamily: [
-    'Fira Sans',
-    'Open Sans',
-    '-apple-system',
-    'BlinkMacSystemFont',
-    'Arial',
-    'sans-serif',
-  ],
+  headerFontFamily: ['Fira Sans', 'sans-serif'],
+  bodyFontFamily: ['Fira Sans', 'sans-serif'],
   bodyColor: 'hsla(0,0%,0%,0.9)',
   headerWeight: 400,
   bodyWeight: 400,
@@ -35,9 +19,9 @@ const typography = new Typography({
       ...scale(1 / 5),
       color: gray(41),
       fontStyle: 'italic',
-      paddingLeft: 0 /*rhythm(13 / 16), */,
-      marginLeft: 0 /*rhythm(-1), */,
-      borderLeft: 0 /*`${rhythm(3 / 16)} solid ${gray(10)}`, */,
+      paddingLeft: rhythm(13 / 16),
+      marginLeft: rhythm(-1),
+      borderLeft: `${rhythm(3 / 16)} solid ${gray(10)}`,
     },
     'blockquote > :last-child': {
       marginBottom: 0,
@@ -53,7 +37,7 @@ const typography = new Typography({
     ul: {
       listStyle: 'disc',
     },
-    'ul,ol,li': {
+    'ul,ol': {
       marginLeft: 0,
       marginBottom: 0,
     },
@@ -63,21 +47,17 @@ const typography = new Typography({
     [MOBILE_MEDIA_QUERY]: {
       'ul,ol': {
         margin: 0,
-        // marginLeft: 0,
-        // marginLeft: rhythm(1),
+        marginLeft: rhythm(1),
       },
       blockquote: {
-        marginLeft: 0,
+        marginLeft: rhythm(-3 / 4),
         marginRight: 0,
-        paddingLeft: 0,
-        // marginLeft: rhythm(-3 / 4),
-        // marginRight: 0,
-        // paddingLeft: rhythm(9 / 16),
+        paddingLeft: rhythm(9 / 16),
       },
     },
     'h1,h2,h3,h4,h5,h6': {
-      margin: 0,
-      // marginTop: rhythm(2),
+      marginTop: rhythm(1),
+      marginBottom: rhythm(0.5),
     },
     h4: {
       letterSpacing: '0.140625em',
@@ -102,8 +82,7 @@ const typography = new Typography({
     'mark,ins': {
       background: monokaiColors.colors['list.highlightForeground'],
       color: 'white',
-      padding: 0,
-      // padding: `${rhythm(1 / 16)} ${rhythm(1 / 8)}`,
+      padding: `${rhythm(1 / 16)} ${rhythm(1 / 8)}`,
       textDecoration: 'none',
     },
   }),

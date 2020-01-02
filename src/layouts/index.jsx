@@ -9,7 +9,8 @@ import Footer from '../components/footer/footer'
 import PageContainer from '../components/elements/pageContainer'
 
 const PageWrapper = styled('div')`
-  min-height: calc(100vh - 230px);
+  min-height: calc(100vh - 152px);
+  margin: 10px;
 `
 
 export default class MainLayout extends React.Component {

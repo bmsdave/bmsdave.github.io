@@ -11,12 +11,15 @@ const Heading = styled(FancyH2)``
 
 const Container = styled('div')`
   float: right;
+  margin-right: -100px;
+  margin-left: 50px;
 
   ${DEFAULT_MEDIA_QUERY} {
     display: none;
   }
 
   ul li {
+    margin-bottom: 5px;
   }
 `
 

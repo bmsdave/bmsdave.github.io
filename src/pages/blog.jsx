@@ -3,6 +3,7 @@ import Helmet from 'react-helmet'
 import PostListing from '../components/postListing/postListing'
 import SEO from '../components/SEO/SEO'
 import config from '../../config'
+import { classes } from '../components/elements/elements'
 import { FancyH1 } from '../components/elements/fancyHeader'
 
 class Blog extends React.Component {
@@ -11,7 +12,7 @@ class Blog extends React.Component {
       ? this.props.data.allMarkdownRemark.edges
       : []
     return (
-      <div>
+      <div className={classes.blog}>
         <Helmet title={config.siteTitle} />
         <SEO postEdges={postEdges} />
         <FancyH1>Blog</FancyH1>

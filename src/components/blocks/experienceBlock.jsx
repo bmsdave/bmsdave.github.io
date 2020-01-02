@@ -9,6 +9,7 @@ import {
   Timeline,
   Event,
   EventTitle,
+  EventTitleStrong,
   EventTime,
   EventTimeMain,
   EventSubtitle,
@@ -31,7 +32,7 @@ export default class ExperienceBlock extends React.Component {
               <li key={index}>
                 <Event>
                   <EventTitle>
-                    {experience.title}
+                    <EventTitleStrong>{experience.title}</EventTitleStrong>{' '}
                     <EventTime>
                       <EventTimeMain>
                         ({getCountOfEvent(experience)})
