@@ -18,6 +18,7 @@ import styled from 'react-emotion'
 
 const RowResume = styled(Row)`
   line-height: 1.2;
+  font-size: 12px;
 
   > div:first-child {
     position: relative;
