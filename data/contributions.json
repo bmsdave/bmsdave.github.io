@@ -8,7 +8,7 @@
     ],
     "organization": "PiterJS",
     "organizationLink": "https://medium.com/piterjs",
-    "dateStart": "2017-6",
+    "dateStart": "2017-3",
     "dateEnd": null
   },
   {
@@ -37,8 +37,7 @@
     ],
     "organization": "HolyJS",
     "organizationLink": "https://holyjs.ru/en/",
-    "date": "Jul 2017 - Jan 2019",
-    "dateStart": "2017-6",
+    "dateStart": "2017-7",
     "dateEnd": "2019-1"
   },
   {
@@ -49,8 +48,7 @@
     ],
     "organization": "NodeSchool",
     "organizationLink": "https://nodeschool.io/spb/",
-    "date": "Feb 2017 - Jan 2018",
-    "dateStart": "2017-2",
-    "dateEnd": "2018-1"
+    "dateStart": "2017-8",
+    "dateEnd": "2018-11"
   }
 ]
