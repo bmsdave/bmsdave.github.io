@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Y: The Most Beautiful Idea in Computer Science explained in JavaScript / RU"
+title: "Одна из самых красивых идей в информатике: Y-Combinator"
 author: Lucas Fernandes da Costa
-date: "2019-01-25"
+date: "2020-01-09"
 place: Saint Petersburg, Russia
 flag: 🇬🇧
 slug: "y-combinator"

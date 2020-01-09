@@ -2,7 +2,7 @@
 title: "First Post"
 slug: "first-post"
 date: "2018-04-07"
-draft: false
+draft: true
 cover: "./test.jpg"
 showCoverInPost: true
 tags:

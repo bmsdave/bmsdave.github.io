@@ -120,6 +120,10 @@ const PostContainer = styled('div')`
     margin-top: 2rem;
   }
 
+  p {
+    margin: 16px 0;
+  }
+
   figure {
     figcaption {
       text-align: center;
@@ -216,9 +220,6 @@ export default class PostTemplate extends React.Component {
           </PostContainer>
           <hr />
           <PostContainer>
-            {hasTableOfContents && (
-              <TableOfContents tableOfContents={tableOfContents} />
-            )}
             {showCoverInPost &&
               post.cover && (
                 <div
@@ -229,6 +230,9 @@ export default class PostTemplate extends React.Component {
                   <Image sizes={post.cover.childImageSharp.sizes} />
                 </div>
               )}
+            {hasTableOfContents && (
+              <TableOfContents tableOfContents={tableOfContents} />
+            )}
             <article dangerouslySetInnerHTML={{ __html: postNode.html }} />
             <SocialLinks postPath={slug} postNode={postNode} />
             <div style={{ textAlign: 'center' }}>

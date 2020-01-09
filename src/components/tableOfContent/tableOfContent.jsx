@@ -13,6 +13,7 @@ const Container = styled('div')`
   float: right;
   margin-right: -100px;
   margin-left: 50px;
+  max-width: 450px;
 
   ${DEFAULT_MEDIA_QUERY} {
     display: none;

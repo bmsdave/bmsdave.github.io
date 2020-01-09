@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Vulnerability analysis in the auth process / RU"
+title: "Анализ уязвимостей процесса аутентификации"
 author: Vadim Gorbachev (bmsdave)
 date: "2019-01-25"
 place: Saint Petersburg, Russia
