@@ -7,14 +7,18 @@ export default class AwardsBlock extends React.Component {
     return (
       <React.Fragment>
         <FancyH2>Awards</FancyH2>
-        {this.props.awards.map(award => (
-          <Event key={award.title}>
-            <EventTitle>{award.title}</EventTitle>
-            <EventSubtitle>
-              {award.date}, {award.location}
-            </EventSubtitle>
-          </Event>
-        ))}
+        <ul style={{ listStyle: 'none' }}>
+          {this.props.awards.map(award => (
+            <li key={award.title}>
+              <Event>
+                <EventTitle>{award.title}</EventTitle>
+                <EventSubtitle>
+                  {award.date}, {award.location}
+                </EventSubtitle>
+              </Event>
+            </li>
+          ))}
+        </ul>
       </React.Fragment>
     )
   }

@@ -12,7 +12,7 @@
     "responsibilities": [
       "Supports product development according to the Roadmap.",
       "Product quality assurance, including: monitoring the quality of code;",
-      "Ensuring a required level of test coverage, high qualityRelease Notes.",
+      "Ensuring a required level of test coverage, high quality Release Notes.",
       "Ensuring high quality Release Notes.",
       "developing software to facilitate manual/automated product testing",
       "applying current and reliable software development technologies (for developing products)",
@@ -34,7 +34,7 @@
     "organizationLink": "http://www.openwaygroup.com/",
     "location": "Saint Petersburg, Russia",
     "description": [
-      "Worked on migration the frontend part of the processing platform from .NET to SPA (angular).",
+      "Worked on migration of the frontend part of the processing platform from .NET to SPA (angular).",
       "Improved performance of application.",
       "Developed a translator from DSL to UI screens.",
       "Was engaged on stress/penetration testing and optimization of frontend part."
@@ -54,7 +54,7 @@
     "organizationLink": "http://www.i-free.com/en",
     "location": "Saint Petersburg, Russia",
     "description": [
-      "Developed high performed real-time billing platform.",
+      "Developed high-performance real-time billing platform.",
       "Integrated a platform with external and internal systems.",
       "Set up CI/CD. Configured environment."
     ],
@@ -130,7 +130,7 @@
     "location": "Saint Petersburg, Russia",
     "description": [
       "Consulting clients on technical issues.",
-      "Configuration, monitoring and troubleshooting hosting and clients services."
+      "Configuration, monitoring and troubleshooting hosting and client services."
     ],
     "responsibilities": [],
     "functions": [
