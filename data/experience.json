@@ -22,7 +22,7 @@
       "Performing the functions of the Information Security Officer (PCI DSS)."
     ],
     "technologies": [
-      "JavaScript", "TypeScript", "Java", "SQL", "TeamCity"
+      "JavaScript", "TypeScript", "AngularJS"
     ],
     "dateStart": "2018-12",
     "dateEnd": null
@@ -42,14 +42,14 @@
     "responsibilities": [
     ],
     "technologies": [
-      "JavaScript", "TypeScript", "Java", "SQL", "TeamCity"
+      "JavaScript", "TypeScript", "AngularJS"
     ],
     "dateStart": "2016-11",
     "dateEnd": "2018-12"
   },
 
   {
-    "title": "Full-Stack Web Developer",
+    "title": "Full-Stack Developer",
     "organization": "i-Free",
     "organizationLink": "http://www.i-free.com/en",
     "location": "Saint Petersburg, Russia",
