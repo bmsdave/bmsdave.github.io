@@ -10,11 +10,11 @@ export default class LeadText extends React.Component {
     return (
       <div className={this.props.className}>
         <FancyH1>Hi, I{"'"}m Vadim</FancyH1>
-        <H2>Software Engineer, based&nbsp;in&nbsp;Saint Petersburg.</H2>
+        <H2>Senior Software Engineer, based&nbsp;in&nbsp;Saint Petersburg.</H2>
         <H2>
           Work at{' '}
-          <a href="http://www.openwaygroup.com/" target="_blank">
-            OpenWay
+          <a href="https://vk.com/about" target="_blank">
+            VK
           </a>.
         </H2>
         <Text style={{ marginTop: 20 }}>
