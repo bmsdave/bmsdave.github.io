@@ -25,8 +25,8 @@ module.exports = {
       type: 'site',
     },
     {
-      label: 'bmsdave@gmail.com',
-      href: 'mailto:bmsdave@gmail.com',
+      label: 'bmsdave[@]gmail.com',
+      href: 'mailto:bmsdave[@]gmail.com',
       type: 'gmail',
     },
     {

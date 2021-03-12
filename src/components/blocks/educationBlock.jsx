@@ -33,7 +33,10 @@ export default class EducationBlock extends React.Component {
                       {education.organization}
                     </a>, {education.location}
                   </EventSubtitle>
-                  <EventDescription />
+                  <EventDescription>
+                    {education.graduationWork && <b>Graduation work: </b>}{' '}
+                    {education.graduationWork}
+                  </EventDescription>
                 </Event>
               </li>
             ))}

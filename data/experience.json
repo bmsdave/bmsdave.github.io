@@ -1,12 +1,30 @@
 [
   {
-    "title": "Software Engineer / Product Owner",
-    "organization": "OpenWay Group",
-    "organizationLink": "http://www.openwaygroup.com/",
+    "title": "Senior Software Engineer",
+    "organization": "VK",
+    "organizationLink": "https://vk.com/about",
     "location": "Saint Petersburg, Russia",
     "description": [
-      "Developing the frontend of platform and a DSL-translator.",
-      "Ensuring a required level of test coverage, quality of code, Release Notes and documentation.",
+      "Developing web part of <a href='https://vk.com/blog/new-group-calls'>vk calls</a>.",
+      "Integration of vk calls into external products.",
+      "Optimizing performance, cross-browser compatibility, UX."
+    ],
+    "responsibilities": [
+    ],
+    "technologies": [
+      "JS", "TS", "HTML", "CSS", "React", "WebRTC"
+    ],
+    "dateStart": "2020-06",
+    "dateEnd": null
+  },
+  {
+    "title": "Software Engineer / Product Owner",
+    "organization": "OpenWay Group",
+    "organizationLink": "https://www.openwaygroup.com/",
+    "location": "Saint Petersburg, Russia",
+    "description": [
+      "Developing the frontend part and a DSL-translator of platform <a href='https://www.openwaygroup.com/way4-payment-platform'>Way4</a>.",
+      "Ensuring a required level of test coverage, quality of code, release notes.",
       "Maintaining PA DSS/PCI DSS requirements and high level of security."
     ],
     "responsibilities": [
@@ -22,39 +40,18 @@
       "Performing the functions of the Information Security Officer (PCI DSS)."
     ],
     "technologies": [
-      "JavaScript", "TypeScript", "AngularJS"
-    ],
-    "dateStart": "2018-12",
-    "dateEnd": null
-  },
-
-  {
-    "title": "Software Engineer",
-    "organization": "OpenWay Group",
-    "organizationLink": "http://www.openwaygroup.com/",
-    "location": "Saint Petersburg, Russia",
-    "description": [
-      "Worked on migration of the frontend part of the processing platform from .NET to SPA (angular).",
-      "Improved performance of application.",
-      "Developed a translator from DSL to UI screens.",
-      "Was engaged on stress/penetration testing and optimization of frontend part."
-    ],
-    "responsibilities": [
-    ],
-    "technologies": [
-      "JavaScript", "TypeScript", "AngularJS"
+      "JS", "TS", "HTML", "CSS", "AngularJS"
     ],
     "dateStart": "2016-11",
-    "dateEnd": "2018-12"
+    "dateEnd": "2020-06"
   },
-
   {
     "title": "Full-Stack Developer",
     "organization": "i-Free",
-    "organizationLink": "http://www.i-free.com/en",
+    "organizationLink": "https://i-free.com/en/main",
     "location": "Saint Petersburg, Russia",
     "description": [
-      "Developed high-performance real-time billing platform.",
+      "Developed high-performance real-time billing platform for <a href='https://i-dgtl.ru/en/smsinfo/'>sms messaging</a>.",
       "Integrated a platform with external and internal systems.",
       "Set up CI/CD. Configured environment."
     ],
@@ -76,7 +73,7 @@
   {
     "title": "Monitoring System Administrator",
     "organization": "i-Free",
-    "organizationLink": "http://www.i-free.com/en",
+    "organizationLink": "https://i-free.com/en/main",
     "location": "Saint Petersburg, Russia",
     "description": [
       "Monitoring and optimization of the services performance.",
@@ -96,32 +93,10 @@
       "Providing technical recommendations to internal divisions of the company."
     ],
     "technologies": [
-      "Zabbix", "Linux", "Puppet", "Apache", "Nginx", "SQL", "Python", "Bash"
-    ],
-    "dateStart": "2014-9",
-    "dateEnd": "2015-2"
-  },
-  {
-    "title": "Technical Support Engineer",
-    "organization": "i-Free",
-    "organizationLink": "http://www.i-free.com/en",
-    "location": "Saint Petersburg, Russia",
-    "description": [
-      "Provided support for the uninterrupted operation of services of the company.",
-      "Troubleshooting high-load SMPP messaging."
-    ],
-    "responsibilities": [
-      "Round-the-clock monitoring of the company's servers and services and rapid response to the occurred problems.",
-      "Maintenance, configuration and improvement of the monitoring system.",
-      "Elimination of errors in the company's systems (independently or with the assistance of specialists).",
-      "Providing technical consultations to corporate clients of the company.",
-      "Providing technical recommendations to the company’s internal divisions."
-    ],
-    "technologies": [
-      "Linux", "SMPP", "Apache", "Nginx", "Tomcat", "SQL", "TCP/IP", "Zabbix", "Python", "Bash"
+      "Zabbix", "SMPP", "TCP/IP", "Linux", "Puppet", "Apache", "Nginx", "SQL", "Python", "Bash"
     ],
     "dateStart": "2013-2",
-    "dateEnd": "2014-9"
+    "dateEnd": "2015-2"
   },
   {
     "title": "Technical Support Engineer",

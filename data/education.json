@@ -1,8 +1,17 @@
 [
   {
+    "title": "Master's degree in CS, Web technologies",
+    "graduationWork": "Analysis of optimization and smoothing methods for audio and video streams in the WebRTC using machine learning",
+    "organization": "ITMO University",
+    "organizationLink": "https://en.itmo.ru/en/page/42/Facts_&_Figures.htm",
+    "location": "Saint Petersburg, Russia",
+    "date": "2020 - 2022"
+  },
+  {
     "title": "Bachelor's degree in CS, System analysis and management",
+    "graduationWork": "Data selection and grouping algorithms for decision-making systems in the analysis of network packets",
     "organization": "Peter the Great St.Petersburg Polytechnic University",
-    "organizationLink": "http://english.spbstu.ru/",
+    "organizationLink": "https://english.spbstu.ru/university/",
     "location": "Saint Petersburg, Russia",
     "date": "2011 - 2016"
   },
