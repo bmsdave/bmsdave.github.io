@@ -34,7 +34,7 @@ article {
     flex-direction: column;
 }
 
-section > article {
+section>article {
     margin-bottom: 12px;
 }
 
@@ -89,7 +89,8 @@ h2::before {
     z-index: -2;
 }
 
-h3, h4 {
+h3,
+h4 {
     display: inline;
     font-size: 16px;
     margin: 0px;
@@ -103,7 +104,7 @@ span {
     opacity: 0.7;
 }
 
-article > span {
+article>span {
     opacity: 1;
 }
 
@@ -115,4 +116,149 @@ ul {
     list-style-type: none;
     padding: 0;
     margin: 0px 0px 0px 12px;
+}
+
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: normal;
+    font-display: swap;
+    font-weight: 100;
+    src: local("Fira Sans Thin "), local("Fira Sans-Thin"), url(/static/fira-sans-latin-100.8ae7c3eb.woff2) format("woff2"), url(/static/fira-sans-latin-100.64ef5d92.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: italic;
+    font-display: swap;
+    font-weight: 100;
+    src: local("Fira Sans Thin italic"), local("Fira Sans-Thinitalic"), url(/static/fira-sans-latin-100italic.7ea7f783.woff2) format("woff2"), url(/static/fira-sans-latin-100italic.cad78196.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: normal;
+    font-display: swap;
+    font-weight: 200;
+    src: local("Fira Sans Extra Light "), local("Fira Sans-Extra Light"), url(/static/fira-sans-latin-200.5dfe5bb8.woff2) format("woff2"), url(/static/fira-sans-latin-200.3759dc28.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: italic;
+    font-display: swap;
+    font-weight: 200;
+    src: local("Fira Sans Extra Light italic"), local("Fira Sans-Extra Lightitalic"), url(/static/fira-sans-latin-200italic.50b37736.woff2) format("woff2"), url(/static/fira-sans-latin-200italic.ac01e2f3.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: normal;
+    font-display: swap;
+    font-weight: 300;
+    src: local("Fira Sans Light "), local("Fira Sans-Light"), url(/static/fira-sans-latin-300.2a17d205.woff2) format("woff2"), url(/static/fira-sans-latin-300.e98236c8.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: italic;
+    font-display: swap;
+    font-weight: 300;
+    src: local("Fira Sans Light italic"), local("Fira Sans-Lightitalic"), url(/static/fira-sans-latin-300italic.83f9042f.woff2) format("woff2"), url(/static/fira-sans-latin-300italic.c583c57a.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: local("Fira Sans Regular "), local("Fira Sans-Regular"), url(/static/fira-sans-latin-400.ffc57646.woff2) format("woff2"), url(/static/fira-sans-latin-400.491b04b1.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: italic;
+    font-display: swap;
+    font-weight: 400;
+    src: local("Fira Sans Regular italic"), local("Fira Sans-Regularitalic"), url(/static/fira-sans-latin-400italic.ac9431d4.woff2) format("woff2"), url(/static/fira-sans-latin-400italic.92d6bf99.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: normal;
+    font-display: swap;
+    font-weight: 500;
+    src: local("Fira Sans Medium "), local("Fira Sans-Medium"), url(/static/fira-sans-latin-500.d7b9cfe2.woff2) format("woff2"), url(/static/fira-sans-latin-500.86206664.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: italic;
+    font-display: swap;
+    font-weight: 500;
+    src: local("Fira Sans Medium italic"), local("Fira Sans-Mediumitalic"), url(/static/fira-sans-latin-500italic.de3e8ca7.woff2) format("woff2"), url(/static/fira-sans-latin-500italic.55380eb6.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: normal;
+    font-display: swap;
+    font-weight: 600;
+    src: local("Fira Sans SemiBold "), local("Fira Sans-SemiBold"), url(/static/fira-sans-latin-600.d169a7ca.woff2) format("woff2"), url(/static/fira-sans-latin-600.9984ceaf.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: italic;
+    font-display: swap;
+    font-weight: 600;
+    src: local("Fira Sans SemiBold italic"), local("Fira Sans-SemiBolditalic"), url(/static/fira-sans-latin-600italic.09c31355.woff2) format("woff2"), url(/static/fira-sans-latin-600italic.a64c67a5.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+    src: local("Fira Sans Bold "), local("Fira Sans-Bold"), url(/static/fira-sans-latin-700.eb271b54.woff2) format("woff2"), url(/static/fira-sans-latin-700.4921abc7.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: italic;
+    font-display: swap;
+    font-weight: 700;
+    src: local("Fira Sans Bold italic"), local("Fira Sans-Bolditalic"), url(/static/fira-sans-latin-700italic.a8a81920.woff2) format("woff2"), url(/static/fira-sans-latin-700italic.406af0be.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: normal;
+    font-display: swap;
+    font-weight: 800;
+    src: local("Fira Sans ExtraBold "), local("Fira Sans-ExtraBold"), url(/static/fira-sans-latin-800.3dd887ae.woff2) format("woff2"), url(/static/fira-sans-latin-800.ea51ab60.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: italic;
+    font-display: swap;
+    font-weight: 800;
+    src: local("Fira Sans ExtraBold italic"), local("Fira Sans-ExtraBolditalic"), url(/static/fira-sans-latin-800italic.6c6352cc.woff2) format("woff2"), url(/static/fira-sans-latin-800italic.cb8edeb3.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: normal;
+    font-display: swap;
+    font-weight: 900;
+    src: local("Fira Sans Black "), local("Fira Sans-Black"), url(/static/fira-sans-latin-900.3505dd68.woff2) format("woff2"), url(/static/fira-sans-latin-900.985a68f9.woff) format("woff")
+}
+
+@font-face {
+    font-family: Fira Sans;
+    font-style: italic;
+    font-display: swap;
+    font-weight: 900;
+    src: local("Fira Sans Black italic"), local("Fira Sans-Blackitalic"), url(/static/fira-sans-latin-900italic.cd497598.woff2) format("woff2"), url(/static/fira-sans-latin-900italic.961d754a.woff) format("woff")
 }
