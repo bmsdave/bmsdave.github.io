@@ -1,13 +1,32 @@
 [
   {
+    "title": "Software Engineer",
+    "organization": "Meta Reality Labs",
+    "organizationLink": "https://about.meta.com/realitylabs/",
+    "location": "London, UK",
+    "description": [
+      "Developing <a href='https://www.meta.com/gb/work/workrooms/'>workrooms vr</a>",
+      "Involved in <a href='https://www.instagram.com/reel/CjskLhxrXp1/'>multi-monitor feature</a>",
+      "Involved in rebranding from Oculus to Meta Quest"
+    ],
+    "responsibilities": [
+    ],
+    "technologies": [
+      "C++", "C#", "Javascript", "Unity", "Objective-C", "ReactVR"
+    ],
+    "dateStart": "2022-03",
+    "dateEnd": null
+  },
+  {
     "title": "Senior Software Engineer",
     "organization": "VK",
     "organizationLink": "https://vk.com/about",
     "location": "Saint Petersburg, Russia",
     "description": [
-      "Developing web part of <a href='https://vk.com/blog/new-group-calls'>vk calls</a>.",
-      "Integration of vk calls into external products.",
-      "Optimizing performance, cross-browser compatibility, UX."
+      "Developing web part of <a href='https://calls.vk.com/'>vk calls</a>.",
+      "During my work, we increased the number of participants in one call from 128 users to 2K, then to 10K and then removed completly this limit.",
+      "Integrated vk calls into external products.",
+      "Optimized performance, cross-browser compatibility, UX."
     ],
     "responsibilities": [
     ],
@@ -15,7 +34,7 @@
       "JS", "TS", "HTML", "CSS", "React", "WebRTC"
     ],
     "dateStart": "2020-06",
-    "dateEnd": null
+    "dateEnd": "2022-02"
   },
   {
     "title": "Software Engineer / Product Owner",
@@ -23,21 +42,22 @@
     "organizationLink": "https://www.openwaygroup.com/",
     "location": "Saint Petersburg, Russia",
     "description": [
-      "Developing the frontend part and a DSL-translator of platform <a href='https://www.openwaygroup.com/way4-payment-platform'>Way4</a>.",
-      "Ensuring a required level of test coverage, quality of code, release notes.",
-      "Maintaining PA DSS/PCI DSS requirements and high level of security."
+      "Developed the frontend part and a DSL-translator of platform <a href='https://www.openwaygroup.com/way4-payment-platform'>Way4</a>.",
+      "Rewrote the application from .Net to Javascript + Angular",
+      "Ensured a required level of test coverage, quality of code, release notes.",
+      "Maintained PA DSS/PCI DSS requirements and high level of security."
     ],
     "responsibilities": [
       "Supports product development according to the Roadmap.",
       "Product quality assurance, including: monitoring the quality of code;",
-      "Ensuring a required level of test coverage, high quality Release Notes.",
-      "Ensuring high quality Release Notes.",
-      "developing software to facilitate manual/automated product testing",
-      "applying current and reliable software development technologies (for developing products)",
-      "Controlling usage of 3rd party libraries in terms of absense of known security vulnerabilities and ensuring license compliance.",
-      "Fixing defects according to regulations (SLA).",
-      "Ensures implementation of non-functional requirements for the product.",
-      "Performing the functions of the Information Security Officer (PCI DSS)."
+      "Ensured a required level of test coverage, high quality Release Notes.",
+      "Ensured high quality Release Notes.",
+      "Developed software to facilitate manual/automated product testing",
+      "applied current and reliable software development technologies (for developing products)",
+      "Controlled usage of 3rd party libraries in terms of absense of known security vulnerabilities and ensuring license compliance.",
+      "Fixed defects according to regulations (SLA).",
+      "Ensured implementation of non-functional requirements for the product.",
+      "Performied the functions of the Information Security Officer (PCI DSS)."
     ],
     "technologies": [
       "JS", "TS", "HTML", "CSS", "AngularJS"
@@ -56,7 +76,7 @@
       "Set up CI/CD. Configured environment."
     ],
     "responsibilities": [
-      "Developing clients personal accounts.",
+      "Developed clients personal accounts.",
       "Architecture development and writing server-side and client-side parts of the platform according to the external customers’ requirements.",
       "Implementation of applications for data synchronization via REST, SOAP, SMTP.",
       "Developed applications deployment.",

@@ -264,7 +264,7 @@ const Group = styled('div')`
 
 const classes = {
   resume: css`
-    font-size: 12px;
+    font-size: 14px;
   `,
   icon: css`
     width: 25px;

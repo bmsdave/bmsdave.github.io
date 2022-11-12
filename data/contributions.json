@@ -12,22 +12,24 @@
     "dateEnd": "2020-4"
   },
   {
-    "title": "",
-    "description": [],
-    "organization": "Speaker",
-    "organizationLink": "https://bmsdave.github.io/talks",
-    "dateStart": "2016-5",
-    "dateEnd": null
+    "title": "Contributor",
+    "description": [
+      "Helped with compatibility of python2 and python3 in the code base."
+    ],
+    "organization": "v8, chromium",
+    "organizationLink": "https://chromium-review.googlesource.com/q/owner:bmsdave%2540gmail.com",
+    "dateStart": "2019-1",
+    "dateEnd": "2020-2"
   },
   {
     "title": "Contributor",
     "description": [
-      "Help with compatibility of python2 and python3 in the code base."
+      "Helped with fixing bugs, writing tests, adding new functionality to various open source products"
     ],
-    "organization": "v8",
-    "organizationLink": "https://chromium-review.googlesource.com/q/owner:bmsdave%2540gmail.com",
-    "dateStart": "2019-1",
-    "dateEnd": "2020-2"
+    "organization": "nodejs and other",
+    "organizationLink": "https://github.com/pulls?page=1&q=is%3Apr+author%3Abmsdave",
+    "dateStart": "2015-11",
+    "dateEnd": null
   },
   {
     "title": "Program committee",
@@ -50,5 +52,34 @@
     "organizationLink": "https://nodeschool.io/spb/",
     "dateStart": "2017-8",
     "dateEnd": "2018-11"
+  },
+  {
+    "title": "",
+    "description": [
+      "2022 <a href='https://www.youtube.com/watch?v=OTtAJUcR1QY'>VK Calls: Beyond browser limits</a>",
+      "2021 <a href='https://www.youtube.com/watch?v=bIIsoJ-pIX0'>Calls to 2000+ participants</a>",
+      "2020 <a href='https://www.youtube.com/watch?v=Zu18cMJGeqw'>EDA: Event Loop details, part 2</a>",
+      "2019 <a href='https://www.youtube.com/watch?v=ctKseRpZcKQ'>EDA: Event Loop details</a>",
+      "2019 <a href='https://www.youtube.com/watch?v=__-NRORYk2s'>Vulnerability analysis in the auth, part 2</a>",
+      "2019 <a href='https://www.youtube.com/watch?v=Zfdy5VHfGZk'>Vulnerability analysis in the auth</a>",
+      "2017 <a href='https://www.youtube.com/watch?v=LTpznz2wcgY&t=5525s'>RxJS</a>",
+      "2016 <a href='https://www.youtube.com/watch?v=kKoZIjdjd7o'>Content Security Policy</a>"
+    ],
+    "organization": "Talks",
+    "organizationLink": "https://bmsdave.github.io/talks",
+    "dateStart": "2016-5",
+    "dateEnd": null
+  },
+  {
+    "title": "",
+    "description": [
+      "2022 <a href='https://bmsdave.github.io/blog/y-combinator'>Y: The Most Beautiful Idea in Computer Science explained in JavaScript</a>",
+      "2019 <a href='https://bmsdave.github.io/blog/piterjs-conf-2019'>AST, automation, optimization or how PiterJS conf #1 went</a>",
+      "2019 <a href='https://bmsdave.github.io/blog/auth-vulnerabilities'>Vulnerability Analysis of Authentication Processes</a>"
+    ],
+    "organization": "Articles",
+    "organizationLink": "https://bmsdave.github.io/blog/",
+    "dateStart": "2019-1",
+    "dateEnd": null
   }
 ]

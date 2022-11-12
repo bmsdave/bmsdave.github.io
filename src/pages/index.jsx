@@ -78,7 +78,7 @@ export const pageQuery = graphql`
         }
       }
     }
-    allTalksJson(limit: 3) {
+    allTalksJson(limit: 5) {
       edges {
         node {
           title

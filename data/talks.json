@@ -1,5 +1,21 @@
 [
   {
+    "title": "Calls for 2000+ participants, or What WebRTC can do",
+    "place": "HolyJS, Saint Petersburg, Russia",
+    "url": "https://bmsdave.github.io/talk-vk-calls/",
+    "video": "https://www.youtube.com/watch?v=bIIsoJ-pIX0",
+    "date": "3.11.2021",
+    "language": "RU"
+  },
+  {
+    "title": "VK Calls: beyond browser limits",
+    "place": "VideoTech, Saint Petersburg, Russia",
+    "url": "https://bmsdave.github.io/talk-vk-calls/",
+    "video": "https://live.jugru.org/en/video?v=MTAwMTE3iiM3NzI5ijA",
+    "date": "12.02.2022",
+    "language": "RU"
+  },
+  {
     "title": "Event-Driven Architecture: Event Loop implementation details",
     "place": "FrontendConf, Moscow, Russia",
     "url": "https://bmsdave.github.io/talk-eda-slides/#/",

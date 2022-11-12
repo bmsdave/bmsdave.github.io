@@ -10,19 +10,18 @@ export default class LeadText extends React.Component {
     return (
       <div className={this.props.className}>
         <FancyH1>Hi, I{"'"}m Vadim</FancyH1>
-        <H2>Senior Software Engineer, based&nbsp;in&nbsp;Saint Petersburg.</H2>
+        <H2>Software Engineer, based&nbsp;in&nbsp;London.</H2>
         <H2>
           Work at{' '}
-          <a href="https://vk.com/about" target="_blank">
-            VK
+          <a href="https://about.meta.com/realitylabs/" target="_blank">
+            Meta Reality Labs
           </a>.
         </H2>
         <Text style={{ marginTop: 20 }}>
-          {experienceInWeb} years of experience in web development and{' '}
-          {experienceInIT} years of experience in IT. I focus on the
-          configuration flexibility, maintainability, performance, and product
-          security. I actively participate in the life of the JavaScript
-          community. I organize{' '}
+          {experienceInWeb} years of experience in development and{' '}
+          {experienceInIT} years of experience in IT. I actively participated in
+          the life of the JavaScript community, but not so long ago I've changed
+          direction to VR Interfaces. I organized{' '}
           <a href="https://piterjs.org/" target="_blank">
             PiterJS
           </a>{' '}
@@ -31,19 +30,20 @@ export default class LeadText extends React.Component {
           <a href="https://nodeschool.io/spb/" target="_blank">
             NodeSchool/SPB
           </a>{' '}
-          and has been a member of the{' '}
+          , has been a member of the{' '}
           <a href="https://holyjs.ru/en/" target="_blank">
             HolyJS
           </a>{' '}
-          program committee. Previously I served as a mentor at{' '}
-          <a href="https://htmlacademy.ru/" target="_blank">
-            HTML Academy
+          program committee.I sometimes make{' '}
+          <a href="https://bmsdave.github.io/talks/" target="_blank">
+            talks
           </a>{' '}
-          and lectured on JavaScript and node.JS at the online university of{' '}
-          <a href="https://netology.ru/" target="_blank">
-            Netology
-          </a>. I like sports (boxing, speedcubing, and chess). I respect and
-          love mathematics and everything related to it.
+          at conferences and contribute a little to{' '}
+          <a href="https://github.com/bmsdave" target="_blank">
+            open source
+          </a>{' '}
+          . I like sports (boxing, speedcubing, and chess). I respect and love
+          mathematics and everything related to it.
         </Text>
       </div>
     )

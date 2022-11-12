@@ -38,14 +38,6 @@ module.exports = {
       resolve: 'gatsby-transformer-remark',
       options: {
         plugins: [
-          `gatsby-plugin-sharp`,
-          {
-            resolve: 'gatsby-remark-images',
-            options: {
-              maxWidth: 700,
-              linkImagesToOriginal: false,
-            },
-          },
           {
             resolve: 'gatsby-remark-embed-video',
             options: {
@@ -86,46 +78,15 @@ module.exports = {
         pathToConfigModule: 'src/utils/typography.js',
       },
     },
+    'gatsby-plugin-remove-serviceworker',
     'gatsby-plugin-twitter',
     'gatsby-plugin-emotion',
-    'gatsby-plugin-sharp',
-    'gatsby-transformer-sharp',
     'gatsby-transformer-json',
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-catch-links',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-lodash',
     'gatsby-plugin-react-next',
-    {
-      resolve: 'gatsby-plugin-manifest',
-      options: {
-        name: config.siteTitle,
-        short_name: config.shortSiteTitle,
-        description: config.siteDescription,
-        start_url: config.pathPrefix,
-        background_color: config.backgroundColor,
-        theme_color: config.themeColor,
-        display: 'minimal-ui',
-        icons: [
-          {
-            src: '/logos/logo-192x192.jpg',
-            sizes: '192x192',
-            type: 'image/jpg',
-          },
-          {
-            src: '/logos/logo-512x512.jpg',
-            sizes: '512x512',
-            type: 'image/jpg',
-          },
-        ],
-      },
-    },
-    {
-      resolve: `gatsby-plugin-offline`,
-      options: {
-        cacheId: 'gatsby-plugin-offline-21',
-      },
-    },
     {
       resolve: 'gatsby-plugin-feed',
       options: {

@@ -226,9 +226,7 @@ export default class PostTemplate extends React.Component {
                   style={{
                     marginBottom: 30,
                   }}
-                >
-                  <Image sizes={post.cover.childImageSharp.sizes} />
-                </div>
+                />
               )}
             {hasTableOfContents && (
               <TableOfContents tableOfContents={tableOfContents} />
@@ -263,16 +261,6 @@ export const pageQuery = graphql`
       frontmatter {
         title
         date(formatString: "MMMM Do, YYYY")
-        cover {
-          childImageSharp {
-            resize(width: 1000) {
-              src
-            }
-            sizes(maxWidth: 786) {
-              ...GatsbyImageSharpSizes
-            }
-          }
-        }
         tags
       }
       fields {

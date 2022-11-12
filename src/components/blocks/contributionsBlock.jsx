@@ -1,15 +1,23 @@
 import React from 'react'
 import { FancyH2 } from '../elements/fancyHeader'
-import { Event, EventTitle, EventSubtitle, EventTitleGray, EventTime, EventTimeMain, EventDescription } from '../elements/events'
+import {
+  Event,
+  EventTitle,
+  EventSubtitle,
+  EventTitleGray,
+  EventTime,
+  EventTimeMain,
+  EventDescription,
+} from '../elements/events'
 import { getCountOfEvent, getIntervalOfEvent } from '../../utils/timeIntervals'
 
 export default class ContributionsBlock extends React.Component {
   render() {
-    console.log(this.props.contributions);
+    console.log(this.props.contributions)
     return (
       <React.Fragment>
         <FancyH2>Community Contributions</FancyH2>
-        <ul style={{listStyle:'none'}}>
+        <ul style={{ listStyle: 'none' }}>
           {this.props.contributions.map(contribution => (
             <li key={contribution.organizationLink}>
               <Event>
@@ -29,7 +37,12 @@ export default class ContributionsBlock extends React.Component {
                 </EventSubtitle>
                 <EventDescription>
                   {contribution.description.map((desc, index) => {
-                    return <p key={index}>{desc}</p>
+                    return (
+                      <p
+                        key={index}
+                        dangerouslySetInnerHTML={{ __html: desc }}
+                      />
+                    )
                   })}
                 </EventDescription>
               </Event>
