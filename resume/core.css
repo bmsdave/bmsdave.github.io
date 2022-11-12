@@ -1,0 +1,110 @@
+* {
+    font-family: 'Fira Sans', sans-serif;
+    text-rendering: optimizeLegibility;
+    line-height: 1.1;
+}
+
+header {
+    display: flex;
+    font-size: 16px;
+    height: 70px;
+    margin: 10px auto 40px auto;
+}
+
+body {
+    margin: 0 auto;
+    width: 980px;
+    font-size: 14px;
+}
+
+section {
+    margin-bottom: 12px;
+}
+
+article {
+    display: flex;
+    flex-direction: column;
+}
+
+section > article {
+    margin-bottom: 12px;
+}
+
+article.project {
+    margin-top: 4px;
+    margin-left: 12px;
+}
+
+article.links {
+    display: flex;
+    flex-direction: row;
+}
+
+.main {
+    display: flex;
+}
+
+.core {
+    padding-right: 32px;
+}
+
+aside {
+    width: 340px;
+    min-width: 340px;
+}
+
+h1 {
+    font-size: 42px;
+    font-weight: 400;
+    padding: 0px 0px 30px 10px;
+    margin: 0px;
+}
+
+h2 {
+    font-size: 21px;
+    position: relative;
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0px 0px 20px;
+}
+
+h2::before {
+    content: "";
+    width: 90%;
+    height: 15px;
+    position: absolute;
+    left: -10px;
+    bottom: -5px;
+    background-color: rgb(176, 176, 176);
+    opacity: 0.6;
+    z-index: -2;
+}
+
+h3, h4 {
+    display: inline;
+    font-size: 16px;
+    margin: 0px;
+}
+
+h4 {
+    font-weight: 400;
+}
+
+span {
+    opacity: 0.7;
+}
+
+article > span {
+    opacity: 1;
+}
+
+p {
+    margin: 0px 0px 0px 12px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0px 0px 0px 12px;
+}
