@@ -17,7 +17,7 @@ import ContributionsBlock from '../components/blocks/contributionsBlock'
 import styled from 'react-emotion'
 
 const RowResume = styled(Row)`
-  line-height: 1.2;
+  line-height: 1.3;
   font-size: 14px;
 
   > div:first-child {
