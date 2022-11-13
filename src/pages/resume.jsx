@@ -34,6 +34,12 @@ const RowResume = styled(Row)`
 
 class Resume extends React.Component {
   render() {
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      window.navigator.serviceWorker.getRegistrations().then(registrations => {
+        registrations.forEach(r => r.unregister())
+      })
+    }
+
     const awards = this.props.data.allAwardsJson.edges.map(edge => edge.node)
     const contributions = this.props.data.allContributionsJson.edges.map(
       edge => edge.node
