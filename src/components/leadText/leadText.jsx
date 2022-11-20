@@ -12,38 +12,38 @@ export default class LeadText extends React.Component {
         <FancyH1>Hi, I{"'"}m Vadim</FancyH1>
         <H2>Software Engineer, based&nbsp;in&nbsp;London.</H2>
         <H2>
-          Work at{' '}
+          @{' '}
           <a href="https://about.meta.com/realitylabs/" target="_blank">
             Meta Reality Labs
           </a>.
         </H2>
         <Text style={{ marginTop: 20 }}>
-          {experienceInWeb} years of experience in development and{' '}
+          I have {experienceInWeb} years of experience in development and{' '}
           {experienceInIT} years of experience in IT. I actively participated in
-          the life of the JavaScript community, but not so long ago I've changed
-          direction to VR Interfaces. I organized{' '}
+          the life of the JavaScript community: I organized{' '}
           <a href="https://piterjs.org/" target="_blank">
             PiterJS
           </a>{' '}
-          – monthly JavaScript Meetup in Saint Petersburg, contributor as a
+          – monthly JavaScript Meetup in Saint Petersburg, contributed as a
           mentor at{' '}
           <a href="https://nodeschool.io/spb/" target="_blank">
             NodeSchool/SPB
           </a>{' '}
-          , has been a member of the{' '}
+          and was a member of the{' '}
           <a href="https://holyjs.ru/en/" target="_blank">
             HolyJS
           </a>{' '}
-          program committee.I sometimes make{' '}
+          program committee. Not so long ago I changed direction to focus on VR
+          Interfaces. I enjoy sharing my knowledge at{' '}
           <a href="https://bmsdave.github.io/talks/" target="_blank">
-            talks
+            conferences
           </a>{' '}
-          at conferences and contribute a little to{' '}
+          and contributing to{' '}
           <a href="https://github.com/bmsdave" target="_blank">
             open source
           </a>{' '}
-          . I like sports (boxing, speedcubing, and chess). I respect and love
-          mathematics and everything related to it.
+          . When I’m not coding, I like to explore London and walk my dog. I
+          respect and love mathematics and everything related to it.
         </Text>
       </div>
     )

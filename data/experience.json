@@ -23,8 +23,8 @@
     "organizationLink": "https://vk.com/about",
     "location": "Saint Petersburg, Russia",
     "description": [
-      "Developing web part of <a href='https://calls.vk.com/'>vk calls</a>.",
-      "During my work, we increased the number of participants in one call from 128 users to 2K, then to 10K and then removed completly this limit.",
+      "Developed web part of <a href='https://calls.vk.com/'>vk calls</a>.",
+      "During my work, we increased the number of participants in one call from 128 users to 2K, then to 10K and then made it completly limitless.",
       "Integrated vk calls into external products.",
       "Optimized performance, cross-browser compatibility, UX."
     ],
@@ -96,9 +96,9 @@
     "organizationLink": "https://i-free.com/en/main",
     "location": "Saint Petersburg, Russia",
     "description": [
-      "Monitoring and optimization of the services performance.",
-      "Participation in the elimination of emergencies in the services.",
-      "Improvement of existing emergency response processes."
+      "Monitored and optimized the service's performance.",
+      "Participated in the elimination of issues in services.",
+      "Improved existing emergency response processes."
     ],
     "responsibilities": [
       "Monitoring and optimization of the services performance.",
@@ -124,7 +124,7 @@
     "organizationLink": "https://www.majordomo.ru/",
     "location": "Saint Petersburg, Russia",
     "description": [
-      "Consulting clients on technical issues.",
+      "Consulted clients on technical issues.",
       "Configuration, monitoring and troubleshooting hosting and client services."
     ],
     "responsibilities": [],
