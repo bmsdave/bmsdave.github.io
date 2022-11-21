@@ -141,6 +141,8 @@ export const pageQuery = graphql`
           organizationLink
           location
           date
+          ranking
+          rankingLink
         }
       }
     }

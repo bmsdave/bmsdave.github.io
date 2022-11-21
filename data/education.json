@@ -5,7 +5,9 @@
     "organization": "ITMO University",
     "organizationLink": "https://en.itmo.ru/en/page/42/Facts_&_Figures.htm",
     "location": "Saint Petersburg, Russia",
-    "date": "2020 - 2022"
+    "date": "2020 - 2022",
+    "ranking": "79 in CS",
+    "rankingLink": "https://www.topuniversities.com/universities/itmo-university"
   },
   {
     "title": "Bachelor's degree in CS, System analysis and management",
@@ -13,13 +15,17 @@
     "organization": "Peter the Great St.Petersburg Polytechnic University",
     "organizationLink": "https://english.spbstu.ru/university/",
     "location": "Saint Petersburg, Russia",
-    "date": "2011 - 2016"
+    "date": "2011 - 2016",
+    "ranking": "31 in EECA",
+    "rankingLink": "https://www.topuniversities.com/universities/peter-great-st-petersburg-polytechnic-university"
   },
   {
     "title": "Associate's degree, Math and Computer Science",
     "organization": "Belarusian-Russian University",
     "organizationLink": "http://en.bru.by",
     "location": "Mogilev, Belarus",
-    "date": "2005 - 2007"
+    "date": "2005 - 2007",
+    "ranking": "186 in EECA",
+    "rankingLink": "https://www.topuniversities.com/universities/belarusian-russian-university"
   }
 ]

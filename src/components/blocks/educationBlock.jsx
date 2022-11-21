@@ -31,6 +31,13 @@ export default class EducationBlock extends React.Component {
                       rel="noopener noreferrer"
                     >
                       {education.organization}
+                    </a>,{' '}
+                    <a
+                      href={education.rankingLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {education.ranking}
                     </a>, {education.location}
                   </EventSubtitle>
                   <EventDescription>
