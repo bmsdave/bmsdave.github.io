@@ -3,7 +3,7 @@
     "title": "Organizer",
     "description": [
       "helped speakers prepare technically competent talks.",
-      "Together with a team of enthusiasts, we organized 50+ meetups and 1 conference.",
+      "Organized 50+ meetups and 1 conference.",
       "We have grown a community of 5000+ developers."
     ],
     "organization": "PiterJS",
@@ -14,7 +14,7 @@
   {
     "title": "Contributor",
     "description": [
-      "Suported compatibility of python2 and python3 in the code base."
+      "Suported py2 and py3 compatibility."
     ],
     "organization": "v8, chromium",
     "organizationLink": "https://chromium-review.googlesource.com/q/owner:bmsdave%2540gmail.com",
@@ -24,7 +24,7 @@
   {
     "title": "Contributor",
     "description": [
-      "Fixing bugs, writing tests, adding new functionality to various open source products"
+      "Fixing bugs, writing tests, adding features to various open source products"
     ],
     "organization": "nodejs and other",
     "organizationLink": "https://github.com/pulls?page=1&q=is%3Apr+author%3Abmsdave",
