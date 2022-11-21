@@ -25,16 +25,6 @@ module.exports = {
       type: 'site',
     },
     {
-      label: 'bmsdave[@]gmail.com',
-      href: 'mailto:bmsdave[@]gmail.com',
-      type: 'gmail',
-    },
-    {
-      label: '@_bmsdave',
-      href: 'https://twitter.com/_bmsdave',
-      type: 'twitter',
-    },
-    {
       label: '@bmsdave',
       href: 'https://github.com/bmsdave',
       type: 'github',

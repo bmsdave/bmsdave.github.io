@@ -10,12 +10,11 @@ export default class LeadText extends React.Component {
     return (
       <div className={this.props.className}>
         <FancyH1>Hi, I{"'"}m Vadim</FancyH1>
-        <H2>Software Engineer, based&nbsp;in&nbsp;London.</H2>
         <H2>
-          @{' '}
+          Software Engineer, based&nbsp;in&nbsp;London.{' '}
           <a href="https://about.meta.com/realitylabs/" target="_blank">
-            Meta Reality Labs
-          </a>.
+            @Meta Reality Labs
+          </a>
         </H2>
         <Text style={{ marginTop: 20 }}>
           I have {experienceInWeb} years of experience in development and{' '}
@@ -41,8 +40,7 @@ export default class LeadText extends React.Component {
           and contributing to{' '}
           <a href="https://github.com/bmsdave" target="_blank">
             open source
-          </a>{' '}
-          . When I’m not coding, I like to explore London and walk my dog. I
+          </a>. When I’m not coding, I like to explore London and walk my dog. I
           respect and love mathematics and everything related to it.
         </Text>
       </div>

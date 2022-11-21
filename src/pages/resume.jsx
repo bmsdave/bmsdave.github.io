@@ -15,6 +15,7 @@ import CoursesBlock from '../components/blocks/coursesBlock'
 import AwardsBlock from '../components/blocks/awardsBlock'
 import ContributionsBlock from '../components/blocks/contributionsBlock'
 import styled from 'react-emotion'
+import { H2, Text } from '../components/elements/elements'
 
 const RowResume = styled(Row)`
   line-height: 1.3;
@@ -34,6 +35,10 @@ const RowResume = styled(Row)`
 
 class Resume extends React.Component {
   render() {
+    const currentYear = new Date().getFullYear()
+    const experienceInWeb = currentYear - 2014
+    const experienceInIT = currentYear - 2009 - 1
+
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
       window.navigator.serviceWorker.getRegistrations().then(registrations => {
         registrations.forEach(r => r.unregister())
@@ -55,9 +60,44 @@ class Resume extends React.Component {
       <div className={classes.resume}>
         <Helmet title={Config.siteTitle} />
         <FancyH1>Resume</FancyH1>
+        <FancyPrintH1>Vadim Gorbachev</FancyPrintH1>
+        <H2 style={{ marginTop: 0 }}>
+          Software Engineer, based&nbsp;in&nbsp;London.{' '}
+          <a href="https://about.meta.com/realitylabs/" target="_blank">
+            @Meta Reality Labs
+          </a>
+        </H2>
+        <Text style={{ marginTop: 20, marginBottom: 20 }}>
+          I have {experienceInWeb} years of experience in development and{' '}
+          {experienceInIT} years of experience in IT. I actively participated in
+          the life of the JavaScript community: I organized{' '}
+          <a href="https://piterjs.org/" target="_blank">
+            PiterJS
+          </a>{' '}
+          – monthly JavaScript Meetup in Saint Petersburg, contributed as a
+          mentor at{' '}
+          <a href="https://nodeschool.io/spb/" target="_blank">
+            NodeSchool/SPB
+          </a>{' '}
+          and was a member of the{' '}
+          <a href="https://holyjs.ru/en/" target="_blank">
+            HolyJS
+          </a>{' '}
+          program committee. Not so long ago I changed direction to focus on VR
+          Interfaces. I enjoy sharing my knowledge at{' '}
+          <a href="https://bmsdave.github.io/talks/" target="_blank">
+            conferences
+          </a>{' '}
+          and contributing to{' '}
+          <a href="https://github.com/bmsdave" target="_blank">
+            open source
+          </a>{' '}
+          . When I’m not coding, I like to explore London and walk my dog. I
+          respect and love mathematics and everything related to it.
+        </Text>
+
         <RowResume>
           <div>
-            <FancyPrintH1>Vadim Gorbachev</FancyPrintH1>
             <ExperienceBlock experiences={experiences} />
             <EducationBlock educations={educations} />
           </div>
