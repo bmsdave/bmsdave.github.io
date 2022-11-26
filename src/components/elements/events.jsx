@@ -57,6 +57,13 @@ const EventTimeMain = styled('div')`
 
 const EventDescription = styled('div')`
   padding: 4px 0 0 4px;
+  p {
+    text-indent: 1.5em;
+  }
+
+  p:last-child {
+    text-indent: 0;
+  }
 `
 
 export {

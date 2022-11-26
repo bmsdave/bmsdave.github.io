@@ -1,18 +1,16 @@
 [
   {
     "title": "Software Engineer",
-    "organization": "Meta Reality Labs",
+    "organization": "Meta",
     "organizationLink": "https://about.meta.com/realitylabs/",
     "location": "London, UK",
     "description": [
-      "Developing <a href='https://www.meta.com/gb/work/workrooms/'>workrooms vr</a>",
-      "Involved in <a href='https://www.instagram.com/reel/CjskLhxrXp1/'>multi-monitor feature</a>",
-      "Involved in rebranding from Oculus to Meta Quest"
+      "Developing <a href='https://www.meta.com/gb/work/workrooms/'>workrooms vr</a>. In particular, remote desktop functionality (both VR and desktop part). Involved in <a href='https://www.instagram.com/reel/CjskLhxrXp1/'>multi-monitor feature</a>. Involved in rebranding from Oculus to Meta Quest."
     ],
     "responsibilities": [
     ],
     "technologies": [
-      "C++", "C#", "Javascript", "Unity", "Objective-C", "ReactVR"
+      "C++", "C#", "JS", "Unity", "Objective-C", "ReactVR"
     ],
     "dateStart": "2022-03",
     "dateEnd": null
@@ -23,10 +21,8 @@
     "organizationLink": "https://vk.com/about",
     "location": "Saint Petersburg, Russia",
     "description": [
-      "Developed web part of <a href='https://calls.vk.com/'>vk calls</a>.",
-      "During my work, we increased the number of participants in one call from 128 users to 2K, then to 10K and then made it completly limitless.",
-      "Integrated vk calls into external products.",
-      "Optimized performance, cross-browser compatibility, UX."
+      "Developed web part of <a href='https://calls.vk.com/'>vk calls</a>. During my work, ro team increased the number of participants in one call from 128 users to 2K, then to 10K and then made it completly limitless. Thus overtaking competing products (such as zoom, MS team, google meet) in a year of development. In the web version, I implemented infinity scrolling pattern of the participants' video, which also gave us an advantage and better UX, since alternative solutions on the market show users video using pagination.",
+      "In the web version, I implemented the speaker and presentation mode, the admin mode (raise hand, mute/unmute, ban, permissions for video/screen sharing/audio), broadcasting. This helped our product to expand the audience due to the fact that there was an opportunity to conduct lectures and master classes in calls. Integrated vk calls into external products. Optimized performance, cross-browser compatibility, UX."
     ],
     "responsibilities": [
     ],
@@ -38,14 +34,13 @@
   },
   {
     "title": "Software Engineer / Product Owner",
-    "organization": "OpenWay Group",
+    "organization": "OpenWay",
     "organizationLink": "https://www.openwaygroup.com/",
     "location": "Saint Petersburg, Russia",
     "description": [
       "Developed the frontend part and a DSL-translator of platform <a href='https://www.openwaygroup.com/way4-payment-platform'>Way4</a>.",
-      "Rewrote the application from .Net to Javascript + Angular",
-      "Ensured a required level of test coverage, quality of code, release notes.",
-      "Maintained PA DSS/PCI DSS requirements and high level of security."
+      "Rewrote the application from .Net to JavaScript + Angular, which increased performance and reduced the load on the servers.",
+      "Ensured a required level of test coverage, quality of code, release notes. Maintained PA DSS/PCI DSS requirements and high level of security."
     ],
     "responsibilities": [
       "Supports product development according to the Roadmap.",
@@ -60,7 +55,7 @@
       "Performied the functions of the Information Security Officer (PCI DSS)."
     ],
     "technologies": [
-      "JS", "TS", "HTML", "CSS", "AngularJS"
+      "JS", "TS", "HTML", "CSS", "AngularJS", "PA DSS"
     ],
     "dateStart": "2016-11",
     "dateEnd": "2020-06"
@@ -71,9 +66,7 @@
     "organizationLink": "https://i-free.com/en/main",
     "location": "Saint Petersburg, Russia",
     "description": [
-      "Developed high-performance real-time billing platform for <a href='https://i-dgtl.ru/en/smsinfo/'>sms messaging</a>.",
-      "Integrated a platform with external and internal systems.",
-      "Set up CI/CD. Configured environment."
+      "Developed high-performance real-time billing platform for <a href='https://i-dgtl.ru/en/smsinfo/'>sms messaging</a>. Integrated a platform with external and internal systems. Set up CI/CD. Configured environment."
     ],
     "responsibilities": [
       "Developed clients personal accounts.",
@@ -84,7 +77,7 @@
       "Configure nginx, apache, puppet configurations."
     ],
     "technologies": [
-      "JavaScript", "Python", "PL/SQL", "Linux", "Nginx", "Apache", "Puppet"
+      "JS", "Python", "PL/SQL", "Linux", "Nginx", "Apache", "Puppet"
     ],
     "dateStart": "2015-2",
     "dateEnd": "2016-11"
@@ -96,9 +89,7 @@
     "organizationLink": "https://i-free.com/en/main",
     "location": "Saint Petersburg, Russia",
     "description": [
-      "Monitored and optimized the service's performance.",
-      "Participated in the elimination of issues in services.",
-      "Improved existing emergency response processes."
+      "Monitored and optimized the service's performance. Participated in the elimination of issues in services. Improved existing emergency response processes."
     ],
     "responsibilities": [
       "Monitoring and optimization of the services performance.",
@@ -124,8 +115,7 @@
     "organizationLink": "https://www.majordomo.ru/",
     "location": "Saint Petersburg, Russia",
     "description": [
-      "Consulted clients on technical issues.",
-      "Configuration, monitoring and troubleshooting hosting and client services."
+      "Consulted clients on technical issues. Configuration, monitoring and troubleshooting hosting and client services."
     ],
     "responsibilities": [],
     "functions": [

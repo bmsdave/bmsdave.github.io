@@ -16,7 +16,6 @@ export const FancyH2 = styled(`h2`)`
   position: relative;
   display: inline-block;
   font-size: 1.5rem;
-  margin: 20px 0 20px 0;
 
   @media print {
   }
