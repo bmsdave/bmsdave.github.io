@@ -3,8 +3,12 @@ import { BlogPost } from './blog/BlogPost';
 import { BlogIndex } from './blog/BlogIndex';
 import { LatestPosts } from './blog/LatestPosts';
 
+// Глобальная переменная для отслеживания инициализации
+let isInitialized = false;
+
 // Initialize the page
 async function initPage(path?: string): Promise<void> {
+  console.log('Initializing page for path:', path);
   // Check if we're on a blog page
   path = path || window.location.pathname;
 
@@ -24,17 +28,32 @@ async function initPage(path?: string): Promise<void> {
     document.head.appendChild(link);
   }
 
+  // Проверяем, не является ли запрос обращением к статическому файлу
+  const fileExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.css', '.js'];
+  const isStaticFile = fileExtensions.some(ext => path?.toLowerCase().endsWith(ext));
+  
+  if (isStaticFile) {
+    console.log('Skipping page initialization for static file:', path);
+    return;
+  }
+
   if (path === '/blog' || path === '/blog/') {
+    console.log('Rendering blog index');
     // Render blog index
     const blogIndex = new BlogIndex(contentContainer);
     await blogIndex.render();
-  } else if (path.startsWith('/blog/')) {
+  } else if (path?.startsWith('/blog/')) {
     // Extract slug from path
     const slug = path.replace('/blog/', '');
-
-    // Render blog post
-    const blogPost = new BlogPost(contentContainer);
-    await blogPost.render(slug);
+    
+    // Check if this is a valid blog post slug (не содержит точек)
+    if (!slug.includes('.')) {
+      // Render blog post
+      const blogPost = new BlogPost(contentContainer);
+      await blogPost.render(slug);
+    } else {
+      console.log('Skipping blog post rendering for non-slug path:', path);
+    }
   } else if (path === '/' || path === '') {
     // If we're on the homepage, render the latest posts section
     const latestPostsContainer = document.querySelector('.section-container:first-of-type');
@@ -45,32 +64,84 @@ async function initPage(path?: string): Promise<void> {
   }
 }
 
-// Function to handle navigation
-function handleNavigation(event: MouseEvent) {
-  const target = event.target as HTMLElement;
-  const link = target.closest('a');
-
-  if (link && link.getAttribute('href')?.startsWith('/') && !link.getAttribute('target')) {
+// Функция для настройки обработчиков всех внутренних ссылок
+function setupLinkHandlers(): void {
+  console.log('Setting up link handlers');
+  
+  // Находим все ссылки с классом internal-link
+  const internalLinks = document.querySelectorAll('a.internal-link');
+  console.log('Found internal links:', internalLinks.length);
+  
+  // Добавляем глобальный обработчик для всех ссылок
+  document.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement;
+    const link = target.closest('a');
+    
+    if (!link) return;
+    
+    const href = link.getAttribute('href');
+    
+    // Пропускаем внешние ссылки, ссылки с target="_blank" и ссылки к статическим файлам
+    if (!href || 
+        href.startsWith('http') || 
+        href.startsWith('//') || 
+        link.hasAttribute('target') ||
+        /\.(jpg|jpeg|png|gif|svg|webp|css|js)$/i.test(href)) {
+      return;
+    }
+    
+    // Пропускаем ссылки, которые не начинаются с "/"
+    if (!href.startsWith('/')) {
+      return;
+    }
+    
+    // Предотвращаем стандартное поведение только для внутренних ссылок на страницы
     event.preventDefault();
-    const path = link.getAttribute('href') || '/';
-
-    // Update the URL without reloading the page
-    window.history.pushState({}, '', path);
-
-    // Render the page for the new path
-    initPage(path);
-  }
+    
+    console.log('Link clicked:', link);
+    console.log('Navigating to path:', href);
+      
+    // Обновляем URL без перезагрузки страницы
+    window.history.pushState({}, '', href);
+    
+    // Очищаем контейнер контента
+    const contentContainer = document.getElementById('blog-content');
+    if (contentContainer) {
+      contentContainer.innerHTML = '';
+    }
+    
+    // Рендерим страницу для нового пути
+    initPage(href);
+  });
 }
 
-// Initialize the page when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  initPage();
-
-  // Add event listener for navigation
-  document.body.addEventListener('click', handleNavigation);
-
-  // Add event listener for browser back/forward navigation
+// Функция для инициализации всего приложения
+function initApp(): void {
+  if (isInitialized) return;
+  
+  console.log('Initializing app');
+  isInitialized = true;
+  
+  // Инициализируем страницу
+  initPage()
+    .then(() => {
+      // После инициализации страницы настраиваем обработчики ссылок
+      setupLinkHandlers();
+    })
+    .catch(error => {
+      console.error('Error initializing page:', error);
+    });
+  
+  // Добавляем обработчик для кнопок назад/вперед
   window.addEventListener('popstate', () => {
     initPage();
   });
-});
+}
+
+// Запускаем приложение при загрузке DOM
+document.addEventListener('DOMContentLoaded', initApp);
+
+// На всякий случай запускаем приложение и при загрузке окна
+window.addEventListener('load', initApp);
+
+console.log('Main.ts loaded');

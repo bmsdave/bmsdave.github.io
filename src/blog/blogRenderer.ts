@@ -5,6 +5,11 @@ import { processMarkdown } from '../utils/markdown';
 // Base path for blog content
 const BLOG_CONTENT_PATH = 'content/blog';
 
+interface BlogPost {
+  slug: string;
+  metadata: Record<string, any>;
+}
+
 /**
  * Loads a blog post by slug
  * @param slug The blog post slug
@@ -27,29 +32,29 @@ export function loadBlogPost(slug: string): { html: string; metadata: Record<str
  * Gets a list of all blog posts
  * @returns Array of blog post metadata
  */
-export function getAllBlogPosts(): Array<{ slug: string; metadata: Record<string, any> }> {
+export function getAllBlogPosts(): BlogPost[] {
   try {
     const blogDir = path.resolve(BLOG_CONTENT_PATH);
     const posts = fs.readdirSync(blogDir)
-      .filter(dir => {
+      .filter((dir: string) => {
         // Check if it's a directory and contains an index.md file
         const fullPath = path.join(blogDir, dir);
         return fs.statSync(fullPath).isDirectory() && 
                fs.existsSync(path.join(fullPath, 'index.md'));
       })
-      .map(dir => {
+      .map((dir: string) => {
         const content = fs.readFileSync(path.join(blogDir, dir, 'index.md'), 'utf-8');
-        const { frontmatter } = processMarkdown(content, path.join(BLOG_CONTENT_PATH, dir));
+        const { metadata } = processMarkdown(content, path.join(BLOG_CONTENT_PATH, dir));
         
         return {
           slug: dir,
-          metadata: frontmatter
+          metadata
         };
       })
       // Filter out draft posts
-      .filter(post => post.metadata.draft !== 'true' && post.metadata.draft !== true)
+      .filter((post: BlogPost) => post.metadata.draft !== 'true' && post.metadata.draft !== true)
       // Sort by date (newest first)
-      .sort((a, b) => {
+      .sort((a: BlogPost, b: BlogPost) => {
         const dateA = new Date(a.metadata.date || '');
         const dateB = new Date(b.metadata.date || '');
         return dateB.getTime() - dateA.getTime();

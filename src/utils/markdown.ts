@@ -45,7 +45,7 @@ export function extractFrontmatter(content: string): { frontmatter: Record<strin
  */
 export function processImagePaths(content: string, basePath: string): string {
   // Replace image references like ![alt](./image.jpg) with absolute paths
-  return content.replace(/!\[(.*?)\]\((\.\/.*?)\)/g, (match, alt, imagePath) => {
+  return content.replace(/!\[(.*?)\]\((\.\/.*?)\)/g, (_match, alt, imagePath) => {
     const absolutePath = imagePath.replace('./', `/${path.join(basePath, '')}`);
     return `![${alt}](${absolutePath})`;
   });
@@ -66,7 +66,7 @@ export function markdownToHtml(content: string, options: { basePath?: string } =
   }
   
   // Convert markdown to HTML
-  return marked(processedContent);
+  return marked(processedContent) as string;
 }
 
 /**

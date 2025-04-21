@@ -304,3 +304,65 @@ a.anchor {
         justify-content: space-around;
     }
 }
+
+/* Styles for blog post images */
+.blog-post-content img, 
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+  border-radius: 4px;
+}
+
+.blog-post img[src$=".gif"],
+.markdown-body img[src$=".gif"] {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Caption for images */
+.blog-post-content img + em,
+.markdown-body img + em {
+  display: block;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+/* Styles for blog images with relative paths */
+.blog-post-content img[src^="./"],
+.markdown-body img[src^="./"] {
+  content: url(attr(src));
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+  border-radius: 4px;
+}
+
+.blog-post-content img:not([src^="/"]):not([src^="http"]):not([src^="./"]),
+.markdown-body img:not([src^="/"]):not([src^="http"]):not([src^="./"]) {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+  border-radius: 4px;
+}
+
+/* Additional styles for blog images */
+.blog-post-content img, 
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+  border-radius: 4px;
+}
+
+/* Make sure all images are responsive */
+img {
+  max-width: 100%;
+  height: auto;
+}

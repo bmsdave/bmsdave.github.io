@@ -12,13 +12,16 @@ export class BlogIndex {
    */
   async render(): Promise<void> {
     try {
+      console.log('Starting to render blog index');
       // Show loading state
       this.container.innerHTML = '<div class="loading">Loading...</div>';
       
       // Load all blog posts
       const posts = await loadAllBlogPosts();
+      console.log('Loaded posts:', posts);
       
       if (posts.length === 0) {
+        console.log('No posts found');
         this.renderEmpty();
         return;
       }
@@ -40,6 +43,7 @@ export class BlogIndex {
         </li>
       `).join('');
       
+      console.log('Rendering posts HTML');
       this.container.innerHTML = `
         <h1>Blog Posts</h1>
         <ul class="blog-post-list">
