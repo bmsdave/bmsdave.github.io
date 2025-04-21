@@ -4,9 +4,9 @@ import { BlogIndex } from './blog/BlogIndex';
 import { LatestPosts } from './blog/LatestPosts';
 
 // Initialize the page
-async function initPage(): Promise<void> {
+async function initPage(path?: string): Promise<void> {
   // Check if we're on a blog page
-  const path = window.location.pathname;
+  path = path || window.location.pathname;
 
   // Get the content container
   const contentContainer = document.getElementById('blog-content');
@@ -45,5 +45,32 @@ async function initPage(): Promise<void> {
   }
 }
 
+// Function to handle navigation
+function handleNavigation(event: MouseEvent) {
+  const target = event.target as HTMLElement;
+  const link = target.closest('a');
+
+  if (link && link.getAttribute('href')?.startsWith('/') && !link.getAttribute('target')) {
+    event.preventDefault();
+    const path = link.getAttribute('href') || '/';
+
+    // Update the URL without reloading the page
+    window.history.pushState({}, '', path);
+
+    // Render the page for the new path
+    initPage(path);
+  }
+}
+
 // Initialize the page when the DOM is loaded
-document.addEventListener('DOMContentLoaded', initPage);
+document.addEventListener('DOMContentLoaded', () => {
+  initPage();
+
+  // Add event listener for navigation
+  document.body.addEventListener('click', handleNavigation);
+
+  // Add event listener for browser back/forward navigation
+  window.addEventListener('popstate', () => {
+    initPage();
+  });
+});
