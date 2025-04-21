@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Vadim Gorbachev | bmsdave</title>
+  <link>https://bmsdave.com</link>
+  <description>Vadim Gorbachev&apos;s personal website and blog about programming</description>
+  <language>ru</language>
+  <lastBuildDate>Mon, 21 Apr 2025 21:39:17 GMT</lastBuildDate>
+  <atom:link href="https://bmsdave.com/rss.xml" rel="self" type="application/rss+xml" />
+
+    <item>
+      <title>Одна из самых красивых идей в информатике: Y-Combinator</title>
+      <link>https://bmsdave.com/blog/y-combinator</link>
+      <guid>https://bmsdave.com/blog/y-combinator</guid>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 GMT</pubDate>
+      <author>Lucas Fernandes da Costa</author>
+      <description>
+
+
+Перевод статьи Lucas Fernandes da Costa &quot;Y: The Most Beautiful Idea in Computer Science explained in JavaScript&quot;
+
+В этой статье мы поговорим об...</description>
+      
+    </item>
+
+    <item>
+      <title>AST, автоматизации, оптимизации или как прошла PiterJS conf #1</title>
+      <link>https://bmsdave.com/blog/piterjsconf-2019</link>
+      <guid>https://bmsdave.com/blog/piterjsconf-2019</guid>
+      <pubDate>Thu, 31 Oct 2019 00:00:00 GMT</pubDate>
+      <author>Vadim Gorbachev (bmsdave)</author>
+      <description>
+
+Прошло 2 месяца после первой (но конечно же не последней) конференции PiterJS conf. Для активистов сообщества это был своего рода праздник, к котор...</description>
+      
+    </item>
+
+    <item>
+      <title>Анализ уязвимостей процесса аутентификации</title>
+      <link>https://bmsdave.com/blog/auth-vulnerabilities</link>
+      <guid>https://bmsdave.com/blog/auth-vulnerabilities</guid>
+      <pubDate>Fri, 25 Jan 2019 00:00:00 GMT</pubDate>
+      <author>Vadim Gorbachev (bmsdave)</author>
+      <description>
+
+## Введение
+
+UPD: На основе данной статьи сделал доклад на CodeFest
+
+Приветствую.
+
+Последней каплей вдохновения для этого поста стал перевод ...</description>
+      
+    </item>
+</channel>
+</rss>
