@@ -10,18 +10,140 @@
 </head>
 <body>
 <nav class="nav-header" id="header-content">
-  <!-- Header content will be populated by TypeScript -->
+  <a class="logo-link" href="/">
+    <svg viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" class="logo-svg">
+      <title>Vadim Gorbachev</title>
+      <defs>
+        <pattern id="img" patternUnits="userSpaceOnUse" width="100" height="100">
+          <image xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/webstorm-icon-logo.svg" x="-25" width="150" height="100"></image>
+        </pattern>
+      </defs>
+      <polygon points="50 1 95 25 95 75 50 99 5 75 5 25" fill="url(#img)"></polygon>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li class="nav-item"><a class="nav-link" href="/">Vadim Gorbachev</a></li>
+    <li class="nav-item"><a href="/blog">Blog</a></li>
+    <li class="nav-item"><a href="/talks">Talks</a></li>
+  </ul>
 </nav>
 <div class="main-container">
   <div class="content-wrapper" id="blog-content">
-    <!-- Main content will be populated by TypeScript -->
+    <div>
+      <div class="content-row">
+        <div>
+          <h1 class="main-heading">Hi, I'm Vadim</h1>
+          <h2 class="main-subheading">Software Engineer, based in London. <a href="https://about.meta.com/realitylabs/" target="_blank">@Meta</a></h2>
+          <p class="bio-text">
+            I have 8 years of experience in development and 11 years of experience in IT. 
+            I actively participated in the life of the JavaScript community: I organized 
+            <a href="https://piterjs.org/" target="_blank">PiterJS</a> – monthly JavaScript 
+            Meetup in Saint Petersburg, contributed as a mentor at 
+            <a href="https://nodeschool.io/spb/" target="_blank">NodeSchool/SPB</a> and was a member of the 
+            <a href="https://holyjs.ru/en/" target="_blank">HolyJS</a> program committee. 
+            Not so long ago I changed direction to focus on VR Interfaces. I enjoy sharing my knowledge at 
+            <a href="/talks" target="_blank">conferences</a> and contributing to 
+            <a href="https://github.com/bmsdave" target="_blank">open source</a>. 
+            When I'm not coding, I like to explore London and walk my dog. 
+            I respect and love mathematics and everything related to it.
+          </p>
+        </div>
+        <div class="social-sidebar">
+          <ul>
+            <li>
+              <a style="border-bottom:none" target="_blank" rel="noopener noreferrer" href="https://github.com/bmsdave">
+                <svg class="social-icon" role="img" aria-label="GitHub" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <title>GitHub</title>
+                  <path fill="currentColor" stroke-width="0px" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path>
+                </svg>
+              </a>
+              <a target="_blank" rel="noopener noreferrer" href="https://github.com/bmsdave">@bmsdave</a>
+            </li>
+            <li>
+              <a style="border-bottom:none" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/bmsdave/">
+                <svg class="social-icon" role="img" aria-label="LinkedIn" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <title>LinkedIn</title>
+                  <path fill="currentColor" stroke-width="0px" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path>
+                </svg>
+              </a>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/bmsdave/">@bmsdave</a>
+            </li>
+            <li>
+              <a style="border-bottom:none" target="_blank" rel="noopener noreferrer" href="https://www.last.fm/user/bmsdave">
+                <svg class="social-icon" role="img" aria-label="LastFM" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <title>LastFM</title>
+                  <path fill="currentColor" stroke-width="0px" d="M10.584 17.209l-.88-2.392s-1.43 1.595-3.573 1.595c-1.897 0-3.244-1.65-3.244-4.289 0-3.381 1.704-4.591 3.382-4.591 2.419 0 3.188 1.567 3.849 3.574l.88 2.75c.879 2.667 2.528 4.811 7.284 4.811 3.409 0 5.719-1.044 5.719-3.793 0-2.227-1.265-3.381-3.629-3.932l-1.76-.385c-1.209-.275-1.566-.77-1.566-1.594 0-.935.742-1.485 1.952-1.485 1.319 0 2.034.495 2.144 1.677l2.749-.33c-.22-2.474-1.924-3.491-4.729-3.491-2.474 0-4.893.935-4.893 3.931 0 1.87.907 3.052 3.188 3.602l1.869.439c1.402.33 1.869.907 1.869 1.705 0 1.017-.989 1.43-2.858 1.43-2.776 0-3.932-1.457-4.591-3.464l-.907-2.749c-1.155-3.574-2.997-4.894-6.653-4.894-4.041-.001-6.186 2.556-6.186 6.899 0 4.179 2.145 6.433 5.993 6.433 3.107.001 4.591-1.457 4.591-1.457z"></path>
+                </svg>
+              </a>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.last.fm/user/bmsdave">@bmsdave</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="content-row">
+        <div class="section-container">
+          <h3>Latest Posts<a href="/blog">see all</a></h3>
+          <ul>
+            <li><a href="/blog/y-combinator">Одна из самых красивых идей в информатике: Y-Combinator</a></li>
+            <li><a href="/blog/piterjs-conf-2019">AST, автоматизации, оптимизации или как прошла PiterJS conf #1</a></li>
+            <li><a href="/blog/auth-vulnerabilities">Анализ уязвимостей процесса аутентификации</a></li>
+          </ul>
+        </div>
+        <div class="section-container">
+          <h3>Latest Talks<a href="/talks">see all</a></h3>
+          <ul>
+            <li class="talk-item">
+              <div>
+                <a target="_blank" href="https://bmsdave.github.io/talk-vk-calls/" rel="noopener noreferrer">
+                  Calls for 2000+ participants, or What WebRTC can do / <small>RU</small>
+                </a>
+                <a href="https://www.youtube.com/watch?v=bIIsoJ-pIX0" target="_blank" rel="noopener noreferrer" class="video-link">
+                  <svg class="video-icon" role="img" aria-label="Youtube" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor" stroke-width="0px" d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"></path>
+                  </svg>
+                </a>
+              </div>
+              <small>3.11.2021, HolyJS, Saint Petersburg, Russia</small>
+            </li>
+            <li class="talk-item">
+              <div>
+                <a target="_blank" href="https://bmsdave.github.io/talk-vk-calls/" rel="noopener noreferrer">
+                  VK Calls: beyond browser limits / <small>RU</small>
+                </a>
+                <a href="https://live.jugru.org/en/video?v=MTAwMTE3iiM3NzI5ijA" target="_blank" rel="noopener noreferrer" class="video-link">
+                  <svg class="video-icon" role="img" aria-label="Youtube" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor" stroke-width="0px" d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"></path>
+                  </svg>
+                </a>
+              </div>
+              <small>12.02.2022, VideoTech, Saint Petersburg, Russia</small>
+            </li>
+            <li class="talk-item">
+              <div>
+                <a target="_blank" href="https://bmsdave.github.io/talk-eda-slides/#/" rel="noopener noreferrer">
+                  Event-Driven Architecture: Event Loop implementation details / <small>RU</small>
+                </a>
+                <a href="https://youtu.be/Zu18cMJGeqw" target="_blank" rel="noopener noreferrer" class="video-link">
+                  <svg class="video-icon" role="img" aria-label="Youtube" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor" stroke-width="0px" d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"></path>
+                  </svg>
+                </a>
+              </div>
+              <small>14.10.2019, FrontendConf, Moscow, Russia</small>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="footer-wrapper">
   <footer class="footer" id="footer-content">
-    <!-- Footer content will be populated by TypeScript -->
+    <div class="footer-content">
+      <h5>© 2023 Vadim Gorbachev</h5>
+      <a href="/rss.xml">Subscribe</a>
+    </div>
   </footer>
 </div>
-<script type="module" src="/src/main.ts"></script>
 </body>
 </html>
