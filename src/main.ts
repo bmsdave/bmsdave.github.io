@@ -8,7 +8,6 @@ let isInitialized = false;
 
 // Initialize the page
 async function initPage(path?: string): Promise<void> {
-  console.log('Initializing page for path:', path);
   // Check if we're on a blog page
   path = path || window.location.pathname;
 
@@ -33,12 +32,10 @@ async function initPage(path?: string): Promise<void> {
   const isStaticFile = fileExtensions.some(ext => path?.toLowerCase().endsWith(ext));
   
   if (isStaticFile) {
-    console.log('Skipping page initialization for static file:', path);
     return;
   }
 
   if (path === '/blog' || path === '/blog/') {
-    console.log('Rendering blog index');
     // Render blog index
     const blogIndex = new BlogIndex(contentContainer);
     await blogIndex.render();
@@ -51,8 +48,6 @@ async function initPage(path?: string): Promise<void> {
       // Render blog post
       const blogPost = new BlogPost(contentContainer);
       await blogPost.render(slug);
-    } else {
-      console.log('Skipping blog post rendering for non-slug path:', path);
     }
   } else if (path === '/' || path === '') {
     // If we're on the homepage, render the latest posts section
@@ -66,12 +61,6 @@ async function initPage(path?: string): Promise<void> {
 
 // Функция для настройки обработчиков всех внутренних ссылок
 function setupLinkHandlers(): void {
-  console.log('Setting up link handlers');
-  
-  // Находим все ссылки с классом internal-link
-  const internalLinks = document.querySelectorAll('a.internal-link');
-  console.log('Found internal links:', internalLinks.length);
-  
   // Добавляем глобальный обработчик для всех ссылок
   document.addEventListener('click', (event) => {
     const target = event.target as HTMLElement;
@@ -97,9 +86,6 @@ function setupLinkHandlers(): void {
     
     // Предотвращаем стандартное поведение только для внутренних ссылок на страницы
     event.preventDefault();
-    
-    console.log('Link clicked:', link);
-    console.log('Navigating to path:', href);
       
     // Обновляем URL без перезагрузки страницы
     window.history.pushState({}, '', href);
@@ -119,7 +105,6 @@ function setupLinkHandlers(): void {
 function initApp(): void {
   if (isInitialized) return;
   
-  console.log('Initializing app');
   isInitialized = true;
   
   // Инициализируем страницу
@@ -143,5 +128,3 @@ document.addEventListener('DOMContentLoaded', initApp);
 
 // На всякий случай запускаем приложение и при загрузке окна
 window.addEventListener('load', initApp);
-
-console.log('Main.ts loaded');

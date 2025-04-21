@@ -331,36 +331,6 @@ a.anchor {
   margin-top: 0.5rem;
 }
 
-/* Styles for blog images with relative paths */
-.blog-post-content img[src^="./"],
-.markdown-body img[src^="./"] {
-  content: url(attr(src));
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 1rem auto;
-  border-radius: 4px;
-}
-
-.blog-post-content img:not([src^="/"]):not([src^="http"]):not([src^="./"]),
-.markdown-body img:not([src^="/"]):not([src^="http"]):not([src^="./"]) {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 1rem auto;
-  border-radius: 4px;
-}
-
-/* Additional styles for blog images */
-.blog-post-content img, 
-.markdown-body img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 1rem auto;
-  border-radius: 4px;
-}
-
 /* Make sure all images are responsive */
 img {
   max-width: 100%;

@@ -21,16 +21,12 @@ function extractFrontmatter(content: string): { frontmatter: Record<string, any>
   const match = content.match(frontmatterRegex);
   
   if (!match) {
-    console.log('No frontmatter found in content');
-    // Выводим первые 150 символов для диагностики
-    console.log('Content preview:', content.substring(0, 150).replace(/\n/g, '\\n').replace(/\r/g, '\\r'));
     return { frontmatter: {}, content };
   }
   
   const frontmatterStr = match[1];
   // Удаляем весь блок frontmatter из контента, включая маркеры ---
   const contentWithoutFrontmatter = content.substring(match[0].length);
-  console.log('Content length after frontmatter removal:', contentWithoutFrontmatter.length);
   
   // Parse frontmatter
   const frontmatter: Record<string, any> = {};
@@ -61,8 +57,6 @@ function extractFrontmatter(content: string): { frontmatter: Record<string, any>
     }
   });
   
-  console.log('Extracted frontmatter:', frontmatter); // Debugging
-  
   return { frontmatter, content: contentWithoutFrontmatter };
 }
 
@@ -70,87 +64,58 @@ function extractFrontmatter(content: string): { frontmatter: Record<string, any>
 function processMarkdown(rawContent: string, slug: string): BlogPost {
   const { frontmatter, content } = extractFrontmatter(rawContent);
   
-  // Более универсальный подход к обработке путей к изображениям
+  // Единый подход к обработке путей к изображениям в markdown
   let processedContent = content;
   
-  // 1. Обработка относительных путей без кавычек: ![alt](./image.png)
-  processedContent = processedContent.replace(/!\[(.*?)\]\((\.\/[^)]+)\)/g, (_match, alt, imagePath) => {
-    const absolutePath = imagePath.replace('./', `/content/blog/${slug}/`);
-    console.log(`Processed image path: ${imagePath} -> ${absolutePath}`);
+  // Обрабатываем все варианты относительных путей к изображениям в markdown
+  const processImagePath = (match: string, alt: string, imagePath: string): string => {
+    // Если путь уже абсолютный или внешний - оставляем как есть
+    if (imagePath.startsWith('/') || imagePath.startsWith('http')) {
+      return match;
+    }
+    
+    // Преобразуем относительный путь в абсолютный
+    const absolutePath = imagePath.startsWith('./') 
+      ? imagePath.replace('./', `/content/blog/${slug}/`)
+      : `/content/blog/${slug}/${imagePath}`;
+      
     return `![${alt}](${absolutePath})`;
-  });
+  };
   
-  // 2. Обработка относительных путей с кавычками: ![alt]("./image.png")
-  processedContent = processedContent.replace(/!\[(.*?)\]\("(\.\/[^"]+)"\)/g, (_match, alt, imagePath) => {
-    const absolutePath = imagePath.replace('./', `/content/blog/${slug}/`);
-    console.log(`Processed quoted image path: ${imagePath} -> ${absolutePath}`);
-    return `![${alt}](${absolutePath})`;
-  });
-  
-  // 3. Обработка относительных путей с одинарными кавычками: ![alt]('./image.png')
-  processedContent = processedContent.replace(/!\[(.*?)\]\('(\.\/[^']+)'\)/g, (_match, alt, imagePath) => {
-    const absolutePath = imagePath.replace('./', `/content/blog/${slug}/`);
-    console.log(`Processed single-quoted image path: ${imagePath} -> ${absolutePath}`);
-    return `![${alt}](${absolutePath})`;
-  });
-  
-  // 4. Обработка путей без ./ но внутри директории: ![alt](image.png)
-  processedContent = processedContent.replace(/!\[(.*?)\]\(([^\/\)]+\.(png|jpg|jpeg|gif|svg))\)/gi, (_match, alt, imagePath) => {
-    const absolutePath = `/content/blog/${slug}/${imagePath}`;
-    console.log(`Processed direct image path: ${imagePath} -> ${absolutePath}`);
-    return `![${alt}](${absolutePath})`;
-  });
-  
-  // Выведем в консоль первую найденную ссылку на изображение для отладки
-  const imgMatch = content.match(/!\[(.*?)\]\(([^)]+)\)/);
-  if (imgMatch) {
-    console.log(`Found image in content: ${imgMatch[0]}, path: ${imgMatch[2]}`);
-  } else {
-    console.log('No images found in content using standard syntax');
-  }
+  // Обработка markdown-ссылок на изображения с разными форматами путей
+  processedContent = processedContent.replace(
+    /!\[(.*?)\]\(([^)]+)\)/g, 
+    (match, alt, path) => processImagePath(match, alt, path.replace(/["']/g, ''))
+  );
   
   // Convert markdown to HTML
   let htmlContent = marked(processedContent) as string;
   
-  // Постобработка HTML для исправления относительных путей изображений
-  htmlContent = htmlContent.replace(/<img[^>]+src="\.\/([^"]+)"[^>]*>/g, (match, imagePath) => {
-    const absolutePath = `/content/blog/${slug}/${imagePath}`;
-    console.log(`Fixed image path in HTML: ./${imagePath} -> ${absolutePath}`);
-    return match.replace(`src="./${imagePath}"`, `src="${absolutePath}"`);
-  });
-  
-  // Также обработаем изображения без ./ в пути
-  htmlContent = htmlContent.replace(/<img[^>]+src="([^"\/][^"]+\.(png|jpg|jpeg|gif|svg))"[^>]*>/gi, (match, imagePath) => {
-    // Если путь не начинается с / или http, то считаем его относительным
-    if (!imagePath.startsWith('/') && !imagePath.startsWith('http')) {
-      const absolutePath = `/content/blog/${slug}/${imagePath}`;
-      console.log(`Fixed relative image path in HTML: ${imagePath} -> ${absolutePath}`);
-      return match.replace(`src="${imagePath}"`, `src="${absolutePath}"`);
+  // Постобработка HTML для исправления относительных путей в тегах img
+  htmlContent = htmlContent.replace(
+    /<img[^>]+src="([^"]+)"[^>]*>/g, 
+    (match, src) => {
+      // Если путь уже абсолютный или внешний - оставляем как есть
+      if (src.startsWith('/') || src.startsWith('http')) {
+        return match;
+      }
+      
+      // Преобразуем относительный путь в абсолютный
+      const absolutePath = src.startsWith('./') 
+        ? src.replace('./', `/content/blog/${slug}/`)
+        : `/content/blog/${slug}/${src}`;
+        
+      return match.replace(`src="${src}"`, `src="${absolutePath}"`);
     }
-    return match;
-  });
-  
-  // Проверим наличие тегов img в получившемся HTML
-  const imgTagMatches = htmlContent.match(/<img[^>]+src="([^"]+)"[^>]*>/g);
-  console.log(`Found ${imgTagMatches ? imgTagMatches.length : 0} image tags in HTML`);
-  if (imgTagMatches) {
-    console.log('Example image tag:', imgTagMatches[0]);
-  }
+  );
   
   // Create excerpt (first 150 characters)
   const plainText = processedContent.replace(/#+\s+(.*?)\n/g, '$1 ').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
   const excerpt = plainText.slice(0, 150) + (plainText.length > 150 ? '...' : '');
   
-  // Log frontmatter for debugging
-  console.log(`Post ${slug} frontmatter:`, frontmatter);
-  
-  // Extract title, checking for both styles of quotes
-  const title = frontmatter.title || 'Untitled';
-  console.log(`Extracted title: ${title}`);
-  
   return {
     slug,
-    title,
+    title: frontmatter.title || 'Untitled',
     date: frontmatter.date || '',
     author: frontmatter.author,
     content: htmlContent,
@@ -163,8 +128,6 @@ function processMarkdown(rawContent: string, slug: string): BlogPost {
 // Function to load a blog post by slug
 export async function loadBlogPost(slug: string): Promise<BlogPost | null> {
   try {
-    console.log(`Loading blog post: ${slug}`); // Debugging
-    
     // Use fetch to load the markdown file
     const response = await fetch(`/content/blog/${slug}/index.md`);
     
@@ -173,21 +136,11 @@ export async function loadBlogPost(slug: string): Promise<BlogPost | null> {
     }
     
     const rawContent = await response.text();
-    console.log(`Raw content length: ${rawContent.length} bytes`); // Debugging
-    
-    // Проверим начало контента для диагностики с отображением символов переноса строки
-    const contentSample = rawContent.substring(0, 100)
-      .replace(/\r/g, '\\r')
-      .replace(/\n/g, '\\n');
-    console.log(`Content starts with encoded newlines: ${contentSample}...`);
     
     // Нормализуем переводы строк перед обработкой
     const normalizedContent = rawContent.replace(/\r\n/g, '\n');
     
-    const post = processMarkdown(normalizedContent, slug);
-    console.log(`Processed post title: "${post.title}"`); // Debugging
-    
-    return post;
+    return processMarkdown(normalizedContent, slug);
   } catch (error) {
     console.error(`Error loading blog post ${slug}:`, error);
     return null;

@@ -18,7 +18,6 @@ export class BlogPost {
       
       // Load the blog post
       const post = await loadBlogPost(slug);
-      console.log('Loaded post:', post); // Debugging
       
       if (!post) {
         this.renderError();
