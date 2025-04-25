@@ -27,14 +27,19 @@ export class LatestPosts {
       
       // Render the latest posts
       const postsHtml = latestPosts.map(post => `
-        <li>
+        <li class="post-item">
           <a href="/blog/${post.slug}">${post.title}</a>
+          ${post.date ? `<small>Published: ${post.date}</small>` : ''}
+          ${post.excerpt ? `<div class="post-excerpt">${post.excerpt.substring(0, 120)}${post.excerpt.length > 120 ? '...' : ''}</div>` : ''}
         </li>
       `).join('');
       
+      // Изменяем заголовок в зависимости от количества постов
+      const heading = this.limit > 3 ? "All Posts" : "Latest Posts";
+      
       this.container.innerHTML = `
-        <h3>Latest Posts<a href="/blog">see all</a></h3>
-        <ul>
+        <h3>${heading}</h3>
+        <ul class="posts-grid">
           ${postsHtml}
         </ul>
       `;
@@ -49,7 +54,7 @@ export class LatestPosts {
    */
   private renderEmpty(): void {
     this.container.innerHTML = `
-      <h3>Latest Posts<a href="/blog">see all</a></h3>
+      <h3>Blog Posts</h3>
       <p>No posts available at the moment.</p>
     `;
   }
@@ -59,7 +64,7 @@ export class LatestPosts {
    */
   private renderError(): void {
     this.container.innerHTML = `
-      <h3>Latest Posts<a href="/blog">see all</a></h3>
+      <h3>Blog Posts</h3>
       <p>Error loading posts. Please try again later.</p>
     `;
   }

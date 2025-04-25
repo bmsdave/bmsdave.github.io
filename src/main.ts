@@ -6,6 +6,45 @@ import { LatestPosts } from './blog/LatestPosts';
 // Глобальная переменная для отслеживания инициализации
 let isInitialized = false;
 
+// Функция для восстановления оригинального HTML содержимого
+function restoreOriginalContent(): void {
+  // Получаем текущий URL
+  const path = window.location.pathname;
+  
+  // Если мы на главной странице, восстанавливаем исходное содержимое из index.html
+  if (path === '/' || path === '') {
+    const contentContainer = document.getElementById('blog-content');
+    if (contentContainer) {
+      // Выполняем запрос к index.html для получения оригинального контента
+      fetch('/')
+        .then(response => response.text())
+        .then(html => {
+          // Парсим HTML
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          
+          // Находим content-wrapper в загруженном HTML
+          const originalContent = doc.getElementById('blog-content');
+          
+          // Заменяем текущий контент оригинальным
+          if (originalContent && contentContainer) {
+            contentContainer.innerHTML = originalContent.innerHTML;
+            
+            // После восстановления оригинального содержимого, инициализируем динамический контент
+            const latestPostsContainer = document.querySelector('.section-container:first-of-type');
+            if (latestPostsContainer) {
+              const latestPosts = new LatestPosts(latestPostsContainer as HTMLElement, 10);
+              latestPosts.render();
+            }
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching original content:', error);
+        });
+    }
+  }
+}
+
 // Initialize the page
 async function initPage(path?: string): Promise<void> {
   // Check if we're on a blog page
@@ -35,11 +74,7 @@ async function initPage(path?: string): Promise<void> {
     return;
   }
 
-  if (path === '/blog' || path === '/blog/') {
-    // Render blog index
-    const blogIndex = new BlogIndex(contentContainer);
-    await blogIndex.render();
-  } else if (path?.startsWith('/blog/')) {
+  if (path?.startsWith('/blog/') && !path.endsWith('/')) {
     // Extract slug from path
     const slug = path.replace('/blog/', '');
     
@@ -49,12 +84,17 @@ async function initPage(path?: string): Promise<void> {
       const blogPost = new BlogPost(contentContainer);
       await blogPost.render(slug);
     }
-  } else if (path === '/' || path === '') {
-    // If we're on the homepage, render the latest posts section
-    const latestPostsContainer = document.querySelector('.section-container:first-of-type');
-    if (latestPostsContainer) {
-      const latestPosts = new LatestPosts(latestPostsContainer as HTMLElement);
-      await latestPosts.render();
+  } else {
+    // Если мы находимся на главной или на страницах блога/докладов,
+    // загружаем все посты на главную страницу
+    if (path === '/' || path === '' || path === '/blog' || path === '/blog/' || path === '/talks' || path === '/talks/') {
+      // Если это не главная страница, перенаправляем на главную
+      if (path !== '/' && path !== '') {
+        window.history.replaceState({}, '', '/');
+      }
+      
+      // Вместо простого обновления секции с постами, восстанавливаем все исходное содержимое
+      restoreOriginalContent();
     }
   }
 }
@@ -76,6 +116,16 @@ function setupLinkHandlers(): void {
         href.startsWith('//') || 
         link.hasAttribute('target') ||
         /\.(jpg|jpeg|png|gif|svg|webp|css|js)$/i.test(href)) {
+      return;
+    }
+    
+    // Обрабатываем переход на главную страницу
+    if (href === '/' || href === '' || href === '/blog' || href === '/blog/' || href === '/talks' || href === '/talks/') {
+      event.preventDefault();
+      window.history.pushState({}, '', '/');
+      
+      // Восстанавливаем оригинальный контент при переходе на главную
+      restoreOriginalContent();
       return;
     }
     
@@ -119,7 +169,15 @@ function initApp(): void {
   
   // Добавляем обработчик для кнопок назад/вперед
   window.addEventListener('popstate', () => {
-    initPage();
+    const path = window.location.pathname;
+    
+    // Если вернулись на главную, восстанавливаем контент
+    if (path === '/' || path === '') {
+      restoreOriginalContent();
+    } else {
+      // Иначе рендерим соответствующую страницу
+      initPage();
+    }
   });
 }
 
