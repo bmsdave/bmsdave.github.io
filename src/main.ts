@@ -1,6 +1,5 @@
 // Import blog components
 import { BlogPost } from './blog/BlogPost';
-import { BlogIndex } from './blog/BlogIndex';
 import { LatestPosts } from './blog/LatestPosts';
 
 // Глобальная переменная для отслеживания инициализации

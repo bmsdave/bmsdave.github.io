@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && npm run generate-rss",
+    "build": "tsc && vite build && npm run generate-rss && npm run generate-articles",
     "preview": "vite preview",
-    "generate-rss": "node build-rss.js"
+    "generate-rss": "node build-rss.js",
+    "generate-articles": "node build-static-blog.js"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",

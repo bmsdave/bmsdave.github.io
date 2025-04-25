@@ -19,12 +19,12 @@
     --primary-hover: #1d4ed8;
     --text-color: #1f2937;
     --text-light: #6b7280;
-    --bg-color: #ffffff;
-    --bg-accent: #f9fafb;
+    --bg-color: #fff;
+    --bg-accent: #fff;
     --border-color: #e5e7eb;
     --transition: all 0.2s ease;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow: none;
+    --shadow-sm: none;
     --radius: 6px;
 }
 
@@ -35,6 +35,12 @@ html {
     overflow-y: scroll;
     scroll-behavior: smooth;
     color-scheme: light;
+    background: #fff !important;
+    box-shadow: none !important;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    color: #222;
 }
 
 * {
@@ -73,7 +79,6 @@ a {
 
 a:hover, a:active {
     color: var(--primary-hover);
-    border-bottom: 1px solid var(--primary-hover);
 }
 
 a.anchor {
@@ -280,6 +285,9 @@ pre {
     background-color: transparent;
     border-radius: 0;
     border: none;
+    margin: 0 auto;
+    max-width: 700px;
+    padding: 0 1rem;
 }
 
 .section-container h3 {
@@ -305,6 +313,7 @@ pre {
 .section-container ul {
     list-style: none;
     margin: 0;
+    padding: 0;
 }
 
 /* Стили для сетки постов */
@@ -312,6 +321,9 @@ pre {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
+    margin: 0 auto;
+    max-width: 700px;
+    padding: 0 1rem;
 }
 
 .post-item {
@@ -323,6 +335,10 @@ pre {
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     background-color: white;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 2rem;
+    background: none !important;
+    box-shadow: none !important;
+    padding: 0;
 }
 
 .post-item:hover {
@@ -347,7 +363,7 @@ pre {
 }
 
 .post-content {
-    padding: 1.25rem;
+    padding: 0;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -387,6 +403,9 @@ pre {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
+    margin: 0 auto;
+    max-width: 700px;
+    padding: 0 1rem;
 }
 
 .section-container ul li {
@@ -400,6 +419,9 @@ pre {
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     height: 100%;
     overflow: hidden;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
 }
 
 .section-container ul li:hover {
@@ -414,6 +436,10 @@ pre {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: var(--radius);
     overflow: hidden;
+    margin-bottom: 2rem;
+    background: none !important;
+    box-shadow: none !important;
+    padding: 0;
 }
 
 .talk-image {
@@ -433,7 +459,7 @@ pre {
 }
 
 .talk-content {
-    padding: 1.25rem;
+    padding: 0;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
