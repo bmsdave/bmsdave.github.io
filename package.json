@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && npm run generate-rss && npm run generate-articles",
+    "build": "tsc && vite build && npm run generate-rss",
     "preview": "vite preview",
     "generate-rss": "node build-rss.js",
     "generate-articles": "node build-static-blog.js"
