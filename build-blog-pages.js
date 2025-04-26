@@ -93,7 +93,7 @@ const htmlTemplate = (content, title, frontmatter) => `
     </script>
     
     <link rel="stylesheet" href="/github-markdown.css">
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/public/style.css">
     <style>
         body {
             background-color: var(--background-color);
