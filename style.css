@@ -139,5 +139,5 @@
   }
 
   .now-playing-block {
-    height: 24px;
+    min-height: 24px;
   }
