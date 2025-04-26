@@ -1,17 +1,17 @@
 :root {
     --background-color: #000000;
-    --primary-color: #6D28D9;
-    --accent-color: #32FF7E;
-    --text-main: #D1D5DB;
-    --text-secondary: #9CA3AF;
-    --link-color: #8B5CF6;
-    --border-color: #1F2937;
+    --primary-color: #8B5CF6;
+    --accent-color: #10B981;
+    --text-main: #FFFFFF;
+    --text-secondary: #E5E7EB;
+    --link-color: #A78BFA;
+    --border-color: #4B5563;
   }
   
   body {
     background-color: var(--background-color);
     color: var(--text-main);
-    font-family: monospace;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Monaco', 'Ubuntu Mono', monospace;
     line-height: 1.6;
     margin: 0;
     padding: 0;
@@ -131,4 +131,13 @@
 
   .social-icons-container {
     margin-top: 0.5rem;
+  }
+
+  .now-playing-icon {
+    position: relative;
+    top: 8px;
+  }
+
+  .now-playing-block {
+    height: 24px;
   }

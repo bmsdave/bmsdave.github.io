@@ -1,4 +1,4 @@
-const LASTFM_API_KEY = 'YOUR_API_KEY'; // Замените на ваш API ключ
+const LASTFM_API_KEY = 'e07781fdb72b940ecccaa4e84182695b'; // Замените на ваш API ключ
 const LASTFM_USER = 'bmsdave';
 
 async function getNowPlaying() {
@@ -13,10 +13,9 @@ async function getNowPlaying() {
     
     if (track['@attr']?.nowplaying === 'true') {
       nowPlaying.innerHTML = `
-        <p>🎵 ${track.name} - ${track.artist['#text']}</p>
+        <img class="now-playing-icon" width="24" height="24" src="/images/now_playing.gif" alt="LastFM">
+        now listening to <a href="https://www.last.fm/user/bmsdave" target="_blank" aria-label="LastFM">🎵 ${track.name} - ${track.artist['#text']}</a>
       `;
-    } else {
-      nowPlaying.innerHTML = '<p>Not playing anything right now</p>';
     }
   } catch (error) {
     console.error('Error fetching Last.fm data:', error);
