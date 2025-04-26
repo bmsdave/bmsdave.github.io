@@ -93,11 +93,12 @@ const htmlTemplate = (content, title, frontmatter) => `
     </script>
     
     <link rel="stylesheet" href="/github-markdown.css">
+    <link rel="stylesheet" href="/style.css">
     <style>
         body {
-            background-color: #ffffff;
-            color: #24292e;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Monaco', 'Ubuntu Mono', monospace;
             line-height: 1.6;
         }
 
@@ -107,8 +108,8 @@ const htmlTemplate = (content, title, frontmatter) => `
             max-width: 800px;
             margin: 0 auto;
             padding: 2rem;
-            background-color: #ffffff;
-            color: #24292e;
+            background-color: var(--background-color);
+            color: var(--text-main);
             font-size: 1.1rem;
             line-height: 1.8;
         }
@@ -116,18 +117,18 @@ const htmlTemplate = (content, title, frontmatter) => `
         .article-header {
             margin-bottom: 2rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid #eaecef;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .article-header h1 {
             margin: 0 0 0.5rem 0;
             font-size: 2.5rem;
-            color: #24292e;
+            color: var(--primary-color);
             font-weight: 600;
         }
 
         .article-meta {
-            color: #6a737d;
+            color: var(--text-secondary);
             font-size: 0.9rem;
             display: flex;
             gap: 1rem;
@@ -143,7 +144,7 @@ const htmlTemplate = (content, title, frontmatter) => `
         .article-meta span::before {
             content: "•";
             margin-right: 0.5rem;
-            color: #e1e4e8;
+            color: var(--border-color);
         }
 
         .article-meta span:first-child::before {
@@ -159,7 +160,7 @@ const htmlTemplate = (content, title, frontmatter) => `
             max-width: 100%;
             height: auto;
             border-radius: 6px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .article-tags {
@@ -170,8 +171,8 @@ const htmlTemplate = (content, title, frontmatter) => `
         }
 
         .article-tag {
-            background-color: #f6f8fa;
-            color: #24292e;
+            background-color: var(--border-color);
+            color: var(--text-main);
             padding: 0.25rem 0.5rem;
             border-radius: 3px;
             font-size: 0.8rem;
@@ -180,47 +181,48 @@ const htmlTemplate = (content, title, frontmatter) => `
         }
 
         .article-tag:hover {
-            background-color: #e1e4e8;
+            background-color: var(--primary-color);
+            color: #ffffff;
         }
 
         .markdown-body h2 {
             font-size: 2rem;
             margin-top: 2rem;
             margin-bottom: 1.25rem;
-            color: #24292e;
+            color: var(--primary-color);
         }
 
         .markdown-body h3 {
             font-size: 1.5rem;
             margin-top: 1.75rem;
             margin-bottom: 1rem;
-            color: #24292e;
+            color: var(--primary-color);
         }
 
         .markdown-body p {
             margin-bottom: 1.5rem;
-            color: #24292e;
+            color: var(--text-main);
         }
 
         .markdown-body a {
-            color: #0366d6;
+            color: var(--link-color);
             text-decoration: none;
         }
 
         .markdown-body a:hover {
-            text-decoration: underline;
+            color: var(--accent-color);
         }
 
         .markdown-body code {
-            background-color: rgba(27, 31, 35, 0.05);
-            color: #24292e;
+            background-color: var(--border-color);
+            color: var(--text-main);
             padding: 0.2em 0.4em;
             border-radius: 3px;
             font-size: 0.9em;
         }
 
         .markdown-body pre {
-            background-color: #f6f8fa;
+            background-color: var(--border-color);
             padding: 1rem;
             border-radius: 6px;
             overflow-x: auto;
@@ -230,15 +232,15 @@ const htmlTemplate = (content, title, frontmatter) => `
         .markdown-body pre code {
             background-color: transparent;
             padding: 0;
-            color: #24292e;
+            color: var(--text-main);
         }
 
         .markdown-body blockquote {
-            color: #6a737d;
-            border-left: 4px solid #dfe2e5;
+            color: var(--text-secondary);
+            border-left: 4px solid var(--primary-color);
             padding: 1rem;
             margin: 1.5rem 0;
-            background-color: #f6f8fa;
+            background-color: var(--border-color);
             border-radius: 0 6px 6px 0;
         }
 
@@ -261,20 +263,20 @@ const htmlTemplate = (content, title, frontmatter) => `
         .markdown-body table th,
         .markdown-body table td {
             padding: 0.75rem;
-            border: 1px solid #dfe2e5;
+            border: 1px solid var(--border-color);
         }
 
         .markdown-body table th {
-            background-color: #f6f8fa;
-            color: #24292e;
+            background-color: var(--border-color);
+            color: var(--text-main);
         }
 
         .markdown-body table tr {
-            background-color: #ffffff;
+            background-color: var(--background-color);
         }
 
         .markdown-body table tr:nth-child(2n) {
-            background-color: #f6f8fa;
+            background-color: var(--border-color);
         }
 
         .markdown-body img {
