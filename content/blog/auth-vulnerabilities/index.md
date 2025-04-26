@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Анализ уязвимостей процесса аутентификации"
+description: "Comprehensive analysis of authentication vulnerabilities in web applications: SQL injection prevention, HTTPS implementation, password hashing with bcrypt vs crypto, timing attacks, and security best practices. Includes real-world examples, practical code samples, and tools for security testing. Learn how to protect your Node.js applications from common authentication threats."
 author: Vadim Gorbachev (bmsdave)
 date: "2019-01-25"
 place: Saint Petersburg, Russia

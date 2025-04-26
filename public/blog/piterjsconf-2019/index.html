@@ -1,0 +1,409 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AST, автоматизации, оптимизации или как прошла PiterJS conf #1 | bmsdave's Blog</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="AST, автоматизации, оптимизации или как прошла PiterJS conf #1">
+    <meta name="description" content="PiterJS Conf 2019: Comprehensive review of Russia's premier JavaScript conference featuring insights on AST transformations, GraphQL, CSS-in-JS, JSX, SPA optimization, and hexagonal architecture. Includes detailed coverage of lightning talks on Node.js, Vue.js, prototyping, automation, and design systems. Learn about the conference organization, attendee feedback, and future events in the JavaScript community.">
+    <meta name="author" content="Vadim Gorbachev (bmsdave)">
+    <meta name="date" content="2019-10-31">
+    <meta name="keywords" content="piterjs">
+    <meta name="language" content="ru">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://bmsdave.github.io/blog/piterjsconf-2019/">
+    <meta property="og:title" content="AST, автоматизации, оптимизации или как прошла PiterJS conf #1">
+    <meta property="og:description" content="PiterJS Conf 2019: Comprehensive review of Russia's premier JavaScript conference featuring insights on AST transformations, GraphQL, CSS-in-JS, JSX, SPA optimization, and hexagonal architecture. Includes detailed coverage of lightning talks on Node.js, Vue.js, prototyping, automation, and design systems. Learn about the conference organization, attendee feedback, and future events in the JavaScript community.">
+    <meta property="og:image" content="https://bmsdave.github.io/blog/piterjsconf-2019/img/1__0oKxWYbE8KSS__YIq5ZQ0mg.jpeg">
+    <meta property="article:published_time" content="2019-10-31">
+    <meta property="article:author" content="Vadim Gorbachev (bmsdave)">
+    <meta property="article:tag" content="piterjs">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://bmsdave.github.io/blog/piterjsconf-2019/">
+    <meta property="twitter:title" content="AST, автоматизации, оптимизации или как прошла PiterJS conf #1">
+    <meta property="twitter:description" content="PiterJS Conf 2019: Comprehensive review of Russia's premier JavaScript conference featuring insights on AST transformations, GraphQL, CSS-in-JS, JSX, SPA optimization, and hexagonal architecture. Includes detailed coverage of lightning talks on Node.js, Vue.js, prototyping, automation, and design systems. Learn about the conference organization, attendee feedback, and future events in the JavaScript community.">
+    <meta property="twitter:image" content="https://bmsdave.github.io/blog/piterjsconf-2019/img/1__0oKxWYbE8KSS__YIq5ZQ0mg.jpeg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://bmsdave.github.io/blog/piterjsconf-2019/">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "AST, автоматизации, оптимизации или как прошла PiterJS conf #1",
+        "description": "PiterJS Conf 2019: Comprehensive review of Russia's premier JavaScript conference featuring insights on AST transformations, GraphQL, CSS-in-JS, JSX, SPA optimization, and hexagonal architecture. Includes detailed coverage of lightning talks on Node.js, Vue.js, prototyping, automation, and design systems. Learn about the conference organization, attendee feedback, and future events in the JavaScript community.",
+        "image": "https://bmsdave.github.io/blog/piterjsconf-2019/img/1__0oKxWYbE8KSS__YIq5ZQ0mg.jpeg",
+        "author": {
+            "@type": "Person",
+            "name": "Vadim Gorbachev (bmsdave)"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "bmsdave",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://bmsdave.github.io/logo.png"
+            }
+        },
+        "datePublished": "2019-10-31",
+        "dateModified": "2019-10-31",
+        "keywords": "piterjs",
+        "inLanguage": "ru"
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/github-markdown.css">
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #24292e;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .markdown-body {
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            color: #24292e;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .article-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eaecef;
+        }
+
+        .article-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+            color: #24292e;
+            font-weight: 600;
+        }
+
+        .article-meta {
+            color: #6a737d;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .article-meta span::before {
+            content: "•";
+            margin-right: 0.5rem;
+            color: #e1e4e8;
+        }
+
+        .article-meta span:first-child::before {
+            display: none;
+        }
+
+        .article-cover {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .article-cover img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-tags {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .article-tag {
+            background-color: #f6f8fa;
+            color: #24292e;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .article-tag:hover {
+            background-color: #e1e4e8;
+        }
+
+        .markdown-body h2 {
+            font-size: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 1.25rem;
+            color: #24292e;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.5rem;
+            margin-top: 1.75rem;
+            margin-bottom: 1rem;
+            color: #24292e;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.5rem;
+            color: #24292e;
+        }
+
+        .markdown-body a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        .markdown-body code {
+            background-color: rgba(27, 31, 35, 0.05);
+            color: #24292e;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        .markdown-body pre {
+            background-color: #f6f8fa;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #24292e;
+        }
+
+        .markdown-body blockquote {
+            color: #6a737d;
+            border-left: 4px solid #dfe2e5;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            background-color: #f6f8fa;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .markdown-body ul, 
+        .markdown-body ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .markdown-body table th,
+        .markdown-body table td {
+            padding: 0.75rem;
+            border: 1px solid #dfe2e5;
+        }
+
+        .markdown-body table th {
+            background-color: #f6f8fa;
+            color: #24292e;
+        }
+
+        .markdown-body table tr {
+            background-color: #ffffff;
+        }
+
+        .markdown-body table tr:nth-child(2n) {
+            background-color: #f6f8fa;
+        }
+
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            .markdown-body {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .article-header h1 {
+                font-size: 2rem;
+            }
+
+            .markdown-body h2 {
+                font-size: 1.75rem;
+            }
+
+            .markdown-body h3 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <article class="markdown-body">
+        <div class="article-header">
+            <h1>AST, автоматизации, оптимизации или как прошла PiterJS conf #1</h1>
+            <div class="article-meta">
+                <span>Vadim Gorbachev (bmsdave)</span>
+                <span>2019-10-31</span>
+                <span>Saint Petersburg, Russia</span>
+            </div>
+            <div class="article-cover">
+                    <img src="/blog/piterjsconf-2019/img/1__0oKxWYbE8KSS__YIq5ZQ0mg.jpeg" alt="AST, автоматизации, оптимизации или как прошла PiterJS conf #1">
+                </div>
+            
+                <div class="article-tags">
+                    <a href="/blog/tag/piterjs" class="article-tag">piterjs</a>
+                </div>
+            
+        </div>
+        <p>Прошло 2 месяца после первой (но конечно же не последней) конференции PiterJS conf. Для активистов сообщества это был своего рода праздник, к которому долго готовишься и столько же отходишь. В этой статье хочу подвести итоги, анонсировать публикацию докладов, понастальгировать и чуть-чуть похвастаться.</p>
+<p><a href="https://vk.com/album-92250781_267125123" title="https://vk.com/album-92250781_267125123"><strong>Фотоотчет</strong></a><a href="https://vk.com/album-92250781_267125123"></a></p>
+<h1>Зачем делать свою конференцию?</h1>
+<p>Конференцию организовали примерно 40 человек. Это волонтеры, партнеры, докладчики, активисты сообщества, MC (Master of Ceremony), DJ, фотограф и видеооператор.</p>
+<p>Если взять грубую аппроксимацию.. то получится 4 человеко-дня (чд) на каждого организатора, так как некоторые были задействованы только на застройке и самой конференции = 1.5 чд. Другие тратили по 7–14 чд, например, некоторые докладчики и часть активистов. В итоге 4(чд)*8(часов)*40(оргов) = 1280 человека и бла бла бла…</p>
+<p><img src="/blog/piterjsconf-2019/1__G21tHhEvnS5BfZmtH54hSQ.jpeg" alt=""></p>
+<p>Но дело не в затраченном времени.. Кто-то выращивает клубнику, кто-то катается на досках, а кто-то занимается сообществом, делает доклады, собирает конференции для своего удовольствия.</p>
+<p>Это очень увлекательные занятия, которые стремительными темпами приближают поезд выгорания от работы на бесплатной основе. Если повезет, и событие пройдет без сучка и задоринки, то можно будет потешить свое самолюбие от большого количества благодарностей и удовлетворить свои альтруистические желания &quot;сделать мир лучше&quot; на ближайшие пару месяцев.</p>
+<p>Но какая-то неведомая сила заставляет людей сидеть вечерами над пруфами интересных концепций, коммитами в популярные репозитории, написанием статей, подготовкой докладов и пр. Поэтому если вернуться к вопросу &quot;Зачем делать свою конференцию?&quot; , лично я, на него общего ответа не знаю. У каждого это свои цели, пока не попробуешь — не поймешь :)</p>
+<p>Но давайте к итогам)</p>
+<h1>Как прошла конференция</h1>
+<p><img src="/blog/piterjsconf-2019/1__e__8JZwdioxgki9rHaJ11hA.jpeg" alt=""></p>
+<p>На конференции было около 550 человек и 50–100 смотрели онлайн. 150 человек оставили отзывы, на основе которых <a href="https://ru.wikipedia.org/wiki/%D0%98%D0%BD%D0%B4%D0%B5%D0%BA%D1%81_%D0%BF%D0%BE%D1%82%D1%80%D0%B5%D0%B1%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%BE%D0%B9_%D0%BB%D0%BE%D1%8F%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D0%B8_NPS">NPS</a> получился равным 84, а это очень хороший показатель.</p>
+<p><img src="/blog/piterjsconf-2019/0__8e__qMRSo3cgf7j2P.jpg" alt=""></p>
+<p>Были хорошие комментарии и конструктивная критика, как докладов, так и организации. За что огромное спасибо! Ведь, как известно:</p>
+<blockquote>
+<p>Понятие обратной связи, можно сказать, сформировало кибернетику как науку. (с) авторы статьи <a href="https://ru.wikipedia.org/wiki/%D0%9E%D0%B1%D1%80%D0%B0%D1%82%D0%BD%D0%B0%D1%8F_%D1%81%D0%B2%D1%8F%D0%B7%D1%8C_%28%D0%BA%D0%B8%D0%B1%D0%B5%D1%80%D0%BD%D0%B5%D1%82%D0%B8%D0%BA%D0%B0%29">&quot;Обратная связь&quot; на wiki</a></p>
+</blockquote>
+<p>Что касается технических деталей, были мелкие огрехи заметные искушенному зрителю, но в целом мы довольны (уже провели 40 митапов как-никак).</p>
+<p><img src="/blog/piterjsconf-2019/1__BH__mL5oP5CS4o19FLaeHyA.jpeg" alt="Миша чешет за ухом ember-евангелиста Алекса мотивируя к докладу (шутка, на самом деле Миша просто надевает петличку).">
+Миша чешет за ухом ember-евангелиста Алекса мотивируя к докладу (шутка, на самом деле Миша просто надевает петличку).</p>
+<h1><strong>Доклады</strong></h1>
+<p>Ну и самое интересное! Рад анонсировать доклады! Полный список можно найти в <a href="https://www.youtube.com/playlist?list=PLcXJ90eZ2bxhXhNINIvebZQkQO35eacOU">этом плейлисте</a>. Но давайте рассмотрим каждый из них подробнее:</p>
+<h2>Как запустить Telegram в VS Code</h2>
+<p>Спикер: <a href="https://twitter.com/mamu_eval">Александр Коротаев</a></p>
+<p><a href="https://fs.piterjs.org/events/conf2019/korotaev.pdf">Слайды</a></p>
+<p><img src="/blog/piterjsconf-2019/1__8hFT9__oqlLyXHZfFI75Peg.jpeg" alt=""></p>
+<p>Саше не нравилось, что time tracker фиксировал много впустую потраченного времени и большая часть этого времени приходилась на приложение telegram. После того, как Саша написал консольный интерфейс телеграмма и стал открывать его в VS Code, time tracker перестал ругаться)</p>
+<p>Если серьезно, то в докладе раскрываются детали реализации удобных консольных утилит. Какие есть инструменты для написания консольных UI, как сделать автодополнение, выделение цветами и как использовать практики фронтенда (например, не писать консольное приложение на angular).</p>
+<h2>GraphQL — уменьшаем энтропию</h2>
+<p>Спикер: <a href="https://github.com/HellSquirrel">Полина Гуртовая</a></p>
+<p><a href="https://fs.piterjs.org/events/conf2019/gurtovaya.pdf">Слайды</a></p>
+<p><img src="/blog/piterjsconf-2019/1____3ZuZay2EMkEXe__0AjoylQ.jpeg" alt=""></p>
+<p>Доклад был основан на решении практической задачи. Представьте приложение, в котором большое количество интеграций со сторонними сервисами, и у каждого сервиса свои представления данных. В одном сервисе поле `language` находится на уровне описания товара, в другом это свойство пользователя, в третьем вообще не передается.</p>
+<p>Эту проблему очень хорошо решает абстрагирование от сторонних API и выделение своих удобных структур (своего рода фасад). А сокрытием сложности и причесывания внешнего мира под наш займется подход с использование GraphQL.</p>
+<h2>Поддержка старых браузеров в CSS-in-JS на AST-преобразованиях</h2>
+<p>Спикер: Яна Менемчиадиc</p>
+<p><a href="https://fs.piterjs.org/events/conf2019/yana.pdf">Слайды</a></p>
+<p><img src="/blog/piterjsconf-2019/1__syTT__PZl54i4ZI__sKASMgw.jpeg" alt=""></p>
+<p>Этот доклад отлично подходит для просмотра с параллельным переключением на эксперименты с AST. Так как разбор является достаточно последовательным и доскональным.</p>
+<p>Яна решала проблему отсутствия реализации CSS-переменных в IE через реализацию babel-плагина. Если представить, как должен выглядеть полный полифилл CSS-переменных, не сложно догадаться, что нам пришлось бы реализовывать достаточно тяжелую логику на клиенте, которая бы плохо отразилась на производительности. Но если ограничить этот полифилл рамками конкретной задачи и конкретного стека (например, только для CSS-in-JS, и без надобности изменять значения в динамике), то решение не скажется на производительности совсем.</p>
+<p>Очень часто все, что можно решить через AST, решается через регулярные выражения.. Но давайте вспомним классиков и начнем переходить на светлую сторону.</p>
+<blockquote>
+<p><strong>Some people, when confronted with a problem, think<br>&quot;I know, I&#39;ll use regular expressions.&quot; Now they have two problems.</strong> <a href="http://regex.info/blog/2006-09-15/247">http://regex.info/blog/2006-09-15/247</a></p>
+</blockquote>
+<h2>JSX в декларативные шаблоны с помощью AST</h2>
+<p>Спикер: <a href="https://twitter.com/vaier">Александр Канунников</a></p>
+<p><a href="https://fs.piterjs.org/events/conf2019/kanunnikov.pdf">Слайды</a></p>
+<p><img src="/blog/piterjsconf-2019/1__L1eOsYsYwYOiawHgqsxDbg.jpeg" alt=""></p>
+<p>Еще один интересный доклад про AST, но решающий другие задачи. Боль проблемы, раскрывающейся в этом докладе, почувствуют люди, которые поддерживаются дизайн систему или набор компонентов для разных фреймворков. Чтобы на Angular, Vue, React описать компонент кнопки, вам нужно три честных реализации под каждый фреймворк, либо тащить несколько фреймворков под те или иные компоненты (кстати, если интересен второй вариант, то вот <a href="https://radiojs.ru/2018/05/%D0%B2%D1%8B%D0%BF%D1%83%D1%81%D0%BA-52-%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D1%8B-%D0%BD%D0%B0-%D1%84%D1%80%D0%BE%D0%BD%D1%82%D0%B5%D0%BD%D0%B4%D0%B5/">эпизод самого часто выходящего подкаста</a> и <a href="https://medium.com/@frontman/%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D1%8B-%D0%BD%D0%B0-%D1%84%D1%80%D0%BE%D0%BD%D1%82%D0%B5%D0%BD%D0%B4%D0%B5-85ab4d37556e">статья с интересными ссылками</a>).</p>
+<p>Либо же можно преобразовать из наиболее популярного формата JSX во все остальные форматы.</p>
+<blockquote>
+<p>лирическое отступление: раньше PHP ругали за смешивание всего в одном коде, теперь JSX хвалят за это же.. Кто раскачивает эти технологические качели?</p>
+</blockquote>
+<p>В таком случае нам не придется волноваться о консистентности и о том, что правки нужно вносить в несколько мест. Важно только реализовать конвертацию паттернов, которые мы используем.</p>
+<h2>Optimize the size of your SPA, битва за байты</h2>
+<p>Спикер: <a href="https://twitter.com/ovrweb">Дмитрий Пацура</a></p>
+<p><a href="https://fs.piterjs.org/events/conf2019/patsura.pdf">Слайды</a></p>
+<p><img src="/blog/piterjsconf-2019/1__WjJRKCqOiJDsxaZanTMdkw.jpeg" alt=""></p>
+<p>Дима провел исследование способов экономии размера передаваемых по сети javascript пакетов. Сравнил и разложил по полочкам способы компрессии, минификации, code splitting, tree shaking и упаковки пакетов.</p>
+<p>Если Вы заботитесь о скорости загрузки своего приложения, то этот доклад определенно для Вас.</p>
+<h2>Как построить Гексагон: прагматичная архитектура для клиентских приложений</h2>
+<p>Спикер: <a href="https://twitter.com/madyankin">Александр Мадьянкин</a></p>
+<p><a href="https://fs.piterjs.org/events/conf2019/madyankin.pdf">Слайды</a></p>
+<p><img src="/blog/piterjsconf-2019/1__iEFqXbD1mneCLVNNWEHIIw.jpeg" alt=""></p>
+<p>Завершили конференцию докладом про гексагональную архитектуру. Данный подход является хорошим средством для борьбы с технических долгом, позволяет грамотно &quot;упаковывать&quot; legacy участки нашего приложения и не давать размазываться этой логике по всему приложению. Есть два пути улучшения продукта: 1 — революционные, взять и все переписать. 2 — эволюционный, постепенно внедрять новые участки кода. Если первый подход очень сильно сказывается на стабильности приложения, то второй является более щадящим, но и более тяжелым, так как приходится больше нюансов держать в голове.</p>
+<p>Александр пошел по эволюционному пути и решение выбрать гексагональную архитектуру пришло к нему через четыре года разработки SPA и React Native приложений. В основу выбора легли собственные пробы и ошибки, анализ и рефакторинг чужого кода.</p>
+<h1>Блок блиц-докладов</h1>
+<p>Еще мы попробовали формат <a href="https://ru.wikipedia.org/wiki/%D0%91%D0%BB%D0%B8%D1%86%D0%B4%D0%BE%D0%BA%D0%BB%D0%B0%D0%B4">блиц-докладов</a> по 15 минут, в которых хотели дать легкий обзор определенных инструментов, библиотек, практик. То, что не нацелено на углубление в технические детали темы, а дает возможность понять что это вообще такое, как это готовить и куда бежать.</p>
+<p>В следующем году мы, скорее всего, сделаем формат по 7 минут, так как за 15 можно вполне себе хорошо углубиться в детали и легким движением руки блиц-доклад превращается в полноценный доклад.</p>
+<h2>Хроники Node.js: сообщество и корпорации</h2>
+<p>Спикер: <a href="https://twitter.com/matvi3nko">Николай Матвиенко</a></p>
+<p><a href="https://fs.piterjs.org/events/conf2019/matvienko.pdf">Слайды</a></p>
+<p><img src="/blog/piterjsconf-2019/1__8aijQnD6ZLbLAe52Tc5UuQ.jpeg" alt=""></p>
+<p>Перед тем, как использовать ту или иную библиотеку, платформу, мы редко смотрим на ее историю развития, какие сложности были на ее пути и куда это решение развивается.</p>
+<p>Но мне кажется, это достаточно важная информация, так как она &quot;оживляет&quot; инструмент. И мы начинаем смотреть на него, как некий живой развивающийся и растущий механизм. С этим знанием мы можем ассоциативно предполагать, где это решение будет к месту, а где с ним могут быть сложности. В этом докладе Николай постарался &quot;оживить&quot; Node.js и показать историю javascript на сервере.</p>
+<h2><strong>Как делать быстро прототипы приложений на современных технологиях</strong></h2>
+<p>Спикер: <a href="https://twitter.com/irustm">Рустам Имайкин</a></p>
+<p><a href="https://fs.piterjs.org/events/conf2019/imaykin.pdf">Слайды</a></p>
+<p><img src="/blog/piterjsconf-2019/1__RT6jx1CO3M6fEaKMi__AuTw.jpeg" alt=""></p>
+<p>Мир меняется, меняются и инструменты прототипирования. Если раньше чтобы запустить свой интернет магазин, все брали готовые CMS решения, то сейчас на их смену приходят такие инструменты как firebase, bootstrap и прочее.</p>
+<p>Рустам в докладе пробежался по небольшому списку подобных библиотек.</p>
+<h2>Автоматизируй это. Гиперавтоматизированный пайплайн</h2>
+<p>Спикер: <a href="https://twitter.com/zolotyh">Алексей Золотых</a></p>
+<p><a href="https://zolotyh.github.io/piterjsconf2019/#/">Слайды</a></p>
+<p><img src="/blog/piterjsconf-2019/1__cg__7PbBf2b__yQ__qae2__9Qw.jpeg" alt=""></p>
+<p>Кто помнит легендарную <a href="https://bash.im/quote/436725">цитату на баше про админа, автоматизировавшего процесс варки half-caf chai latte среднего размера</a>? Можно сказать, что этот доклад был вдохновлен подобным подходом.</p>
+<p>В докладе рассказаны некоторые хаки и вполне себе серьезные инструменты помогающие автоматизировать рутинные задачи CI/CD и не только.</p>
+<h2><strong>State of Vue (2k19 Q3)</strong></h2>
+<p>Спикер: <a href="https://twitter.com/lionskape">Владимир Ульянов</a></p>
+<p><img src="/blog/piterjsconf-2019/1__cB__2TJ0eVFdm2tNWoy3Slg.jpeg" alt=""></p>
+<p>В докладе рассмотрены некоторые новшества, которые скоро появятся во vue.</p>
+<p>Лично для меня оказалось самым интересным composition api. Часть функциональности, такая как методы <code>reactive</code>, <code>computed</code>, <code>watch</code>, похоже сильно вдохновлена mobx. Посмотрим как будет развиваться это API в дальнейшем.</p>
+<h2>Holy War between Designers &amp; Developers</h2>
+<p>Спикер: <a href="https://twitter.com/paul_yuhnovich">Павел Юхнович</a></p>
+<p><a href="https://fs.piterjs.org/events/conf2019/yuhnovich.pdf">Слайды</a></p>
+<p><img src="/blog/piterjsconf-2019/1__SigWtF4zjw1aEk6Kbopbng.jpeg" alt=""></p>
+<p>В докладе Павел рассказывает, как выстроить мост общения между разработчиками и дизайнерами. Основной инструмент, который он предлагает — создание дизайн-системы. Этот подход помогает здорово структурировать и привести в правильное русло процесс взаимодействия. Позволяет уменьшить эффект от постоянно меняющихся требований и позволит выдохнуть)</p>
+<h1><strong>О будущем</strong></h1>
+<h2>PiterJS Conf 2020</h2>
+<p><img src="/blog/piterjsconf-2019/1__0QMJdcVQOV__yvxc3qbX1aQ.jpeg" alt=""></p>
+<p>PiterJS Conf 2020 обязательно состоится. Предположительно, следующей весной мы сделаем анонс. А пока можете следить за нами в соц. сетях (их можно найти у нас на сайте <a href="https://piterjs.dev/"></a> <a href="http://piterjs.org">piterjs.org</a>)</p>
+<p><a href="https://www.youtube.com/channel/UCN9aK6ZG5PS1nnJZqscsmKw" title="https://www.youtube.com/channel/UCN9aK6ZG5PS1nnJZqscsmKw"><strong>PiterJS</strong><br>_Сообщество вокруг JavaScript, платформы node.js и все, что с ними связано c берегов Невы_www.youtube.com</a><a href="https://www.youtube.com/channel/UCN9aK6ZG5PS1nnJZqscsmKw"></a></p>
+<h2>Node.js Code+Learn</h2>
+<p>6 ноября в Москве, мы совместно с HolyJS на площадке <a href="http://tutu.ru/">Tutu.ru</a> проведем Node.js Code+Learn. Это возможность сделать коммит в Node.js при менторстве core team members. Подробности в статье:</p>
+<p><a href="https://medium.com/piterjs/announcement-node-js-code-learn-in-moscow-fd997241c77" title="https://medium.com/piterjs/announcement-node-js-code-learn-in-moscow-fd997241c77"><strong>Announcement Node.js Code+Learn in Moscow</strong><br>_2019 November 6 at the office of the company tutu.ru will be held Node.js Code+Learn._medium.com</a><a href="https://medium.com/piterjs/announcement-node-js-code-learn-in-moscow-fd997241c77"></a></p>
+<h2>PiterJS #42</h2>
+<p>14 ноября пройдет ежемесячный митап. Подробности в анонсе:</p>
+<p><a href="https://medium.com/piterjs/%D0%B0%D0%BD%D0%BE%D0%BD%D1%81-piterjs-42-d760cebdb79c" title="https://medium.com/piterjs/%D0%B0%D0%BD%D0%BE%D0%BD%D1%81-piterjs-42-d760cebdb79c"><strong>Анонс PiterJS #42</strong><br>_14 ноября в офисе компании JetBrains пройдёт ежемесячный митап PiterJS. Поговорим про логирование на JS, API на Node.js…_medium.com</a><a href="https://medium.com/piterjs/%D0%B0%D0%BD%D0%BE%D0%BD%D1%81-piterjs-42-d760cebdb79c"></a></p>
+<p>Спасибо всем, кто осилил эту статью! Ждем Вас на наших встречах!</p>
+
+    </article>
+</body>
+</html>

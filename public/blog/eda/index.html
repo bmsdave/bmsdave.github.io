@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event-Driven Architecture: Event Loop implementation details / RU | bmsdave's Blog</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Event-Driven Architecture: Event Loop implementation details / RU">
+    <meta name="description" content="undefined">
+    <meta name="author" content="Vadim Gorbachev (bmsdave)">
+    <meta name="date" content="2019-10-20">
+    <meta name="keywords" content="javascript, node.js, libuv, web server, event loop">
+    <meta name="language" content="ru">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://bmsdave.github.io/blog/eda/">
+    <meta property="og:title" content="Event-Driven Architecture: Event Loop implementation details / RU">
+    <meta property="og:description" content="undefined">
+    <meta property="og:image" content="https://bmsdave.github.io/blog/eda/./test.jpg">
+    <meta property="article:published_time" content="2019-10-20">
+    <meta property="article:author" content="Vadim Gorbachev (bmsdave)">
+    <meta property="article:tag" content="javascript">
+    <meta property="article:tag" content="node.js">
+    <meta property="article:tag" content="libuv">
+    <meta property="article:tag" content="web server">
+    <meta property="article:tag" content="event loop">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://bmsdave.github.io/blog/eda/">
+    <meta property="twitter:title" content="Event-Driven Architecture: Event Loop implementation details / RU">
+    <meta property="twitter:description" content="undefined">
+    <meta property="twitter:image" content="https://bmsdave.github.io/blog/eda/./test.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://bmsdave.github.io/blog/eda/">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Event-Driven Architecture: Event Loop implementation details / RU",
+        "description": "undefined",
+        "image": "https://bmsdave.github.io/blog/eda/./test.jpg",
+        "author": {
+            "@type": "Person",
+            "name": "Vadim Gorbachev (bmsdave)"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "bmsdave",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://bmsdave.github.io/logo.png"
+            }
+        },
+        "datePublished": "2019-10-20",
+        "dateModified": "2019-10-20",
+        "keywords": "javascript, node.js, libuv, web server, event loop",
+        "inLanguage": "ru"
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/github-markdown.css">
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #24292e;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .markdown-body {
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            color: #24292e;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .article-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eaecef;
+        }
+
+        .article-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+            color: #24292e;
+            font-weight: 600;
+        }
+
+        .article-meta {
+            color: #6a737d;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .article-meta span::before {
+            content: "•";
+            margin-right: 0.5rem;
+            color: #e1e4e8;
+        }
+
+        .article-meta span:first-child::before {
+            display: none;
+        }
+
+        .article-cover {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .article-cover img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-tags {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .article-tag {
+            background-color: #f6f8fa;
+            color: #24292e;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .article-tag:hover {
+            background-color: #e1e4e8;
+        }
+
+        .markdown-body h2 {
+            font-size: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 1.25rem;
+            color: #24292e;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.5rem;
+            margin-top: 1.75rem;
+            margin-bottom: 1rem;
+            color: #24292e;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.5rem;
+            color: #24292e;
+        }
+
+        .markdown-body a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        .markdown-body code {
+            background-color: rgba(27, 31, 35, 0.05);
+            color: #24292e;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        .markdown-body pre {
+            background-color: #f6f8fa;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #24292e;
+        }
+
+        .markdown-body blockquote {
+            color: #6a737d;
+            border-left: 4px solid #dfe2e5;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            background-color: #f6f8fa;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .markdown-body ul, 
+        .markdown-body ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .markdown-body table th,
+        .markdown-body table td {
+            padding: 0.75rem;
+            border: 1px solid #dfe2e5;
+        }
+
+        .markdown-body table th {
+            background-color: #f6f8fa;
+            color: #24292e;
+        }
+
+        .markdown-body table tr {
+            background-color: #ffffff;
+        }
+
+        .markdown-body table tr:nth-child(2n) {
+            background-color: #f6f8fa;
+        }
+
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            .markdown-body {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .article-header h1 {
+                font-size: 2rem;
+            }
+
+            .markdown-body h2 {
+                font-size: 1.75rem;
+            }
+
+            .markdown-body h3 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <article class="markdown-body">
+        <div class="article-header">
+            <h1>Event-Driven Architecture: Event Loop implementation details / RU</h1>
+            <div class="article-meta">
+                <span>Vadim Gorbachev (bmsdave)</span>
+                <span>2019-10-20</span>
+                <span>Saint Petersburg, Russia</span>
+            </div>
+            
+            
+                <div class="article-tags">
+                    <a href="/blog/tag/javascript" class="article-tag">javascript</a><a href="/blog/tag/node.js" class="article-tag">node.js</a><a href="/blog/tag/libuv" class="article-tag">libuv</a><a href="/blog/tag/web server" class="article-tag">web server</a><a href="/blog/tag/event loop" class="article-tag">event loop</a>
+                </div>
+            
+        </div>
+        <h2>0. Введение</h2>
+<p><strong>todo</strong></p>
+<h2>1. EDA. определение.</h2>
+<!-- Event-driven architecture уходит своими корнями в далекие 1970тые года и компанию IBM. И наверное, первое упоминание касается операционной системы EDX и языка EDL под эту систему. Это те времени когда входные данные представляли собой последовательность файлов на ленте. Программа считывала эти данные делала преобразования и записывала в другой файл, который шел на вход другой программе и так далее. -->
+
+<p>Первые упоминаний event-driven architecture уходят в 1970тые
+будет свое начало 
+Интересно заметить что описание на wiki звучит:
+&quot;Событие можно определить как «существенное изменение состояния»[1]. Например, когда покупатель приобретает автомобиль, состояние автомобиля изменяется с «продаваемого» на «проданный». Системная архитектура продавца автомобилей может рассматривать это изменение состояния как событие, создаваемое, публикуемое, определяемое и потребляемое различными приложениями в составе архитектуры.&quot;</p>
+<p>Ничего не напоминает? использованием в определении &quot;state&quot;, т.е. не так давно появившихся подходов state-management. Интересно что использование state-management&#39;а появилось только сейчас.</p>
+<p>Интересно еще отметить &quot;по структуре более ориентированы на непредсказуемые и асинхронные окружения&quot;, т.е. это </p>
+<p>Системы посторнные по EDA выделяются наличием:</p>
+<ol>
+<li>Генератор событий</li>
+<li>Канал событий</li>
+<li>Механизм обработки событий</li>
+<li>Последующее действие, управляемое событиями</li>
+</ol>
+<p>на язык фронтенда это можно перевести как:</p>
+<p>??? 1. action
+??? 2. -
+??? 3. handlers
+??? 4. reactions</p>
+<h2>2. Немного истории</h2>
+<h3>2.1 apache</h3>
+<p>Давным давно в далекой далекой галактике появился apache HTTP server (созданный в 1995 году), так как это первый проект apache foundation, его обычно называют просто apache. Важную роль в apache выполняет модуль MPM (Multi-Processing Module), который, грубо говоря, отвечает обработку нескольких запросов несколькими процессами. Один из наиболее частых режимов использования которого mpm_prefork. Суть его в том, что на 1 запрос обрабатывает отдельный процесс с одним потоком. В этом режиме может быть запущено определенное количество <code>X</code> процессов, их количество, по большей части ограничивается RAM на сервере. И как вы думаете, что произойдет если придет <code>X+1</code> запрос? Верно, он будет ждать пока освободится процесс.</p>
+<p>TODO: либо demo, либо анимацию с примерами.</p>
+<p>С одной стороны этот подход не преспособлен под большие назрузки, но у него есть и определенные плюсы о которых мы поговорим позже.</p>
+<h3>2.2 проблема C10k</h3>
+<p>В 1999 администратор популярного публичного FTP_сервера Simtel Ден Кегель обнаружил, что по аппаратным показателем средний узел его сети был готов держать 10k соединение, но программное обеспечение не могло выдать такой результат. [<a href="http://kegel.com/c10k.html%5D">http://kegel.com/c10k.html]</a></p>
+<h3>2.3 nginx</h3>
+<p>NB: здесь, кстати, в 2002-2003 году начали вестись разговоры про SPA.</p>
+<p>Но! через 5 лет после обозначения этой проблемы (в 2004 году) вышел первый релиз такого веб-сервера как nginx. nginx изначально был спроектирован на базе асинхронных неблокирующих event-driven алгоритмов. Каждый запрос помещается в event loop. В этом цикле события обрабатываются асинхронно, позволяя обрабатывать задачи в неблокирующей манере. Когда соединение закрывается оно удаляется из цикла.</p>
+<p><a href="https://www.eyerys.com/sites/default/files/nginx-apache-10kreqs.png">https://www.eyerys.com/sites/default/files/nginx-apache-10kreqs.png</a></p>
+<p>TODO: либо demo, либо анимацию с примерами.</p>
+<p>А еще через 5 лет что появилось? Кто угадает?)
+Правильно платформа Node.js</p>
+<h3>2.4 libuv (Node.js)</h3>
+<p>В осонову платформы node.js легла библиотека libuv с реализацией event-loop. Что она на себя берет:</p>
+<ol>
+<li>во-первых, кроссплатформенность, так как она абстарагиерует работу с epoll kqueue и прочими.</li>
+<li>предоставляет API хендлеров и реквестов (к диску, сети, DNS резолв и пр.).</li>
+<li>собственно event loop (в дефолтной конфигурации один, в такой конфигурации его используется node.js, но так же можно создавать и несколько).</li>
+</ol>
+<h3>2.5 select poll epoll</h3>
+<p>Еще один важный момент измененный за это время это способ работы с &quot;внешним миром для процессора&quot;, таким как файлы, сеть и т.д. В POSIX системах все является &quot;файлом&quot; будь то socket, file etc. И для работы с этим используются файловые дескрипторы.
+Изначать был select() он реализован еще в 1980ых годах когда сокеты назывались &quot;сокетами Беркли&quot; и никто, видимо, не продполагаю что в будущем появится сильная необходимость писать многопоточные приложения. более новый poll() стал более производительным при использовании многопоточности и на 1000 fd был быстрее select в ~40 раз. В epoll() стало еще лучше, нам сразу видно какие дескрипторы ждут, чтобы из них прочитали или в них записали данные, но здесь добавляется немного больше системных вызовов через poll() <em>/TODO проверить, вот эта <a href="https://it.wikireading.ru/3323">https://it.wikireading.ru/3323</a> статья все опровергает/и по сути, выйгрыш в производительности виден только на большом количестве &quot;не активных&quot; дескрипторов (порядка 10к)</em>. node.js в linux (простите, в gnu/linux) работает через epoll. </p>
+<p><a href="https://monkey.org/~provos/libevent/libevent-benchmark.jpg">https://monkey.org/~provos/libevent/libevent-benchmark.jpg</a>
+<a href="https://monkey.org/~provos/libevent/libevent-benchmark2.jpg">https://monkey.org/~provos/libevent/libevent-benchmark2.jpg</a></p>
+<h3>2.6 TCP соединения</h3>
+<p>Еще есть ньюанс что каждый браузер при открытии страницы делать разное количество TCP соединений и через разные промежутки это обрывает.
+Есть флаг keep-alive через который это можно более менее регульровать.</p>
+<h3>2.7 Demo libuv server</h3>
+<p>TODO пример реализации сервера на libuv:</p>
+<pre><code class="language-C">int main() {
+    loop = uv_default_loop();
+
+    uv_tcp_t server;
+    uv_tcp_init(loop, &amp;server);
+
+    uv_ip4_addr(&quot;0.0.0.0&quot;, DEFAULT_PORT, &amp;addr);
+
+    uv_tcp_bind(&amp;server, (const struct sockaddr*)&amp;addr, 0);
+    int r = uv_listen((uv_stream_t*) &amp;server, DEFAULT_BACKLOG, on_new_connection);
+    if (r) {
+        fprintf(stderr, &quot;Listen error %s\n&quot;, uv_strerror(r));
+        return 1;
+    }
+    return uv_run(loop, UV_RUN_DEFAULT);
+}
+</code></pre>
+<h2>3. event loop</h2>
+<h3>3.1 анимированный представления</h3>
+<p>Про event loop очень много хороших графических представлений, как они работают и как отображаются. Возможно их было бы меньше будь у нас инструменты для отладки и мониторига состояния event-loop, так как сейчас они очень скудны.
+Но давайте рассмотрим пару интересных отсылок.
+<a href="https://www.youtube.com/watch?v=cCOL7MC4Pl0">https://www.youtube.com/watch?v=cCOL7MC4Pl0</a></p>
+<h3>3.2 реализации</h3>
+<h4>3.2.1 libuv TODO</h4>
+<pre><code>TODO: дать описание на основеоснове доки
+http://docs.libuv.org/en/v1.x/_images/architecture.png
+</code></pre>
+<h4>3.2.2 tokio</h4>
+<pre><code>Сделаль сравнение с libuv
+https://tokio.rs/docs/overview/
+
+Как по мне, так там принципы очень похожи, единственная разница в &quot;подстраивании под язык&quot;, libuv - C, tokio - rust. + в tokio из коробки идет реализаций future.
+</code></pre>
+<h3>3.3 event loop в браузерах</h3>
+<p>В браузерах есть много отличных ньюансов, которые позволяют им быть гораздо проще.
+Во-первых, нет &quot;внешнего мира&quot; кроме как &quot;брузерных абстракций&quot;.</p>
+<p>The event loop is the mastermind that orchestrates:
+    what JavaScript code gets executed
+    when does it run
+    when do layout and style get updated
+    render: when do DOM changes get rendered
+It is formally specified in whatwg&#39;s HTML standard.</p>
+<h4>3.3.1 браузеры и отличие event loop от серверного.</h4>
+<p>TODO: <a href="https://stackoverflow.com/questions/25750884/are-there-significant-differences-between-the-chrome-browser-event-loop-versus-t">https://stackoverflow.com/questions/25750884/are-there-significant-differences-between-the-chrome-browser-event-loop-versus-t</a></p>
+<h4>3.3.2 event loop спецификация.</h4>
+<pre><code>У whatwg есть описание как должен выглядеть event loop.
+Но, соотвествено реализации в браузерах расходятся и 
+TODO расширить из https://github.com/atotic/event-loop
+</code></pre>
+<h4>3.3.3 chromium</h4>
+<pre><code>TODO из https://github.com/atotic/event-loop
+</code></pre>
+<h3>3.4 puzlers</h3>
+<pre><code>1. https://cdn.rawgit.com/atotic/event-loop/caa3cfd4/rendering-events.html
+2. https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/
+3. пример из доклада арчибальда про click из браузера и из кода.
+</code></pre>
+<h2>4. problems</h2>
+<p>Несмотря на плюсы которые нам предоставляет EDA она с собой несет и минусы. Самая основная проблема, это то, что event loop, в отличии от многопоточных подходов является своеобразным бутылочным горлышком. Все события выстраиваются в единую очередь и если один обработчик будет выполняться долго, то его будут ждать все остальные обработчики, т.е. на отдельное событие может повлиять события с ним не связанные. Для такое ситуации есть отдельный термин - отравление обработчика. Давайте это подробнее рассмотрим.</p>
+<h3>4.1 отравление обработчика</h3>
+<p>TODO: анимированное представление.
+если мы добавили в очередь тысячу событий, и 500ое будет выполняться 1 минуту, то у всех событий с 501 до 1000 задержка будет не меньше 1 минуты. Поэтому очень важно следить за тем, что именно представляют собой обработчики.</p>
+<h3>4.2 redos</h3>
+<p>Один из интереснейших примеров таких уязвимостей 
+это Regular expression Denial of Service [ReDOS].</p>
+<p>Суть ее заключается в том, что регулярные выражения по своей природе рекурсивны из-за чего можно найти определенную строку, которая, при разборе ее регуляркой, сможет &quot;съесть&quot; много ресурсов. Для того кто знаком со временной сложностью алгоритмов, &quot;O&quot; большое для разбора по регулярке - экспоненциально, т.е. O(c^n), что очень плохо. Если вас это не пугает, то вот вам картинка, на ней экспоненцианалое время оранжевое (из класических примеров хуже только факториальное)
+<a href="https://twitter.com/jsunderhood/status/1169947400804425732/photo/1">https://twitter.com/jsunderhood/status/1169947400804425732/photo/1</a></p>
+<p>А вот и на эту тему науч статья) &quot;Freezing the Web: A Study of ReDoS Vulnerabilities in JavaScript-based Web Servers&quot;
+<a href="https://usenix.org/system/files/conference/usenixsecurity18/sec18-staicu.pdf">https://usenix.org/system/files/conference/usenixsecurity18/sec18-staicu.pdf</a></p>
+<p>Но если вам скучно читать это полотно текста, то вот есть примеры:
+<a href="https://github.com/sola-da/ReDoS-vulnerabilities">https://github.com/sola-da/ReDoS-vulnerabilities</a>
+Эта подборка примеров ReDoS уязвимостей в популярных библиотеках.</p>
+<p>Там есть и lodash, и moment, и underscore.string.
+Благо что большинство этих проблем поправлены.
+И вот разобор от snyk на эту тему - <a href="https://snyk.io/blog/redos-and-catastrophic-backtracking/">https://snyk.io/blog/redos-and-catastrophic-backtracking/</a>
+В ней все с примерами доходчиво объясняется.</p>
+<h3>4.3 Упадет воркер - потеряются все коннекты с воркера</h3>
+<p>Еще один важный ньанс, касающийся Node.js. Если окажется так, что один из обработчиков повлечет за собой падение приложения. То все события находящиеся в очереди будут потеряны.</p>
+<p>Давайте разберем пример. Представим что у нас есть сервер принимающий финансовые транзакции по http. TODO возможно стоит придумать более интересный пример..
+#TODO Demo показать пример в консоле.</p>
+<h3>4.4 Нет инструментов для анализа того что присходит в eventloop</h3>
+<p>Это все усугубляется тем, что инструментов, которые дают возможность посмотреть что происходить в event loop у разработчиков практически нет. У Вас нет возможности сохранить dump событий и после поднятия приложения запустить их заново, это нужно делать только на стороне приложений которые общаются с нашим приложениям, т.е. всегда продумывать логику перепосылки и прочего.</p>
+<h3>4.4.1 Node.js</h3>
+<p>В Node.js не так давно велась разработка по предоставлению API для трассировки event loop
+TODO раскрыть детали:
+feature request: a way to inspect what&#39;s in the event loop
+<a href="https://github.com/nodejs/node/issues/1128">https://github.com/nodejs/node/issues/1128</a>
+<a href="https://github.com/nodejs/node/issues/19063">https://github.com/nodejs/node/issues/19063</a>
+<a href="https://github.com/nodejs/node/issues/19158">https://github.com/nodejs/node/issues/19158</a>
+<a href="https://github.com/libuv/libuv/pull/1764">https://github.com/libuv/libuv/pull/1764</a>
+<a href="https://github.com/nodejs/node-report">https://github.com/nodejs/node-report</a></p>
+<h3>4.5 Нет управляемой приоритизацией</h3>
+<p>как мы рассмотрели в libuv и с примерами в пазлерах, процесс обхода event loop является синхронной функцией, которая выполняет задачи по заранее заданной последовательности и это нельзя изменить. Но есть определенные хаки который рассмотрим чуть позже. </p>
+<h2>5. нахождение проблем</h2>
+<p>Как находить такие проблемы</p>
+<h3>5.1 devtools</h3>
+<p>В devtools основной инструмент для этого это timeline, на котором можно отслеживать время выполнения той или иной функции.
+TODO: demo с devtools в котором можно рассмотреть скрытые ньюансы.</p>
+<h3>5.2 Нахождение проблем, fuzzing</h3>
+<p>TODO: взять отсюда интересные моменты если они там есть
+<a href="http://people.cs.vt.edu/dongyoon/papers/EUROSYS-17-NodeFz.pdf">http://people.cs.vt.edu/dongyoon/papers/EUROSYS-17-NodeFz.pdf</a></p>
+<h3>5.3 snyk</h3>
+<p>snyk. Следить за обновлениями и блабла
+Так же можно встроиться в CI.
+Показать пример.</p>
+<h3>5.4 добавление проверок в CI</h3>
+<p>TODO: статистика с devtools
+TODO: статистика со snyk</p>
+<h3>6. решение проблем</h3>
+<p>Какие же есть решения?</p>
+<h3>6.1 высвобождение основного потока</h3>
+<p>все handlers должны быть максимально &quot;тонкие&quot; все остальное выполнять вне основного потока.</p>
+<h3>6.2 fibers</h3>
+<p>#TODO пример с fibers</p>
+<h2>7. Выводы</h2>
+
+    </article>
+</body>
+</html>

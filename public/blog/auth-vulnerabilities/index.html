@@ -1,0 +1,794 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ уязвимостей процесса аутентификации | bmsdave's Blog</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Анализ уязвимостей процесса аутентификации">
+    <meta name="description" content="Comprehensive analysis of authentication vulnerabilities in web applications: SQL injection prevention, HTTPS implementation, password hashing with bcrypt vs crypto, timing attacks, and security best practices. Includes real-world examples, practical code samples, and tools for security testing. Learn how to protect your Node.js applications from common authentication threats.">
+    <meta name="author" content="Vadim Gorbachev (bmsdave)">
+    <meta name="date" content="2019-01-25">
+    <meta name="keywords" content="javascript, node.js, security, SQL injection">
+    <meta name="language" content="ru">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://bmsdave.github.io/blog/auth-vulnerabilities/">
+    <meta property="og:title" content="Анализ уязвимостей процесса аутентификации">
+    <meta property="og:description" content="Comprehensive analysis of authentication vulnerabilities in web applications: SQL injection prevention, HTTPS implementation, password hashing with bcrypt vs crypto, timing attacks, and security best practices. Includes real-world examples, practical code samples, and tools for security testing. Learn how to protect your Node.js applications from common authentication threats.">
+    <meta property="og:image" content="https://bmsdave.github.io/blog/auth-vulnerabilities/./talk.jpg">
+    <meta property="article:published_time" content="2019-01-25">
+    <meta property="article:author" content="Vadim Gorbachev (bmsdave)">
+    <meta property="article:tag" content="javascript">
+    <meta property="article:tag" content="node.js">
+    <meta property="article:tag" content="security">
+    <meta property="article:tag" content="SQL injection">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://bmsdave.github.io/blog/auth-vulnerabilities/">
+    <meta property="twitter:title" content="Анализ уязвимостей процесса аутентификации">
+    <meta property="twitter:description" content="Comprehensive analysis of authentication vulnerabilities in web applications: SQL injection prevention, HTTPS implementation, password hashing with bcrypt vs crypto, timing attacks, and security best practices. Includes real-world examples, practical code samples, and tools for security testing. Learn how to protect your Node.js applications from common authentication threats.">
+    <meta property="twitter:image" content="https://bmsdave.github.io/blog/auth-vulnerabilities/./talk.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://bmsdave.github.io/blog/auth-vulnerabilities/">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Анализ уязвимостей процесса аутентификации",
+        "description": "Comprehensive analysis of authentication vulnerabilities in web applications: SQL injection prevention, HTTPS implementation, password hashing with bcrypt vs crypto, timing attacks, and security best practices. Includes real-world examples, practical code samples, and tools for security testing. Learn how to protect your Node.js applications from common authentication threats.",
+        "image": "https://bmsdave.github.io/blog/auth-vulnerabilities/./talk.jpg",
+        "author": {
+            "@type": "Person",
+            "name": "Vadim Gorbachev (bmsdave)"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "bmsdave",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://bmsdave.github.io/logo.png"
+            }
+        },
+        "datePublished": "2019-01-25",
+        "dateModified": "2019-01-25",
+        "keywords": "javascript, node.js, security, SQL injection",
+        "inLanguage": "ru"
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/github-markdown.css">
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #24292e;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .markdown-body {
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            color: #24292e;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .article-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eaecef;
+        }
+
+        .article-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+            color: #24292e;
+            font-weight: 600;
+        }
+
+        .article-meta {
+            color: #6a737d;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .article-meta span::before {
+            content: "•";
+            margin-right: 0.5rem;
+            color: #e1e4e8;
+        }
+
+        .article-meta span:first-child::before {
+            display: none;
+        }
+
+        .article-cover {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .article-cover img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-tags {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .article-tag {
+            background-color: #f6f8fa;
+            color: #24292e;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .article-tag:hover {
+            background-color: #e1e4e8;
+        }
+
+        .markdown-body h2 {
+            font-size: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 1.25rem;
+            color: #24292e;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.5rem;
+            margin-top: 1.75rem;
+            margin-bottom: 1rem;
+            color: #24292e;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.5rem;
+            color: #24292e;
+        }
+
+        .markdown-body a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        .markdown-body code {
+            background-color: rgba(27, 31, 35, 0.05);
+            color: #24292e;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        .markdown-body pre {
+            background-color: #f6f8fa;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #24292e;
+        }
+
+        .markdown-body blockquote {
+            color: #6a737d;
+            border-left: 4px solid #dfe2e5;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            background-color: #f6f8fa;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .markdown-body ul, 
+        .markdown-body ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .markdown-body table th,
+        .markdown-body table td {
+            padding: 0.75rem;
+            border: 1px solid #dfe2e5;
+        }
+
+        .markdown-body table th {
+            background-color: #f6f8fa;
+            color: #24292e;
+        }
+
+        .markdown-body table tr {
+            background-color: #ffffff;
+        }
+
+        .markdown-body table tr:nth-child(2n) {
+            background-color: #f6f8fa;
+        }
+
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            .markdown-body {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .article-header h1 {
+                font-size: 2rem;
+            }
+
+            .markdown-body h2 {
+                font-size: 1.75rem;
+            }
+
+            .markdown-body h3 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <article class="markdown-body">
+        <div class="article-header">
+            <h1>Анализ уязвимостей процесса аутентификации</h1>
+            <div class="article-meta">
+                <span>Vadim Gorbachev (bmsdave)</span>
+                <span>2019-01-25</span>
+                <span>Saint Petersburg, Russia</span>
+            </div>
+            <div class="article-cover">
+                    <img src="/blog/auth-vulnerabilities/./talk.jpg" alt="Анализ уязвимостей процесса аутентификации">
+                </div>
+            
+                <div class="article-tags">
+                    <a href="/blog/tag/javascript" class="article-tag">javascript</a><a href="/blog/tag/node.js" class="article-tag">node.js</a><a href="/blog/tag/security" class="article-tag">security</a><a href="/blog/tag/SQL injection" class="article-tag">SQL injection</a>
+                </div>
+            
+        </div>
+        <h2>Введение</h2>
+<p>UPD: На основе данной статьи сделал <a href="https://www.youtube.com/watch?v=__-NRORYk2s">доклад на CodeFest</a></p>
+<p>Приветствую.</p>
+<p>Последней каплей вдохновения для этого поста стал перевод <a href="https://habr.com/ru/company/ua-hosting/blog/354874/">курса MIT «Безопасность компьютерных систем»</a> от <a href="https://habr.com/ru/company/ua-hosting/">@ua-hosting</a>, огромное спасибо им за это. Если кто-то еще не читал/смотрел этот курс, то я настоятельно его рекомендую.</p>
+<p>А для затравки и в качестве введения для этого поста приведу примеры, которые приводились во введение в этом курсе.</p>
+<p>В первую очередь хочется сказать, что материал который предоставляется в этом посте нельзя использовать в незаконных целях и направлен на то, чтобы мы как разработчики знали как может вести себя злоумышленник и были защищены от этого, а не наоборот. Если вы захотите попробовать некоторые из подходов на практике, то прочитайте вот эту статью <a href="https://xakep.ru/2017/01/12/lawyer-answers-hacker-responsibility-howto/">&quot;Ответы юриста: как избежать ответственности за поиск уязвимостей&quot;</a>.</p>
+<h3>Cool story 1</h3>
+<p>В определенный момент времени Yahoo решила дать своим пользователям получать доступ к аккаунту не только по логину и паролю, но и в случае, если вы забыли пароль, ответить на пару вопросов, ответ на который могли знать только вы (т.к. у них не было возможности отправить вам пароль на какой либо другой резервный аккаунт).</p>
+<p>И в один прекрасный день, <a href="https://ru.wikipedia.org/wiki/%D0%9F%D1%8D%D0%B9%D0%BB%D0%B8%D0%BD,_%D0%A1%D0%B0%D1%80%D0%B0">Сара Пэйлин</a>, у которой был ящик на Yahoo, обнаружила, что данные ее почтового ящика утекли. Дело в том, что на кодовые вопросы для доступа к аккаунту были «Где вы посещали школу? Как звали вашего друга? Когда у вас день рождения?», а ответы на эти вопросы были на ее странице в википедии. И каждый мог получить доступ к ее аккаунту, просто прочитав страницу о ней.  </p>
+<h3>Cool story 2</h3>
+<p>Еще один &quot;прекрасный&quot; случай произошел с парнем по имени <a href="https://twitter.com/mat">Мэт Хонан</a>. Злоумышленников заинтересовал твиттер этого человека. Из персонального сайта нашли его email - <a href="mailto:mhonan@gmail.com">mhonan@gmail.com</a>, а информация Whois одного из проектов говорила что его адрес 1559B Sloat Blvd, San Francisco. Далее злоумышленник через форму восстановления пароля google узнал его резервный ящик m••••<a href="mailto:n@me.com">n@me.com</a>. Ящики на me.com - это по совместительству еще и AppleID -  идентификатор, используемый для совершения покупок в магазине AppStore. Дабы восстановить пароль к аккаунту @me.com через звонок в техподдержку Apple, необходимо знать:</p>
+<ol>
+<li>адрес почты @me.com;</li>
+<li>billing address - адрес проживания;</li>
+<li>последние 4 цифры кредитной карты, привязанной к AppleID.</li>
+</ol>
+<p>Первые два пункта хакер уже знал. Осталось узнать последние 4ре цифры кредитки, и в этом ему помог Amazon. Хакер позвонил в техподдержку Амазона, представился Мэттом и сказал, что хочет привязать к аккаунту еще одну кредитную карту. Все что нужно знать для этого - ФИО, мыло и адрес. Далее он повесил трубку и позвонил еще раз, но уже с другим запросом - он &quot;забыл пароль от аккаунта&quot; и хотел бы привязать еще один ящик для восстановления пароля. Всё, что нужно знать в таком случае - ФИО, адрес и номер свежей добавленной кредитной карты (!). Теперь осталось зайти на страничку Амазона и посмотреть последние 4 цифры привязанной старым хозяином кредитной карты. Вуаля!
+Подробнее об этом случае можно почитать <a href="http://www.itsec.pro/2012/08/blog-post_7.html">здесь</a>.</p>
+<p>Какие выводы мы можем сделать по этим примерам:</p>
+<ol>
+<li>Взлом подразумевает наличие “плохого парня”</li>
+<li>Подход к ИБ должен быть глобальным</li>
+<li>Чем меньше мы открываем данных, тем безопаснее система.</li>
+</ol>
+<p>Но давайте продолжим и рассмотрим технические детали и возможные уязвимости одного из основополагающих процессов - процесса аутентификации.</p>
+<p>Так же очень хочется уделить особое внимание инструментам, которые помогут нам не быть слепыми котятами и дать возможность более прозрачно видеть детали процесса отправки запросов. В частности, изначально пост назывался &quot;Анализ уязвимостей форм для аутентификации&quot;, но я из него убрал слово &quot;форм&quot;, так как хочется показать такой инструмент, как postman.</p>
+<h3>Инструментарий</h3>
+<ol>
+<li>Postman</li>
+<li>tcpdump</li>
+<li>wireshark</li>
+<li>katools (kali linux tool)</li>
+<li>puppeteer</li>
+</ol>
+<p>Давайте рассмотрим очень простой пример.</p>
+<h2>Очень простой пример</h2>
+<p>Задача: нам нужно по логину и паролю аутентифицировать пользователя.</p>
+<p>Для этого создадим табличку:</p>
+<pre><code class="language-sql">CREATE TABLE users (
+    login TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL
+);
+</code></pre>
+<p>Как БД будем использовать <code>sqlite3</code>.</p>
+<p>И напишем запрос аутентификации:</p>
+<pre><code class="language-javascript">app.get(&#39;/api/v1/login&#39;, (req, res) =&gt; {
+    db.all(`
+        SELECT rowid AS id, login, password
+           FROM users
+            WHERE login = &#39;${req.query.login}&#39;
+        `, function(err, rows) {
+        if (err) {
+            res.send(err.message);
+        } else {
+            let loginFlag = false;
+            if (rows &amp;&amp; rows.length &gt; 0) {
+                if (req.query.password === rows[0].password) {
+                    loginFlag = true;
+                }
+            }
+        res.send(loginFlag ? &quot;logged in&quot; : &quot;bad news&quot;);
+        }
+    })
+})
+</code></pre>
+<p>Полный листинг сервера <a href="https://github.com/bmsdave/talk-auth-vulnerabilities/blob/master/example/server.v2.js">здесь</a>.</p>
+<p>UPD: Никогда! Никогда! НИКОГДА! не выводите “голые” ошибки и стэктрейсы в ответ. Так как это даст дополнителную информацию злоумышленнику. Например, в нашем примере<code>res.send(err.message);</code> даст информацию о том, что мы используем SQLite.</p>
+<p>Что здесь происходит, по <code>GET</code> запросу, мы идем в БД и ищем запись по логину.
+Если такая есть, сверяем пароль который к нам пришел с тем, который записан в БД.
+Если все ок выводим <code>&quot;logged in&quot;</code>, если нет <code>&quot;bad news&quot;</code>.
+В базе у нас заведен пользователь с логин = &quot;v1&quot; и паролем &quot;123456&quot;.</p>
+<p>Этот код, является отличным рассадником уязвимостей, давайте посмотрим почему.</p>
+<p>Во-первых. Давайте воспользуемся Postman и составим запрос:
+<code>127.0.0.1:3030/api/v1/login?login=v1&amp;password=123456</code>.</p>
+<figure style="text-aling: center;">
+    <img src="./request-good.jpg" alt="Postman запрос с правильными login/pass">
+    <figcaption>Postman запрос с правильными login/pass</figcaption>
+</figure>
+
+<p>В ответ, мы получим <code>&quot;logged in&quot;</code>, если мы введем другие данные, например <code>127.0.0.1:3030/api/v1/login?login=whatthefoxsay&amp;password=test</code>, то получим <code>&quot;bad news&quot;</code>, т.е. API работает и выполняет свою задачу.</p>
+<figure style="text-aling: center;">
+    <img src="./request-bad.jpg" alt="Postman запрос с неправильными login/pass">
+    <figcaption>Postman запрос с неправильными login/pass</figcaption>
+</figure>
+
+<h2>SQL инъекции</h2>
+<p>Но что будет, если мы отправим: <code>127.0.0.1:3030/api/v1/login?login=whatthefoxsay&#39;&amp;password=test</code></p>
+<figure style="text-aling: center;">
+    <img src="./request-hmm.jpg" alt="Postman запрос с '">
+    <figcaption>Postman запрос с '</figcaption>
+</figure>
+
+<p>На придет <code>SQLITE_ERROR: unrecognized token: &quot;&#39;whatthefoxsay&#39;&#39;&quot;</code></p>
+<p>Происходит это потому, что мы используем вот такую конструкцию:</p>
+<pre><code class="language-javascript">login = &#39;${req.query.login}&#39;
+</code></pre>
+<p>И в результате формирования запроса мы получим:</p>
+<pre><code class="language-sql">SELECT rowid AS id, login, password
+   FROM users
+   WHERE login = &#39;whatthefoxsay&#39;&#39;;
+</code></pre>
+<p>Где есть синтаксическая ошибка в виде последнего знака <code>&#39;</code>.</p>
+<p>Ок. получив эту ошибку, мы можем догадаться что при обращении <code>/api/v1/login</code> идет запрос в БД с поиском логина и пароля.
+Значит мы можем попробовать каким-то образом немного изменить запрос и подставить туда свои данные.</p>
+<h3>UNION</h3>
+<p>в <code>SQL</code> есть оператор <code>UNION</code>, который позволяет объединять запрос в один по строкам. Работает он так:</p>
+<pre><code class="language-sql">SELECT 1,2,3 UNION SELECT 3,2,1;
+</code></pre>
+<p>Выведет:</p>
+<pre><code class="language-sql">1,2,3
+3,2,1
+</code></pre>
+<p>Давайте попробуем им воспользоваться:</p>
+<pre><code class="language-x">/login?login=whatthefoxsay&#39; union select &#39;test&#39;, &#39;test&amp;password=test
+</code></pre>
+<p>Получим:</p>
+<pre><code class="language-x">SQLITE_ERROR:
+SELECTs to the left and right of UNION do not have the same number of result columns
+</code></pre>
+<p>ага, в данном ответе нам говорят что количество колонок не совпадает. Ок. Давайте это исправим:</p>
+<pre><code class="language-x">/login?login=whatthefoxsay&#39; union select &#39;test&#39;, &#39;test&#39;, &#39;test&amp;password=test
+</code></pre>
+<figure style="text-aling: center;">
+    <img src="./request-hacked.jpg" alt="hacked">
+    <figcaption>hacked</figcaption>
+</figure>
+
+<p>Получаем: <code>logged in</code></p>
+<p>Вуаля! мы прошли аутентификацию.</p>
+<p>Как нам обезопаситься от таких случаев?
+Все драйвера для БД должны предоставлять инструменты для экранирования входных параметров.
+В примере с sqlite3 нам нужно использовать вместо:</p>
+<pre><code class="language-javascript">    conn.all(`
+        SELECT rowid AS id, login, password
+           FROM users
+            WHERE login = &#39;${req.query.login}&#39;
+        `,
+        function (err, rows) {}
+    );
+</code></pre>
+<p>Вот это:</p>
+<pre><code class="language-javascript">    conn.all(`
+            SELECT rowid AS id, login, password
+            FROM users
+            WHERE login = $login
+        `, {
+            $login: req.body.login
+        },
+        function (err, rows) {}
+    );
+</code></pre>
+<p>Полный листинг сервера <a href="https://github.com/bmsdave/talk-auth-vulnerabilities/blob/master/example/server.v3.js">здесь</a>.</p>
+<p>В этом случае символ <code>&#39;</code> будет экранироваться и мы получим что-то типа:
+<code>login = &#39;whatthefoxsay\&#39; union select \&#39;test\&#39;, \&#39;test\&#39;, \&#39;test&#39;</code></p>
+<p>Что нас спасет и при попытке отправить:</p>
+<pre><code class="language-x">/login?login=whatthefoxsay&#39; union select &#39;test&#39;, &#39;test&#39;, &#39;test&amp;password=test
+</code></pre>
+<p>Получим:  <code>bad news</code></p>
+<p>Драйвера всегда предоставляют возможность безопасной интерполяции параметров. Используете это!</p>
+<p>Например в документации psycopg2 (python драйвер для работы с postgresql), написано:</p>
+<blockquote>
+<p>Warning: Never, never, <em>NEVER</em> use Python
+string concatenation (+) or string parameters
+interpolation (%) to pass variables to a SQL
+query string. Not even at gunpoint.</p>
+</blockquote>
+<blockquote>
+<p>Предупреждение: Никогда, никогда, НИКОГДА не используйте конкатенацию строк (+) или (%) интерполяцию, чтобы передать параметры в SQL запрос. Даже под дулом пистолета.</p>
+</blockquote>
+<p>Разобрались.
+Давайте пойдем дальше, и заметим, что мы отсылаем <code>GET</code> запрос с нашим логином и паролем.
+Мало того! Мы используем <code>http</code> вместо <code>https</code>! Нужно помнить о том, что URL запроса (часть которого - это <code>GET</code> параметры)гораздо чаще логируются <code>HTTP</code> серверами и если у злоумышленника будет доступ к логам сервера, он сможет получить их.</p>
+<h2>TCP/HTTP(s) GET vs POST</h2>
+<p>в случае, с <code>HTTP</code>, что с <code>POST</code>, что c <code>GET</code> возможна очень простая <a href="https://ru.wikipedia.org/wiki/%D0%90%D1%82%D0%B0%D0%BA%D0%B0_%D0%BF%D0%BE%D1%81%D1%80%D0%B5%D0%B4%D0%BD%D0%B8%D0%BA%D0%B0">атака посредника (Man in the middle (MITM))</a>,
+если конечно у нас есть возможность оказаться посередине. Как пример, вот вы пришли в кафе, подключились к wifi.
+А какой-то плохой парень взломал роутер и решил записать весь трафик проходящий через него, чтобы узнать куда ходят посетители кафе.</p>
+<p>В этом случае он на одном из узлов записывает tcp-дамп:</p>
+<pre><code class="language-bash">sudo tcpdump -i lo port 3030 -w ./dump.pcap
+</code></pre>
+<p>Здесь</p>
+<ul>
+<li><code>-i lo</code> - сетевой интерфейс который мы слушаем, так как у меня все развернуто локально я слушаю <code>localhost</code>.</li>
+<li><code>port 3030</code> - чтобы не засорять эфир, ограничимся портом 3030, который слушает наше приложение.</li>
+<li><code>-w ./dump.pcap</code> - говорит писать дамп в файл.</li>
+</ul>
+<p>После отправим два запроса и <code>GET</code>, и <code>POST</code> на наше API аутентификации <code>/api/v1/login</code>.
+По завершению записи мы воспользуемся <code>wireshark</code>, чтобы посмотреть что получилось.
+И увидим, что в дампе оказались наши два запроса с явками и паролями.</p>
+<figure style="text-aling: center;">
+    <img src="./wireshark_http_get.jpg" alt="HTTP GET">
+    <figcaption>HTTP GET</figcaption>
+</figure>
+
+
+<figure style="text-aling: center;">
+    <img src="./wireshark_http_post.jpg" alt="HTTP POST">
+    <figcaption>HTTP POST</figcaption>
+</figure>
+
+<p>Давайте подключим <code>HTTPS</code> и перейдем на <code>POST</code></p>
+<p>Для начала создадим самоподписанные сертификаты:</p>
+<pre><code class="language-bash">openssl req -nodes -new -x509 -keyout server.key -out server.cert
+</code></pre>
+<p>Теперь подключим их к нашему приложению:</p>
+<pre><code class="language-javascript">const express = require(&#39;express&#39;);
+const app = express();
+const bodyParser = require(&#39;body-parser&#39;);
+app.use(bodyParser.json());
+
+const fs = require(&#39;fs&#39;);
+const https = require(&#39;https&#39;);
+const privateKey  = fs.readFileSync(&#39;./server.key&#39;, &#39;utf8&#39;);
+const certificate = fs.readFileSync(&#39;./server.cert&#39;, &#39;utf8&#39;);
+const credentials = {key: privateKey, cert: certificate};
+
+app.post(&#39;/api/v1/login&#39;, (req, res) =&gt; {
+  /* здесь без изменений */
+})
+
+const httpsServer = https.createServer(credentials, app);
+httpsServer.listen(3030);
+</code></pre>
+<p>Полный листинг сервера <a href="https://github.com/bmsdave/talk-auth-vulnerabilities/blob/master/example/server.v4.js">здесь</a></p>
+<p>Если мы посмотрим на <code>HTTPS</code> трафик, то здесь будет все хорошо, так как <code>SSL/TLS</code> шифрует данные &quot;между&quot; TCP и HTTP протоколами (см. картинку ниже), т.е. все данные HTTP-запроса будут зашифрованы. Кстати, с <code>HTTPS</code> тоже могут быть проблемы, если сотворить определенную магию с сертификатами, но мы этой темы касаться не будем, скажу одно использовать самоподписанные сертификаты в большинстве случаев является плохой практикой.</p>
+<figure style="text-aling: center;">
+    <img src="./osi.jpg" alt="Модель OSI">
+    <figcaption>Модель OSI</figcaption>
+</figure>
+
+<p>А вот что видно в дампе:</p>
+<figure style="text-aling: center;">
+    <img src="./wireshark_https_get.jpg" alt="HTTPS GET">
+    <figcaption>HTTPS GET</figcaption>
+</figure>
+
+
+<figure style="text-aling: center;">
+    <img src="./wireshark_https_post.jpg" alt="HTTPS POST">
+    <figcaption>HTTPS POST</figcaption>
+</figure>
+
+
+<p>Если отойти от аутентификации, архитектурный стиль <code>REST API</code> для получения данных рекомендует именно <code>GET</code>.
+Но давайте представим, что вы пишете приложение для мед.страховой, где есть API <code>/users</code>, которое принимает параметры:
+Имя, фамилия, отчество, дата рождения и номер полиса ДМС.
+В таком случае наш запрос должен выглядеть примерно так:
+<code>/users?name=Vadim&amp;last_name=Gorbachev&amp;polic=123456</code>.
+Соответственно эта информация осядет в логах HTTP сервера, который пример запрос, и эти в них злоумышленник сможет получить пароль в незашифрованном виде. Ах да! шифрование пароля! Это следующая часть нашего доклада.</p>
+<h2>Шифрование (crypto vs bcrypt)</h2>
+<p>давайте зашифруем наши пароли, чтобы не хранить в БД в открытом виде, для этого воспользуемся модулем <code>crypto</code>:</p>
+<pre><code class="language-javascript">crypto.createHash(&#39;md5&#39;).update(password).digest(&#39;hex&#39;);
+</code></pre>
+<p>Полный листинг сервера <a href="https://github.com/bmsdave/talk-auth-vulnerabilities/blob/master/example/server.v5.js">здесь</a>.</p>
+<p>Окей, кажется теперь получше, да? Не совсем.</p>
+<p>Во-первых, не используете <code>MD5</code>, почему спросите вы?
+А потому, что команда:</p>
+<pre><code class="language-javascript">crypto.createHash(&#39;md5&#39;).update(&#39;123456&#39;).digest(&#39;hex&#39;);
+</code></pre>
+<p>сгенерирует нам хэш: <code>e10adc3949ba59abbe56e057f20f883e</code></p>
+<p>И если мы воспользуемся таким инструментом как google, то получим:
+<code>https://google.gik-team.com/?q=e10adc3949ba59abbe56e057f20f883e</code>
+что ваш хэш уже даже проиндексирован в поисковике.</p>
+<p>Этот пример, конечно утрированный, если мы введем пароль, к примеру <code>whatthefoxsay</code>, его будет сложнее найти, так как он не настолько простой как <code>123456</code>. Но тем, не менее взломать его возможно. И вообще, криптография нам дает только время. Т.е. любой хэш со временем можно взломать. Важно понимать что время может быть равно 10 секундам и 1 млн. лет. Поэтому чем более криптостойкие алгоритмы вы используете, тем надежнее у вас защита (но помните, что она никогда не будет равна 100%, хотя при хороших условиях будет к этому значению стремиться).</p>
+<p>Кстати, хотелось бы упомянуть такой инструмент как <code>katools</code> который является сборником инструментов для анализа уязвимостей репозитория <code>Kali Linux</code>. в его состав входит такая вещь как  <code>findmyhash</code>.
+И с помощью команды </p>
+<pre><code class="language-bash">findmyhash MD5 -h e10adc3949ba59abbe56e057f20f883e
+</code></pre>
+<p>мы cможем опросить популярные источники &quot;не знаю ли они такого хэша?&quot;.</p>
+<p>И мы получим:</p>
+<pre><code class="language-bash">***** HASH CRACKED!! *****
+The original string is: 123456
+
+
+The following hashes were cracked:
+----------------------------------
+
+e10adc3949ba59abbe56e057f20f883e -&gt; 123456
+</code></pre>
+<p>Крайне не рекомендую вводить в подобные инструменты боевые хэши которые вы используете на проде.</p>
+<p>MD5 плох! Поэтому давайте воспользуемся, чем-то более надежным.</p>
+<pre><code class="language-javascript">const getFuncSHA512Salt = (salt) =&gt; {
+    return (password) =&gt; {
+        var hash = crypto.createHmac(&#39;sha512&#39;, salt);
+        hash.update(password);
+        var value = hash.digest(&#39;hex&#39;);
+        return value;
+    }
+};
+const cryptoSHA512Salt = getFuncSHA512Salt(&quot;HVHSNrRWpP1ZSR4bnjXpiHCS1ENYcUuHO&quot;)
+</code></pre>
+<p><a href="https://github.com/bmsdave/talk-auth-vulnerabilities/blob/master/example/server.v6.js">Листинг</a>.</p>
+<p>Хотел отметить, что здесь мы добавляем соль <code>HVHSNrRWpP1ZSR4bnjXpiHCS1ENYcUuHO</code>.
+Такое использование, это минимальный способ шифрования который стоит использовать в наше время (возможно, будет не так страшно использова <code>sha256</code>, но все же).</p>
+<p>В той же <a href="https://nodejs.org/api/crypto.html">документации к crypto</a>:</p>
+<pre><code class="language-javascript">const secret = &#39;abcdefg&#39;;
+const hash = crypto.createHmac(&#39;sha256&#39;, secret)
+                   .update(&#39;I love cupcakes&#39;)
+                   .digest(&#39;hex&#39;);
+</code></pre>
+<p>Они по умолчанию приводят пример хеширования уже с солью. Спасибо им! </p>
+<p>Давайте немного отвлечемся и рассмотрим еще одну cool story.
+<a href="https://www.opennet.ru/opennews/art.shtml?num=46768">https://www.opennet.ru/opennews/art.shtml?num=46768</a></p>
+<h3>Cool story 3</h3>
+<p>Возможно, вы помните как npm отозвал пароли около 170 тыс. аккаунтов и вот <a href="https://blog.npmjs.org/post/161515829950/credentials-resets">этот пост</a>. А все дело в том, что очень интересный человек <a href="https://github.com/ChALkeR">Сковорода Никита Андреевич @ChALkeR</a>, который сейчас состоит в рабочей группе по безопасности node.js, провел анализ уязвимости аутентификации пользователей в npm.</p>
+<p>возможно вы использовали пакеты из списка: 
+Express, EventEmitter2, mime-types, semver, npm, fstream, cookie (и cookies), Bower, Component, Connect, koa, co, tar, css, gm, csrf, keygrip, jcarousel, serialport, basic-auth, lru-cache, inflight, mochify, denodeify, и многие другие.</p>
+<p>К которым Никита получил доступ и описал подробности в статье опубликованной <a href="https://github.com/ChALkeR/notes/blob/master/Do-not-underestimate-credentials-leaks.md">2015-12-04</a>.</p>
+<p>Позже он провел еще одно исследование от опубликованное <a href="https://github.com/ChALkeR/notes/blob/master/Gathering-weak-npm-credentials.md">2017-06-21</a></p>
+<p>В котором рассказал что ситуация слабо изменилась. В этот раз список ТОП пакетов был такой:
+debug, qs, supports-color, yargs, commander, request, strip-ansi, chalk, form-data, mime, tunnel-agent, extend, delayed-stream, combined-stream, forever-agent, concat-stream, vinyl, co, express, escape-html, path-to-regexp, component-emitter, moment, ws, handlebars, connect, escodegen, got, gulp-util, ultron, http-proxy, dom-serializer, url-parse, vinyl-fs, configstore, coa, csso, formidable, color, winston, node-sass, react, react-dom, rx, postcss-calc, superagent, basic-auth, cheerio, jsdom, gulp, sinon, useragent, deprecated, browserify, redux, array-equal, bower, jshint, jasmine, global, mongoose, vhost, imagemin, highlight.js, tape, mysql, mz, nock, rollup, gulp-less, rework, xcode, ionic, cordova, normalize.css, electron, n, react-native, ember-cli, yeoman-generator, nunjucks, koa, modernizr, yo, mongoskin, и многие другие.</p>
+<p>Результаты оказались ошеломляющими:</p>
+<ol>
+<li>из 126 тыс, удалось получить доступ к 17 тыс, что примерно 13%</li>
+<li>Количество пострадавших пакетов 73983 — 14% экосистемы.</li>
+<li>Количество пострадавших через зависимости - 54%</li>
+<li>Получил аккаунты 4 пользователей из списка топ-20</li>
+<li>42 пользователя имели более 10 миллионов загрузок в месяц (каждый).</li>
+<li>13 пользователей имели более 50 миллионов.</li>
+<li>Одним из аккаунтов с доступом к koa был &quot;password&quot;</li>
+<li>662 - «123456», 174 — «123», 124 — password». </li>
+<li>11% пользователей повторно использовали свои просочившиеся пароли: 10,6% - напрямую, и 0,7% — с очень незначительными изменениями.</li>
+<li>т.е. он мог бы контролировать 1 972 421 945 загрузок в месяц (напрямую), это 20% от общего числа.</li>
+</ol>
+<p>Заметьте <code>662</code> пользователей использовали пароль <code>123456</code>. А вы говорите, я утрирую =)</p>
+<p>Один из кейсов получения паролей, был использование базы утекших паролей с других ресурсов.
+Например, вы зарегистрировались с паролем <code>whatthefoxsay</code> в npm и на сайте blabla.site. Если взломают сайт blabla.site и получат все явки из него. Как вы думаете злоумышленники не захотят пройтись по ТОП-20 сайтам (таких как gmail, facebook, twitter, ..., npm, github) с попытками ввода логинов/паролей из базы?
+Чтобы проверить есть ли у вас утекшие логины, можно воспользоваться <a href="https://haveibeenpwned.com/">https://haveibeenpwned.com/</a> , который рекомендует npm.
+Будете ли вы получать спам на почту после того как введете вашу почту? Я не знаю, но если вы доверяете npm и их рекомендациям, то можете проверить =)</p>
+<p>Возможно, хороший способ обезопасить себя от подобных ситуаций является использование менеджеров паролей.
+Можно ознакомиться с топом в <a href="https://habr.com/ru/post/357192/">этой статье</a>, многие рекомендуют <code>1password</code>.
+Но давайте не будет на этом задерживаться и пойдем дальше.</p>
+<h3>crypto vs bcrypt</h3>
+<p>Давайте, обратимся к гуру интернетов чтобы узнать действительно ли мы делаем все правильно.
+И по запросу <code>node.js best practice</code> наткнемся на <a href="https://github.com/i0natan/nodebestpractices#6-security-best-practices">репозиторий</a>,
+который действительно содержит очень много нужных и полезных рекомендаций + к этим рекомендациям многие прислушиваются, о чем свидетельствуют звездочки на github, которых около 23 тыс.
+В нем есть раздел <code>6-security-best-practices</code>, в котором даются советы и на часть примеров которые мы рассмотрели и на многие другие ситуации.
+Среди которых есть пункт: <a href="https://github.com/i0natan/nodebestpractices/tree/15_Jan_19#-68-avoid-using-the-nodejs-crypto-library-for-handling-passwords-usebcrypt">6.8. Avoid using the Node.js crypto library for handling passwords, use Bcrypt</a></p>
+<p>Пароли или секреты (ключи API) должны храниться с использованием безопасной функции <code>hash + salt</code>, такой которую предоставляет <code>bcrypt</code>, которая должна быть предпочтительным выбором по сравнению с реализацией JavaScript из-за соображений производительности и безопасности.</p>
+<p>Также обратим внимание на призыв не использовать <code>Math.random()</code> в алгоритмах шифрования.
+Не будем углубляться, но кому интересно почитайте статью Майорова <a href="https://medium.com/@frontman/%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%D0%BD%D1%8B%D0%B5-%D1%87%D0%B8%D1%81%D0%BB%D0%B0-%D0%BD%D0%B5-%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%D0%BD%D1%8B-252e08e60828">Случайные числа не случайны</a>.</p>
+<p>Но вернемся к crypto vs bcrypt. Нам предлагают использовать код:</p>
+<pre><code class="language-javascript">// asynchronously generate a secure password using 10 hashing rounds
+bcrypt.hash(&#39;myPassword&#39;, 10, function(err, hash) {
+  // Store secure hash in user record
+});
+
+// compare a provided password input with saved hash
+bcrypt.compare(&#39;somePassword&#39;, hash, function(err, match) {
+  if(match) {
+   // Passwords match
+  } else {
+   // // Passwords don&#39;t match
+  }
+});
+</code></pre>
+<p>Давайте же последуем совету!
+И перепишем наше API на:</p>
+<pre><code class="language-javascript">bcrypt.hash(&quot;whatthefoxsay&quot;, 10, function(err, hash) {
+    // Store secure hash in user record
+    db.createUser(conn,&#39;v7&#39;, hash)
+});
+
+app.post(&#39;/api/v1/login&#39;, (req, res) =&gt; {
+    conn.all(`
+        SELECT rowid AS id, login, password
+           FROM users
+            WHERE login = $login
+        `, {
+            $login: req.body.login
+        },
+        function (err, rows) {
+            if (err) {
+                res.send(err.message);
+            } else {
+                if (rows &amp;&amp; rows.length &gt; 0) {
+                    // compare a provided password input with saved hash
+                    bcrypt.compare(
+                        req.body.password,
+                        rows[0].password,
+                        function(err, match) {
+                            res.send(match ? &#39;logged in&#39; : &#39;bad news&#39;);
+                        }
+                    );
+                } else {
+                    res.send(&#39;bad news&#39;);
+                }
+            }
+        })
+})
+</code></pre>
+<p><a href="https://github.com/bmsdave/talk-auth-vulnerabilities/blob/master/example/server.v7.js">Листинг сервера</a>.</p>
+<p>Кажется что все выглядит пуленепробиваемое! Но!</p>
+<p>Заметим один нюанс. Давайте попробуем устроить небольшой брутфорс пар логин+пароль по нашему API.</p>
+<p>Воспользуемся подобной функцией:</p>
+<pre><code class="language-javascript">const sendRequest = function (login, password) {
+    const result = {
+        start: Date.now(),
+        login,
+        password
+    }
+    const promise = new Promise(function (res, rej) {
+        request.post(
+            &#39;https://127.0.0.1:3030/api/v1/login&#39;,
+            { json: { login, password } },
+            function (error, response, body) {
+                if (!error &amp;&amp; response.statusCode == 200) {
+                    result.end = Date.now();
+                    res(result);
+                }
+            }
+        );
+    })
+    return promise;
+}
+</code></pre>
+<p>И отправим по 10 запросов на каждый из логинов <code>v7</code>, <code>v7_wrong</code>, <code>v7_wrong2</code></p>
+<pre><code class="language-bash">$ node ./attaker.js 
+v7 917
+v7_wrong 40
+v7_wrong2 39
+</code></pre>
+<p>хмм.. давайте отправим еще раз:</p>
+<pre><code class="language-bash">$ node ./attaker.js
+v7 837
+v7_wrong 42
+v7_wrong2 45
+</code></pre>
+<p>Заметим что ответы с логином <code>v7</code> заметно отличаются от остальных. Что здесь происходит, а происходит то, что если пользователь мы угадали, дальше идет тяжелый, надежный алгоритм <code>bcrypt</code>, который шифрует нам <code>password</code> из запроса и пытается сравнить с хэшем из БД.
+А давайте попробуем вернуть <code>crypto</code> и <code>sha512</code> с солью:</p>
+<pre><code class="language-bash">$ node ./attaker.js
+v6 54
+v6_wrong 32
+v6_wrong2 30
+finish
+</code></pre>
+<p>Заметим, что здесь разница не такая значительная, и если мы хостились на удаленной машине, а не на <code>localhost</code>, то погрешность в скорости прохождения пакетов по сети просто бы съела это 20-30 мс в 10 запросов. Значит ли это что <code>bcrypt</code> плох? Конечно нет. Мы просто неправильно его готовим, о чем, к сожалению best practice нам не говорит. На момент написания статьи, мы обсуждаем этот момент в <a href="https://github.com/i0natan/nodebestpractices/issues/325">issue</a>, присоединяйтесь.</p>
+<p>Но если мы изменим наш код таким образом, чтобы мы всегда вычисляли хэш.
+Например:</p>
+<pre><code class="language-javascript">if (rows &amp;&amp; rows.length &gt; 0) {
+    // compare a provided password input with saved hash
+    bcrypt.compare(req.body.password, rows[0].password, function(err, match) {
+        console.log(&#39;good&#39;);
+        res.send(match ? &#39;logged in&#39; : &#39;bad news&#39;);
+    });
+} else {
+    bcrypt.compare(
+        req.body.password,
+        &quot;$2b$10$m.fhQdLyRI8ExS/GGh43FOkO.XTCS85QdVpn6sINdlxTGQSJe3Ydi&quot;,
+        function(err, match) {
+            console.log(&#39;bad&#39;);
+            res.send(&#39;bad news&#39;);
+        }
+    );
+}
+</code></pre>
+<p>То получим:</p>
+<pre><code class="language-bash">$ node ./attaker.js
+v7 786
+v7_wrong 778
+v7_wrong2 762
+finish
+</code></pre>
+<p>Что вполне нас обезопасит от тайминговых атак.
+Кстати, по этой теме есть хорошая <a href="https://habr.com/ru/company/alfa/blog/338170/">статья</a></p>
+<h2>usability vs security</h2>
+<p>Напоследок хочется рассмотреть еще один пример. Который не связан с аутентификацией напрямую. Но связан с формой регистрации.
+Сейчас фронтендеры ослеплены лучшими практиками UX, все стараются максимально ублажить пользователя и иногда в этой спешке теряются важные нюансы, о которых не стоит забывать.</p>
+<p>Как пример, в <a href="https://habr.com/ru/post/268253/">статье</a> предлагается уведомлять пользователя, после того как он ввел почту, зарегистрирован акк на этот email или нет. Это конечно красиво, но не до конца. Конечно мы можем добавить какие-то дополнительные проверки, на то чтобы выявить что к нам за проверкой почты стучится человек, а не машина. Но вы посмотрите за окно!</p>
+<p>Сейчас на улице другие законы! <a href="https://twitter.com/bobuk/status/1082691244730535937">селфдрайвинг кары сбивают промо роботов</a>.</p>
+<p>И есть такой волшебный инструмент как puppeteer, с помощью которого притвориться человеком гораздо проще.
+И мы можем брутфорсом пройти по форме регистрации и собрать базу email&#39;ов пользователей, тех или иных ресурсов.</p>
+<p>Для этого есть спасение - это ограничение количества запросов. Например как это делает github. На его ограничение даже можно наткнуться руками, если очень настырно пытаться его спрашивать.</p>
+<figure style="text-aling: center;">
+    <img src="./github-reg.gif" alt="Github форма регистрации">
+    <figcaption>где-то на 40 github начнет ругаться</figcaption>
+</figure>
+
+<h2>Ссылки на источники</h2>
+<ol start="0">
+<li><a href="https://github.com/bmsdave/talk-auth-vulnerabilities">Листинги кода и примеры описанные в статье</a></li>
+<li><a href="https://habr.com/ru/company/ua-hosting/blog/354874/">Курс MIT «Безопасность компьютерных систем»</a></li>
+<li><a href="">Ответы юриста: как избежать ответственности за поиск уязвимостей</a></li>
+<li><a href="http://www.itsec.pro/2012/08/blog-post_7.html">Про Мэта Хонан</a></li>
+<li><a href="http://initd.org/psycopg/docs/usage.html#the-problem-with-the-query-parameters">psycopg2: The problem with the query parameters</a></li>
+<li><a href="https://habr.com/ru/company/alfa/blog/338170/">Тайминговая атака на Node.js — когда время работает против вас</a> </li>
+<li><a href="https://www.opennet.ru/opennews/art.shtml?num=46768">Исследование @ChALkeR</a></li>
+<li><a href="https://medium.com/@frontman/%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%D0%BD%D1%8B%D0%B5-%D1%87%D0%B8%D1%81%D0%BB%D0%B0-%D0%BD%D0%B5-%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9%D0%BD%D1%8B-252e08e60828">Майоров &quot;Случайные числа не случайны&quot;</a> </li>
+<li><a href="https://github.com/i0natan/nodebestpractices">Node.js best practices list</a></li>
+<li><a href="https://github.com/nodejs/security-wg">Node.js Security Working Group</a></li>
+<li><a href="https://habr.com/ru/post/268253/">Юзабилити форм авторизации</a></li>
+</ol>
+<p>Спасибо!</p>
+
+    </article>
+</body>
+</html>

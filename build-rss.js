@@ -87,7 +87,7 @@ function getBlogPostDirectories() {
 
 // Функция для создания элемента <item> для RSS
 function createRSSItem(postData, siteURL) {
-  const { slug, frontmatter, excerpt } = postData;
+  const { slug, frontmatter } = postData;
   const postURL = `${siteURL}/blog/${slug}`;
   
   return `
@@ -97,7 +97,7 @@ function createRSSItem(postData, siteURL) {
       <guid>${postURL}</guid>
       <pubDate>${formatRFC822Date(frontmatter.date || new Date().toISOString())}</pubDate>
       ${frontmatter.author ? `<author>${escapeXML(frontmatter.author)}</author>` : ''}
-      <description>${escapeXML(excerpt)}</description>
+      <description>${escapeXML(frontmatter.description || '')}</description>
       ${frontmatter.tags ? 
         (typeof frontmatter.tags === 'string' 
           ? frontmatter.tags.split(',').map(tag => `<category>${escapeXML(tag.trim())}</category>`).join('\n      ')
@@ -128,16 +128,9 @@ function generateRSS() {
           return;
         }
         
-        // Создаем краткое описание (excerpt)
-        const plainText = contentWithoutFrontmatter
-          .replace(/#+\s+(.*?)\n/g, '$1 ')
-          .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
-        const excerpt = plainText.slice(0, 150) + (plainText.length > 150 ? '...' : '');
-        
         posts.push({
           slug,
-          frontmatter,
-          excerpt
+          frontmatter
         });
       } catch (error) {
         console.error(`Error processing blog post ${dir}:`, error);

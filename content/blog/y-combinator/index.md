@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Одна из самых красивых идей в информатике: Y-Combinator"
+description: "Deep dive into Y-Combinator: Understanding one of computer science's most elegant concepts through JavaScript. Learn how to implement recursion without explicit recursion, explore fixed points, and discover practical applications. Includes step-by-step explanations, code examples, and connections to functional programming principles."
 author: Lucas Fernandes da Costa
 date: "2020-01-09"
 place: Saint Petersburg, Russia

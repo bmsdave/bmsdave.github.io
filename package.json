@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && npm run generate-rss",
+    "build": "vite build && npm run generate-rss && npm run generate-blog-pages",
     "preview": "vite preview",
     "generate-rss": "node build-rss.js",
-    "generate-articles": "node build-static-blog.js"
+    "generate-blog-pages": "node build-blog-pages.js"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "github-markdown-css": "^5.8.1",
+    "gray-matter": "^4.0.3",
     "marked": "^15.0.8",
     "vite-plugin-markdown": "^2.2.0"
   }

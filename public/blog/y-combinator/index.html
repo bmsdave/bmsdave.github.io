@@ -1,0 +1,804 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Одна из самых красивых идей в информатике: Y-Combinator | bmsdave's Blog</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Одна из самых красивых идей в информатике: Y-Combinator">
+    <meta name="description" content="Deep dive into Y-Combinator: Understanding one of computer science's most elegant concepts through JavaScript. Learn how to implement recursion without explicit recursion, explore fixed points, and discover practical applications. Includes step-by-step explanations, code examples, and connections to functional programming principles.">
+    <meta name="author" content="Lucas Fernandes da Costa">
+    <meta name="date" content="2020-01-09">
+    <meta name="keywords" content="javascript, y-combinator">
+    <meta name="language" content="ru">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://bmsdave.github.io/blog/y-combinator/">
+    <meta property="og:title" content="Одна из самых красивых идей в информатике: Y-Combinator">
+    <meta property="og:description" content="Deep dive into Y-Combinator: Understanding one of computer science's most elegant concepts through JavaScript. Learn how to implement recursion without explicit recursion, explore fixed points, and discover practical applications. Includes step-by-step explanations, code examples, and connections to functional programming principles.">
+    <meta property="og:image" content="https://bmsdave.github.io/blog/y-combinator/./test.jpg">
+    <meta property="article:published_time" content="2020-01-09">
+    <meta property="article:author" content="Lucas Fernandes da Costa">
+    <meta property="article:tag" content="javascript">
+    <meta property="article:tag" content="y-combinator">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://bmsdave.github.io/blog/y-combinator/">
+    <meta property="twitter:title" content="Одна из самых красивых идей в информатике: Y-Combinator">
+    <meta property="twitter:description" content="Deep dive into Y-Combinator: Understanding one of computer science's most elegant concepts through JavaScript. Learn how to implement recursion without explicit recursion, explore fixed points, and discover practical applications. Includes step-by-step explanations, code examples, and connections to functional programming principles.">
+    <meta property="twitter:image" content="https://bmsdave.github.io/blog/y-combinator/./test.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://bmsdave.github.io/blog/y-combinator/">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Одна из самых красивых идей в информатике: Y-Combinator",
+        "description": "Deep dive into Y-Combinator: Understanding one of computer science's most elegant concepts through JavaScript. Learn how to implement recursion without explicit recursion, explore fixed points, and discover practical applications. Includes step-by-step explanations, code examples, and connections to functional programming principles.",
+        "image": "https://bmsdave.github.io/blog/y-combinator/./test.jpg",
+        "author": {
+            "@type": "Person",
+            "name": "Lucas Fernandes da Costa"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "bmsdave",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://bmsdave.github.io/logo.png"
+            }
+        },
+        "datePublished": "2020-01-09",
+        "dateModified": "2020-01-09",
+        "keywords": "javascript, y-combinator",
+        "inLanguage": "ru"
+    }
+    </script>
+    
+    <link rel="stylesheet" href="/github-markdown.css">
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #24292e;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .markdown-body {
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            color: #24292e;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .article-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eaecef;
+        }
+
+        .article-header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+            color: #24292e;
+            font-weight: 600;
+        }
+
+        .article-meta {
+            color: #6a737d;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+        }
+
+        .article-meta span::before {
+            content: "•";
+            margin-right: 0.5rem;
+            color: #e1e4e8;
+        }
+
+        .article-meta span:first-child::before {
+            display: none;
+        }
+
+        .article-cover {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .article-cover img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-tags {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .article-tag {
+            background-color: #f6f8fa;
+            color: #24292e;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .article-tag:hover {
+            background-color: #e1e4e8;
+        }
+
+        .markdown-body h2 {
+            font-size: 2rem;
+            margin-top: 2rem;
+            margin-bottom: 1.25rem;
+            color: #24292e;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.5rem;
+            margin-top: 1.75rem;
+            margin-bottom: 1rem;
+            color: #24292e;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1.5rem;
+            color: #24292e;
+        }
+
+        .markdown-body a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+
+        .markdown-body code {
+            background-color: rgba(27, 31, 35, 0.05);
+            color: #24292e;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        .markdown-body pre {
+            background-color: #f6f8fa;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .markdown-body pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #24292e;
+        }
+
+        .markdown-body blockquote {
+            color: #6a737d;
+            border-left: 4px solid #dfe2e5;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            background-color: #f6f8fa;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .markdown-body ul, 
+        .markdown-body ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .markdown-body table th,
+        .markdown-body table td {
+            padding: 0.75rem;
+            border: 1px solid #dfe2e5;
+        }
+
+        .markdown-body table th {
+            background-color: #f6f8fa;
+            color: #24292e;
+        }
+
+        .markdown-body table tr {
+            background-color: #ffffff;
+        }
+
+        .markdown-body table tr:nth-child(2n) {
+            background-color: #f6f8fa;
+        }
+
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            display: block;
+        }
+
+        @media (max-width: 767px) {
+            .markdown-body {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .article-header h1 {
+                font-size: 2rem;
+            }
+
+            .markdown-body h2 {
+                font-size: 1.75rem;
+            }
+
+            .markdown-body h3 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <article class="markdown-body">
+        <div class="article-header">
+            <h1>Одна из самых красивых идей в информатике: Y-Combinator</h1>
+            <div class="article-meta">
+                <span>Lucas Fernandes da Costa</span>
+                <span>2020-01-09</span>
+                <span>Saint Petersburg, Russia</span>
+            </div>
+            
+            
+                <div class="article-tags">
+                    <a href="/blog/tag/javascript" class="article-tag">javascript</a><a href="/blog/tag/y-combinator" class="article-tag">y-combinator</a>
+                </div>
+            
+        </div>
+        <p>Перевод статьи <a href="https://lucasfcosta.com/2018/05/20/Y-The-Most-Beautiful-Idea-in-Computer-Science.html">Lucas Fernandes da Costa &quot;Y: The Most Beautiful Idea in Computer Science explained in JavaScript&quot;</a></p>
+<p>В этой статье мы поговорим об <strong>одной из самых красивых идей в информатике: Y-Combinator</strong>. И нет, я не говорю о <a href="http://www.ycombinator.com/">венчурной компании в Силиконовой долине</a>, хотя этот пост объяснит, почему у них такое название ;)</p>
+<p>Если говорить простыми словами, <strong>Y-Combinator (также известный как <a href="https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D0%BC%D0%B1%D0%B8%D0%BD%D0%B0%D1%82%D0%BE%D1%80_%D0%BD%D0%B5%D0%BF%D0%BE%D0%B4%D0%B2%D0%B8%D0%B6%D0%BD%D0%BE%D0%B9_%D1%82%D0%BE%D1%87%D0%BA%D0%B8">комбинатор неподвижной точки</a>)-это способ рекурсии на языке, который явно не поддерживает его</strong>.</p>
+<p>Предположим, вы хотите реализовать рекурсивную <a href="https://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D0%BA%D1%82%D0%BE%D1%80%D0%B8%D0%B0%D0%BB">функцию вычисления факториала</a>. В JavaScript, например, вы можете просто сделать так:</p>
+<pre><code class="language-js">const factorial = n =&gt; n === 0 ? 1 : n * factorial(n - 1);
+</code></pre>
+<p>Но что, если вы не можете использовать никаких «имён»? Что делать, если JavaScript не позволяет вызывать <code>factorial</code> внутри <code>factorial</code>, как бы вы реализовали тогда рекурсивный вызов?</p>
+<p>В этом случае вам на помощь придет <code>Y-Combinator</code>.</p>
+<p>У него не так много вариантов использования для решения реальных проблем, но это не только одна из самых умопомрачительных идей в компьютерной науке и отличное умственное упражнение, но грань, разделяющая тех, кто действительно понимает, что такое функциональное программирование, от тех, кто еще пока не достиг этого просветления.</p>
+<p>Прежде чем мы начнем, я должен предупредить вас, что <strong>вывести Y-Combinator в первый раз может быть трудно</strong>. Поэтому не расстраивайтесь, если вы читаете этот пост более одного раза, чтобы хорошенько разобраться. <strong>Я попытался сделать его очень подробным и показать каждый шаг того, что происходит на каждом примере, но если вы чувствуете, что описание чересчур подробное, просто прочитайте часть &quot;Вывод Y-Combinator&quot;</strong>.</p>
+<p>Я рекомендую Вам проверять весь код статьи самостоятельно (например используя nodemon или любой удобной для вас REPL среды), что поможет вам понять все шаги, которые мы пройдем. <strong>Не бойтесь пробовать и тестировать каждый пример. Ваше собственное исследование играет большую роль в понимании того, как Y работает</strong>.</p>
+<p>Кроме того, если вы хотите узнать больше о рекурсии [у меня есть очень популярный пост в моем блоге ENG] (<a href="https://lucasfcosta.com/2017/05/08/All-About-Recursion-PTC-TCO-and-STC-in-JavaScript.html">https://lucasfcosta.com/2017/05/08/All-About-Recursion-PTC-TCO-and-STC-in-JavaScript.html</a>) Он немного старый, но остается достаточно информативным.</p>
+<p>Я гарантирую вам, что <strong>это будет одно из самых удивительных путешествий в функциональное программирование</strong>. Первый раз, вывод Y-Combinator является неописуемой радостью, так что устраивайтесь в кресле поудобнее и давайте начнем.</p>
+<br>
+
+<h2><strong>Прежде всего: что такое combinator?</strong></h2>
+<p><strong>Комбинатор — это функция без свободных переменных</strong>.</p>
+<p><strong>Свободные переменные — это переменные, определенные вне области видимости функции</strong>. Они противоположны связанным переменным, которые существуют только внутри области видимости функции.</p>
+<p>Давайте используем пример, чтобы было легче понять:</p>
+<pre><code class="language-js">const num = 13;
+
+const sumPlusThirteen = (a, b) =&gt; a + b + num;
+</code></pre>
+<p>В приведенном выше примере, <code>sumPlusThirteen</code>  использует переменными <code>a</code>, <code>b</code> и <code>num</code>. <strong>Переменные <code>a</code> и <code>b</code> являются связанными переменными, потому что они привязаны к параметрам функции</strong>: когда мы ссылаемся на их имена, мы имеем в виду значения, которые были переданы функции <code>sumPlusThirteen</code>. Однако <strong>переменная <code>num</code> ссылается на значение вне области видимости функции, что означает, что это свободная переменная</strong>.</p>
+<p>Давайте рассмотрим еще несколько примеров:</p>
+<ol>
+<li><code>x =&gt; x</code> - <code>x</code> является связанной переменной, так как она привязана к параметрам функции</li>
+<li><code>x =&gt; x + y</code> - <code>x</code> — связанная переменная, так как она привязана к параметрам функции, а <code>y</code> — свободная переменная, так как она ссылается на значение вне области видимости функции</li>
+<li><code>x =&gt; y + z</code> - <code>y</code> и <code>z</code> являются свободными переменными, так как они ссылаются на значения вне контекста функции</li>
+<li><code>(x, y) = &gt; x + y</code> — оба <code>x</code> и <code>y</code> являются связанными переменными, так как они привязаны к параметрам функции.</li>
+</ol>
+<p>Возвращаясь к комбинаторам, теперь мы можем сказать, что все комбинаторы являются следующими функциями:</p>
+<ol>
+<li><code>x =&gt; x</code> является комбинатором, потому что <code>x</code> является единственной переменной в теле функции и привязана к параметрам функции</li>
+<li><code>(x, y) =&gt; y</code> — комбинатор, так как единственная переменная в его теле (<code>y</code>) привязана к параметрам функции.</li>
+<li><code>x =&gt; y</code> — не является комбинатором, потому что переменная в его теле (<code>y</code>) относится к чему-то вне контекста функции</li>
+<li><code>(x, y) =&gt; x(y(z))</code> не является комбинатором, потому что одна из переменных в его теле (<code>z</code>) относится к чему-то вне контекста функции.</li>
+</ol>
+<p>Я мог бы написать об этом целый пост в блоге, но пока этих базовых знаний будет достаточно. Я настоятельно рекомендую вам узнать больше о <a href="https://stackoverflow.com/questions/21855838/what-are-free-and-bound-variables">разнице между связанными и свободными переменными ENG</a> и <a href="https://stackoverflow.com/questions/838079/what-is-pass-by-name-and-how-does-it-work-exactly">что такое pass-by-name и с чем его едят ENG</a>.</p>
+<br>
+
+<h2><strong>Получение Y</strong></h2>
+<h3>Итак, что для этого нужно?</h3>
+<p>Теперь, когда мы знаем, что такое комбинатор, давайте перейдем к самой смешной части этого поста и выведем сам Y-комбинатор.</p>
+<p>Давайте вернёмся к нашему рекурсивному определению факториала:</p>
+<pre><code class="language-js">const factorial = n =&gt; n === 0 ? 1 : n * factorial(n - 1);
+
+console.log(factorial(5)); // 120
+</code></pre>
+<p>Как Вы помните, <strong>мы хотим найти способ получения факториала без ссылки на собственное имя. Мы хотим функцию, которая не имеет свободных переменных, но все еще рекурсивна</strong>.</p>
+<p>Учитывая эту цель, наиболее очевидным здесь было бы <strong>исключить вызов <code>factorial</code> внутри тела функции</strong>. Чтобы сделать это, мы сделаем один из самых простых и распространенных методов рефакторинга в функциональном программировании: мы удалим ссылку <code>factorial</code> из тела функции и сделаем ее параметром:</p>
+<pre><code class="language-js">const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+</code></pre>
+<p>Теперь, для того, чтобы вычислить факториал числа, мы должны передать функцию <code>f</code> в <code>factorialGenerator</code>, чтобы он мог вызвать ее с <code>n-1</code>, Когда <code>n</code> не <code>0</code>. Например, если бы Вы передали функцию <code>myFun</code>, вы бы получили обратно <code>n =&gt; n === 0 ? 1 : n * myFun(n - 1)</code>.</p>
+<p>Давайте посмотрим, что произойдет, если мы вызовем эту функцию с рандомной функцией и передадим <code>0</code>:</p>
+<pre><code class="language-js">const literallyAnyFunction = () =&gt; null
+const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+console.log(factorialGenerator(literallyAnyFunction)(0)); // 1
+</code></pre>
+<p>Посмотрите, это уже работает для <code>0</code>! И мы можем использовать <code>literallyAnyFunction</code> для этого! Разве это не удивительно? :)</p>
+<p>Это происходит потому, что при передаче нуля в функцию, возвращаемую <code>factorialGenerator</code>, <code>n</code> будет равно <code>0</code>, а затем он вернет <code>1</code>. Нам даже не нужно будет вызывать функцию, которую мы передали (<code>literallyAnyFunction</code>).</p>
+<p>Но что если мы попытаемся вычислить факториал числа <code>1</code> таким же образом?</p>
+<pre><code class="language-js">const literallyAnyFunction = () =&gt; &#39;a string&#39;
+const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+console.log(factorialGenerator(literallyAnyFunction)(1)); // NaN
+</code></pre>
+<p>Возможно, вы захотите возразить: &quot;но ведь мы хотим получить факториал от 1, <code>NaN</code> нам абсолютно не нужен!&quot;</p>
+<p>Чтобы понять, что произошло, давайте посмотрим на функцию, возвращаемую вызовом <code>factorialGenerator</code> и передачей ей <code>literallyAnyFunction</code>:</p>
+<pre><code class="language-js">const literallyAnyFunction = () =&gt; &#39;a string&#39;
+const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+const fn = factorialGenerator(literallyAnyFunction);
+// fn is: n =&gt; n === 0 ? 1 : n * (() =&gt; &#39;a string&#39;)(n - 1));
+</code></pre>
+<p>Как видите, в функции возвращаемое <code>factorialGenerator(literallyAnyFunction)</code>, если <code>n</code> не <code>0</code> придется вызывать <code>literallyAnyFunction</code> с <code>n - 1</code>, а затем умножить результат на <code>n</code>. И каков результат умножения строки на число в JavaScript? Именно, это <code>NaN</code>.</p>
+<p>Хорошо, но что, если попытаться вычислить факториал <code>2</code> также используя <code>factorialGenerator(literallyAnyFunction)</code>? Это сработает?</p>
+<pre><code class="language-js">const literallyAnyFunction = () =&gt; &#39;a string&#39;
+const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+console.log(factorialGenerator(literallyAnyFunction)(2)); // NaN
+</code></pre>
+<p>Конечно, нет. Это все еще <code>NaN</code>. Но это не то, что я хочу показать тебе, мой дорогой читатель, на этот раз. Что я хочу заострить внимание на том, что <code>literallyAnyFunction</code> вызывается только один раз.</p>
+<p>Вот что произошло:</p>
+<ol>
+<li><code>factorialGenerator</code> был назван с literallyAnyFunction и возвращенная функция.</li>
+<li>Эта функция была вызвана с помощью <code>2</code></li>
+<li><code>2</code> не равен <code>0</code>, поэтому мы будем делать <code>2 * literallyAnyFunction(2 - 1)</code></li>
+<li><code>literallyAnyFunction(2 - 1)</code> возвращает `строка&quot;</li>
+<li>Мы попытаемся умножить <code>a string</code> на <code>2</code> и получаем <code>NaN</code>.</li>
+</ol>
+<p>Как я уже сказал, был только один вызов <code>literallyAnyFunction</code>.</p>
+<p>Давайте сделаем это более очевидным, добавив <code>console.log</code> в <code>literallyAnyFunction</code>:</p>
+<pre><code class="language-js">const literallyAnyFunction = () =&gt; {
+    console.log(&#39;f has been called!&#39;)
+    return &#39;a string&#39;
+}
+
+const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+console.log(factorialGenerator(literallyAnyFunction)(2));
+</code></pre>
+<p>Видите? <code>literallyAnyFunction</code> был вызван только один раз. Теперь проверьте его снова с <code>0</code>, <code>1</code> и <code>2</code>. Что происходит?</p>
+<ul>
+<li>Для <code>0</code> возвращает  <code>1</code>, что является правильным ответом и не вызывает <code>literallyAnyFunction</code> вообще.</li>
+<li>Для <code>1</code> и <code>2</code> возвращает <code>NaN</code>, так как была вызвана <code>literallyAnyFunction</code> и произошло умножение строки на число.</li>
+</ul>
+<p>Вы заметили какую-нибудь закономерность? Всякий раз, когда мы вызываем <code>literallyAnyFunction</code> и умножаем число на строку, которая возвращается, мы получаем <code>NaN</code>. Эх.. Если бы только у нас был способ этого избежать...</p>
+<p>Ну, он на самом деле есть!</p>
+<p>Если мы вызываем <code>factorialGenerator</code> с <code>factorialGenerator(literallyAnyFunction)</code> первоначально <code>f</code> будет являться <code>factorialGenerator</code>, что означает, что мы называем <code>factorialGenerator</code> с <code>n - 1</code> вместо <code>literallyAnyFunction</code>.</p>
+<p>Смотри!</p>
+<pre><code class="language-js">const literallyAnyFunction = () =&gt; {
+    console.log(&#39;f has been called!&#39;)
+    return &#39;a string&#39;
+}
+
+const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+const result = factorialGenerator(
+    factorialGenerator(literallyAnyFunction)
+)(1);
+
+// Работает!
+console.log(result); // 1
+</code></pre>
+<p>Потрясающе, это работает! Но что же произошло?</p>
+<ol>
+<li>На первом шаге мы определим <code>factorialGenerator(literallyAnyFunction)</code> которая вернет функцию, которая возвращает <code>1</code> (если переданный ей аргумент <code>0</code>), иначе вызовет <code>literallyAnyFunction</code>.</li>
+<li>Затем мы снова вызываем. <code>factorialGenerator</code> с помощью только что возвращенной функции.</li>
+<li>Наконец, функция, которую мы получили, будет вызывать <code>factorialGenerator</code> при первом обращении к <code>f</code>. После этого он вызовет <code>literallyAnyFunction</code>.</li>
+<li>Если  это <code>1</code>, он видит, что <code>1</code> не равен <code>0</code>, чтобы вызывать <code>f</code> (который <code>factorialGenerator</code>) с <code>n - 1</code> (aka <code>0</code>) и умножит результат на <code>1</code>.</li>
+<li>Теперь, когда <code>factorialGenerator</code> был вызван с <code>0</code>, то <code>n</code> равен <code>0</code> и вернется <code>1</code>. Это <code>1</code> будет умножено на <code>1</code>, возвращая <code>1</code>, который является правильным ответом.</li>
+</ol>
+<p><strong>Заметим, что <code>literallyAnyFunction</code> не вызывался вообще.</strong></p>
+<p>Если понимание рекурсии дается сложно, еще раз рекомендую прочитать [эту статью в блоге, где я объясняю, как простым способом понять рекурсию] (<a href="https://lucasfcosta.com/2017/05/08/All-About-Recursion-PTC-TCO-and-STC-in-JavaScript.html">https://lucasfcosta.com/2017/05/08/All-About-Recursion-PTC-TCO-and-STC-in-JavaScript.html</a>), а затем вернуться сюда.</p>
+<p>Другой вопрос: будет ли эта техника работать и с <code>2</code>?</p>
+<pre><code class="language-js">const literallyAnyFunction = () =&gt; {
+    console.log(&#39;f has been called!&#39;)
+    return &#39;a string&#39;
+}
+
+const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+const result = factorialGenerator(
+    factorialGenerator(literallyAnyFunction)
+)(2);
+
+console.log(result); // NaN
+</code></pre>
+<p>Очевидно что нет!</p>
+<p>Как вы можете видеть, на этот раз, <code>literallyAnyFunction</code> было названа, потому что второй вызов <code>f</code> вызвал <code>literallyAnyFunction</code>. Как мы можем этого избежать с <code>2</code>? Легко, просто добавить <code>factorialGenerator</code>.</p>
+<pre><code class="language-js">const literallyAnyFunction = () =&gt; {
+    console.log(&#39;f has been called!&#39;)
+    return &#39;a string&#39;
+}
+
+const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+const result = factorialGenerator(
+    factorialGenerator(
+        factorialGenerator(literallyAnyFunction)
+    )
+)(2);
+
+console.log(result); // 2
+</code></pre>
+<p>Теперь работает! Это происходит потому, что мы не вызываем <code>literallyAnyFunction</code>, вместо этого, мы просто продолжаем вызывать <code>factorialGenerator</code> пока не достигнем <code>0</code>, а потом результат пузырем выталкиваем наверх, как и в предыдущем примере.</p>
+<p>Вот что произошло на этот раз:</p>
+<pre><code class="language-js">const literallyAnyFunction = () =&gt; {
+    console.log(&#39;f has been called!&#39;)
+    return &#39;a string&#39;
+}
+
+const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+const result = factorialGenerator(
+    factorialGenerator(
+        factorialGenerator(literallyAnyFunction)
+    )
+)(2);
+
+//  n =&gt; 2 === 0 ? 1 : 2 * factorialGenerator(2 - 1)
+//  n =&gt; 1 === 0 ? 1 : 1 * factorialGenerator(1 - 1)
+//  n =&gt; 0 === 0 ? 1 : 0 * literallyAnyFunction(0 - 1) - literallyAnyFunction won&#39;t be called!
+
+console.log(result); // 2
+</code></pre>
+<p>Хотите заставить работать с <code>3</code>? Легко, просто добавьте еще один вызов <code>factorialGenerator</code>:</p>
+<pre><code class="language-js">const literallyAnyFunction = () =&gt; {
+    console.log(&#39;f has been called!&#39;)
+    return &#39;a string&#39;
+}
+
+const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+const result = factorialGenerator(
+    factorialGenerator(
+        factorialGenerator(
+            factorialGenerator(literallyAnyFunction)
+        )
+    )
+)(3);
+
+console.log(result); // 6
+</code></pre>
+<p>А что насчет <code>4</code>? Все в том же духе:</p>
+<pre><code class="language-js">const literallyAnyFunction = () =&gt; {
+    console.log(&#39;f has been called!&#39;)
+    return &#39;a string&#39;
+}
+
+const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+const result = factorialGenerator(
+    factorialGenerator(
+        factorialGenerator(
+            factorialGenerator(
+                factorialGenerator(literallyAnyFunction)
+            )
+        )
+    )
+)(4);
+
+console.log(result); // 24
+</code></pre>
+<p>Возможно вам кажется что мы переходим на LISP. Но есть один важный момент.
+Эти примеры показывают, что для того, чтобы иметь возможность вычислить факториал любого числа, нам просто нужно иметь бесконечную цепочку вызовов <code>factorialGenerator</code>, передаваемых друг другу:</p>
+<pre><code class="language-js">const literallyAnyFunction = () =&gt; {
+    console.log(&#39;f has been called!&#39;)
+    return &#39;a string&#39;
+}
+
+const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+const factorial = factorialGenerator(
+    factorialGenerator(
+        factorialGenerator(
+            factorialGenerator(...)
+        )
+    )
+);
+</code></pre>
+<br>
+
+<h3>Неподвижная точка</h3>
+<p>Теперь остановимся на минутку на другом очень важном понятии для понимания Y: <strong>неподвижная точка</strong>.</p>
+<p><strong>Неподвижной точкой функции является то значение, которое при применении к ней приводит к самой себе.</strong> В принципе, <strong>если вы вызываете функцию <code>f</code> с <code>fixpoint</code>, на выходе вы получите <code>fixpoint</code></strong>.</p>
+<p>Возьмите калькулятор, введите любое число и просто продолжайте нажимать <code>cos</code>, до того момента пока результат не будет изменяться. Давайте я попробую отгадать это число. Хм.. Я думаю.. Это будет примерно... <code>0.7390851332151607</code>!
+Это означает, что <code>0.7390851332151607</code> - это неподвижная точка <code>cos</code> и если мы вызовем <code>cos(0.7390851332151607)</code> мы вернемся к <code>0.7390851332151607</code>.</p>
+<p>Подведем итог в одном выражении:</p>
+<pre><code class="language-js">f(fixpoint) = fixpoint
+</code></pre>
+<p>Как видите, <code>f(fixpoint)</code> это то же самое что и <code>fixpoint</code>, в таком случае мы можем просто заменить <code>fixpoint</code> внутри <code>f</code> на  <code>f(fixpoint)</code>, вот так вот:</p>
+<pre><code class="language-js">fixpoint = f(fixpoint)
+fixpoint = f(f(fixpoint))
+fixpoint = f(f(f(fixpoint)))
+fixpoint = f(f(f(f(fixpoint))))
+fixpoint = f(f(f(f(f(fixpoint)))))
+// Мы можем продолжать вечно...
+</code></pre>
+<p>Выглядит знакомо, не правда ли? И это именно то, что мы хотим! Мы хотим иметь возможность вкладывать бесконечные вызовы <code> factorialGenerator</code> внутрь себя всякий раз, когда нам нужно сделать рекурсию.</p>
+<p>Вот почему мы хотим найти Y combinator. Y Combinator - это комбинатор, который позволяет нам найти фиксированную точку функции, такой как <code>factorialGenerator</code>, чтобы мы могли сделать ее рекурсивной!</p>
+<br>
+
+<h3>Поиск Y</h3>
+<p>При применении функции к Y мы хотим, чтобы она возвращала фиксированную точку этой функции, например:</p>
+<pre><code class="language-js">Y(f) = fixpoint
+</code></pre>
+<p>Учитывая то, что <code>fixpoint</code> функции <code>f</code> является значением, которое при применении к ней <code>f</code> вернет <code>fixpoint</code>, мы также можем сказать, что:</p>
+<pre><code class="language-js">Y(f) = fixpoint
+Y(f) = f(fixpoint)
+</code></pre>
+<p>Теперь, если мы просто заменим fixpoint внутри второго выражения, мы получим:</p>
+<pre><code class="language-js">Y(f) = f(Y(f))
+</code></pre>
+<p>Это и является определением <code>Y</code>! Итак, давайте определим функцию <code>Y</code>, просто взяв <code>f</code> в качестве аргумента, а не применяя его к <code>Y</code>:</p>
+<pre><code class="language-js">const Y = f =&gt; f(Y(f))
+</code></pre>
+<p>Теперь, мы должны вызвать <code>Y</code> передавая <code>factorialGenerator</code> и получим <code>factorial</code>. Это будет выглядеть так:</p>
+<pre><code class="language-js">const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+const Y = f =&gt; f(Y(f));
+
+const factorial = Y(factorialGenerator);
+
+console.log(factorial(5));
+</code></pre>
+<p>Пока что это не работает. Если вы попытаетесь выполнить приведенный выше фрагмент кода, произойдет:</p>
+<pre><code>RangeError: Maximum call stack size exceeded
+    at Y (repl:1:11)
+    at Y (repl:1:18)
+    at Y (repl:1:18)
+    at Y (repl:1:18)
+    at Y (repl:1:18)
+    at Y (repl:1:18)
+    at Y (repl:1:18)
+    at Y (repl:1:18)
+    at Y (repl:1:18)
+    at Y (repl:1:18)
+</code></pre>
+<p>Вы получите переполнение стека, потому что <code>Y</code> вызывает себя бесконечно. Если вы остановитесь и замените <code>Y(f)</code> в теле этой функции на ее результат, это станет очевидным:</p>
+<pre><code class="language-js">const Y = f =&gt; f(Y(f));
+
+//  Вот что происходит, когда мы применяем `f` к нему:
+// Y(f) = f(Y(f));
+
+// Это означает, что мы можем заменить каждый `Y(f)` на `f(Y(f))`
+// = f(Y(f));
+// = f(f(Y(f)));
+// = f(f(f(Y(f))));
+// И так далее...
+</code></pre>
+<p>На самом деле, это определение будет работать в языках со слабой типизацией (aka <a href="https://en.wikipedia.org/wiki/Strict_programming_language"><code>non-strict</code></a>), потому что нам не нужно было бы мгновенно выполнять <code>Y(f)</code> в теле <code>Y</code>, вместо этого мы выполнили бы его только тогда, когда это необходимо. Это означает, что вместо того, чтобы бесконечно делать эту &quot;замену&quot;, которую мы только что сделали, мы вернем функцию, возвращенную <code>f</code>, причем <code>Y(f)</code> является первым аргументом, который он принимает (без необходимости его выполнения).</p>
+<p>Итак, чтобы перевести это на JavaScript, нам нужно будет отложить выполнение <code>Y(f)</code>, чтобы оно не вызывалось сразу, когда мы передаем функцию <code>Y</code>.</p>
+<p>И каков самый простой способ отложить выполнение функции в <code>JavaScript</code>?</p>
+<p>thunk! <a href="https://github.com/reduxjs/redux-thunk#whats-a-thunk">Thunk-это функция, которая обертывает выражение для задержки его вычисления</a>.</p>
+<pre><code class="language-js">// вычисление 1 + 2 выполняется немедленно
+// x === 3
+let x = 1 + 2;
+
+// вычисление 1 + 2 откладывается
+// foo можно вызвать позже для выполнения вычисления
+// foo - это thunk!
+let foo = () =&gt; 1 + 2;
+</code></pre>
+<p>Я думаю, что те кто использует redux c этим знакомы, не так ли?. Действительно, <a href="https://github.com/reduxjs/redux-thunk#motivation">это именно то, для чего был сделан redux-thunk</a>. Фактически, <a href="https://github.com/reduxjs/redux-thunk#whats-a-thunk">сам пример выше был взят из их README</a>.</p>
+<p>Теперь, когда мы знаем, что такое thunk, давайте отложим выполнение <code>f(Y(f))</code>, обернув его в функцию:</p>
+<pre><code class="language-js">const Y = f =&gt; x =&gt; f(Y(f))(x);
+</code></pre>
+<p>Поскольку функция, возвращаемая <code>factorialGenerator</code>, будет принимать только один аргумент в качестве параметра, то можно просто обернуть его в функцию, которая принимает один аргумент и применяет его к результату <code>f(Y(f))</code>, который теперь будет функция, которая принимает один аргумент, вместо бесконечного вычисления.</p>
+<p>Давайте сделаем это более очевидным, представив, что происходит, когда мы вызываем <code>Y</code> с <code>factorialGenerator</code>, а затем применяем к нему <code>5</code>:</p>
+<pre><code class="language-js">const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+const Y = f =&gt; x =&gt; f(Y(f))(x);
+
+const factorial = Y(factorialGenerator);
+
+console.log(factorial(5));
+</code></pre>
+<ol>
+<li>Поскольку Y возвращает функцию, которая принимает один аргумент, мы получим функцию в ее теле, которая является <code>x =&gt; f(Y(f))(x)</code>.
+ В этой функции мы сможем заменить все <code>f</code> на <code>factorialGenerator</code>:
+ <code>x =&gt; factorialGenerator(Y(factorialGenerator))(x)</code>
+ Хитрость здесь в том, что, поскольку все все еще обернуто в функцию, которая принимает <code>x</code> в качестве аргумента, мы будем вычислять ее только тогда, когда передадим <code>x</code> в эту функцию.</li>
+<li>Еще один момент, отметим, что <code>factorialGenerator(Y(factorialGenerator))</code> примет то, что вернет <code>Y(factorialGenerator)</code>, но не будет выполнять до того, как мы не передадим аргумент (<code>х</code>) в нее.
+ Он будет в основном возвращать это <code>n =&gt; n === 0 ? 1 : n * Y(factorialGenerator)(n - 1)</code>.</li>
+<li>Делаем ещё один шаг, начиная с <code>Y(factorialGenerator)</code> равен <code>x =&gt; factorialGenerator(Y(factorialGenerator))(x)</code> (как мы видели на Шаг 1), мы получим: <code>n =&gt; n === 0 ? 1 : n * (x =&gt; factorialGenerator(Y(factorialGenerator)))(n - 1)</code></li>
+<li>Наконец, мы можем вызвать функцию на предыдущем шаге, например, со значением <code>5</code>.
+ Это вызовет функцию в теле <code>factorialGenerator</code> с <code>n</code> заменённым на <code>5</code>, и <code>f</code> будет результатом <code>Y(factorialGenerator)</code>, который является точно такой же функцией как мы имели на Шаг 1.
+ Затем мы вызываем функцию на Шаге 2 <code>5 - 1</code>:
+ <code>5 === 0 ? 1 : 5 * (x =&gt; factorialGenerator(Y(factorialGenerator)))(5 - 1)</code>.</li>
+<li>Этот процесс будет повторяться до тех пор, пока мы больше не вызовем функцию на шаге 1, но вернем 1, потому что <code>n</code> достигло 0, в результате чего умножение запустится и вернет конечный результат.</li>
+</ol>
+<p>**И это, друзья мои, само определение Y, но это еще не Y <em>combinator</em> **.</p>
+<p>Как вы помните, для того, чтобы он был комбинатором, у нас не должно быть свободных переменных в его теле, но в этом случае у нас есть явный вызов <code>Y</code>.</p>
+<br>
+
+<h3>Поиск Y Combinator</h3>
+<p>Есть много способов получить комбинатор Y, но я думаю, что самый простой для большинства людей — это, безусловно, перейти от функции <code>factorial</code> к Y вместо использования математических выражений.</p>
+<p>Как вы помните, сначала у нас была явно рекурсивная функция вычисления факториал, которая выглядела следующим образом:</p>
+<pre><code class="language-js">const factorial = n =&gt; n === 0 ? 1 : n * factorial(n - 1);
+</code></pre>
+<p>Затем, чтобы удалить явную рекурсию, мы сделали явный рекурсивный вызов <code>factorial</code> аргументом этой функции:</p>
+<pre><code class="language-js">const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+</code></pre>
+<p>Теперь <code>factorialGenerator</code> больше не является явно рекурсивным, вместо этого он вызывает переданную ему функцию <code>f</code>. Пока <code>f</code> внутри него является функцией, возвращаемой <code>factorialGenerator</code>, мы сможем вычислять факториалы, так как мы будем продолжать вызывать внутреннюю функцию: <code>n =&gt; n === 0 ? 1: n * f (n - 1)</code>.</p>
+<p>Но как мы можем сделать так, чтобы <code>factorialGenerator</code> всегда вызывал внутреннюю функцию?</p>
+<p>Мы можем заставить <code>f</code> вызвать себя внутри его тела:</p>
+<pre><code class="language-js">const factorialRecursive = f =&gt; n =&gt; n === 0 ? 1 : n * f(f)(n - 1);
+
+const factorial = factorialRecursive(factorialRecursive);
+
+console.log(factorial(5)); // 120
+</code></pre>
+<p>И это работает! Это потому что когда  мы вызываем <code>factorialRecursive</code> в первый раз мы возвращаем:</p>
+<pre><code class="language-js">n =&gt; n === 0 ? 1 : n * factorialRecursive(factorialRecursive)(n - 1);
+</code></pre>
+<p>А затем, например, при вызове его с помощью <code>5</code>, мы вызовем точно такую же функцию: <code>factorialRecursive(factorialRecursive)</code>, которая, как вы можете видеть выше, является тем же самым определением <code>factorial</code> (и, следовательно, возвращает то же самое).</p>
+<p>Это означает, что он будет продолжать вызывать <code>factorialRecursive(factorialRecursive)</code> (который является, по сути, <code>factorial</code>) пока <code>n</code> не достигнет <code>0</code>, потом вернёт <code>1</code> и позволит нам вычислить факториал числа. Примерно так:</p>
+<pre><code class="language-js">const factorialRecursive = f =&gt; n =&gt; n === 0 ? 1 : n * f(f)(n - 1);
+
+const factorial = factorialRecursive(factorialRecursive);
+
+// factorial is: n =&gt; n === 0 ? 1 : n * factorialRecursive(factorialRecursive)(n - 1);
+
+console.log(factorial(5)); // 120
+
+// n =&gt; 5 === 0 ? 1 : 5 * factorialRecursive(factorialRecursive)(5 - 1);
+
+// n =&gt; 4 === 0 ? 1 : 4 * factorialRecursive(factorialRecursive)(4 - 1);
+
+// n =&gt; 3 === 0 ? 1 : 3 * factorialRecursive(factorialRecursive)(3 - 1);
+
+// n =&gt; 2 === 0 ? 1 : 2 * factorialRecursive(factorialRecursive)(2 - 1);
+
+// n =&gt; 1 === 0 ? 1 : 1 * factorialRecursive(factorialRecursive)(1 - 1);
+
+// n =&gt; 0 === 0 ? 1 : 0 * factorialRecursive(factorialRecursive)(0 - 1); // returns 1
+
+// Notice that you can replace all the `factorialRecursive(factorialRecursive)` occurrences
+// above for `factorial`, because they are the same thing.
+</code></pre>
+<p>Имейте в виду, что наша цель — сделать этот процесс достаточно общим, чтобы мы могли заставить его работать для любой функции, которую мы хотим сделать рекурсивным, поэтому давайте удалим <code>f(f)</code>, чтобы мы могли вернуть <code>factorialGenerator</code> и извлечь его в ближайшем будущем.</p>
+<p>Сделать его аргументом этой функции и передать его внутрь через <a href="https://developer.mozilla.org/en-US/docs/Glossary/IIFE">немедленно вызываемую функцию</a> как мы собираемся это сделать:</p>
+<pre><code class="language-js">const factorialRecursive = myFun =&gt; (f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1))(myFun(myFun));
+
+const factorial = factorialRecursive(factorialRecursive)
+
+console.log(factorial(5)); // RangeError: Maximum call stack size exceeded
+</code></pre>
+<p>Переполнение Стека! Почему так произошло? Это произошло потому, что <code>myFun(myFun)</code> - это первое, что нужно оценить, в результате чего <code>factorialRecursive</code> продолжает вызывать себя бесконечно.</p>
+<p>Помните, как проще всего отложить выполнение функции? Точно, оберните его в другую функцию.</p>
+<pre><code class="language-js">const factorialRecursive = myFun =&gt; (f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1))((x) =&gt; myFun(myFun)(x));
+
+const factorial = factorialRecursive(factorialRecursive)
+
+console.log(factorial(5)); // 120
+</code></pre>
+<p>Круто, похоже мы снова на правильном пути. Теперь мы будем оценивать только <code>myFun (myFun)</code> каждый раз, когда передаем <code>x</code>.</p>
+<p>Кроме того, переименование <code>myFun</code> в <code>g</code> может упростить чтение:</p>
+<pre><code class="language-js">const factorialRecursive = g =&gt; (f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1))((x) =&gt; g(g)(x));
+
+const factorial = factorialRecursive(factorialRecursive)
+
+console.log(factorial(5)); // 120
+</code></pre>
+<p>Самое классное, что теперь нам даже не нужно определять факториал как <code>factorialRecursive(factorialRecursive)</code>, мы можем просто скопировать и вставить его, заставляя его вызывать себя в том же определении, как это:</p>
+<pre><code class="language-js">const factorial = (
+    g =&gt; (f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1))((x) =&gt; g(g)(x)) // функция
+)(g =&gt; (f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1))((x) =&gt; g(g)(x))); // сам снова в качестве аргумента
+
+console.log(factorial(5)); // 120
+</code></pre>
+<p>Я думаю, мы все можем согласиться с тем, что просто копирование и вставка этой функции немного уродливы, так почему бы нам не создать функцию, которая берет функцию и вызывает ее сама с собой и использует ее?</p>
+<pre><code class="language-js">// `g =&gt; g(g)` - функция, которая берет функцию и вызывает ее сама с собой
+const factorial = (g =&gt; g(g))(g =&gt; (f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1))((x) =&gt; g(g)(x)))
+
+console.log(factorial(5)); // 120
+</code></pre>
+<p>Намного лучше!</p>
+<p>Наконец, мы можем извлечь само определение <code>factorialGenerator</code> (<code>f =&gt; n =&gt; n === 0 ? 1: n * f (n - 1)</code>) мы попали в тело <code>factorial</code> и передаем его в качестве аргумента, чтобы сделать эту функцию универсальной:</p>
+<pre><code class="language-js">const factorialGenerator = f =&gt; n =&gt; n === 0 ? 1 : n * f(n - 1);
+
+const yCombinator = f =&gt; (g =&gt; g(g))(g =&gt; f((x) =&gt; g(g)(x)))
+
+const factorial = yCombinator(factorialGenerator);
+
+console.log(factorial(5)); // 120
+</code></pre>
+<p><strong>Это Y-Combinator!</strong></p>
+<br>
+
+<h2>Применение его к другим рекурсивным функциям</h2>
+<p><strong>Наш Y-комбинатор работает с любой неявно рекурсивной функцией, которая принимает один аргумент</strong>.</p>
+<p><strong>Давайте посмотрим, как это работает для функции вычисления чисел <a href="https://en.wikipedia.org/wiki/Fibonacci_number">Фибоначчи</a></strong>.</p>
+<p>Начнем с определения самой функции <code>fibonacci</code>. Она возвращает число Фибоначчи по определенному индексу <code>n</code>.</p>
+<pre><code class="language-js">const fibonacci = n =&gt; n &lt;= 1 ? 1 : fibonacci(n - 1) + fibonacci(n - 2);
+</code></pre>
+<p>Теперь давайте исключим явную рекурсию, удалив явные вызовы <code>fibonacci</code> и сделав его аргументом:</p>
+<pre><code class="language-js">const fibonacciGenerator = f =&gt; n =&gt; n &lt;= 1 ? 1 : f(n - 1) + f(n - 2);
+</code></pre>
+<p>Наконец, если мы передадим <code>fibonacciGenerator</code> нашему <code>Y-комбинатору</code>, мы получим рекурсивную функцию Фибоначчи:</p>
+<pre><code class="language-js">const fibonacciGenerator = f =&gt; n =&gt; n &lt;= 1 ? 1 : f(n - 1) + f(n - 2);
+
+const yCombinator = f =&gt; (g =&gt; g(g))(g =&gt; f((x) =&gt; g(g)(x)))
+
+const fibonacci = yCombinator(fibonacciGenerator)
+
+console.log(fibonacci(0)); // 1
+console.log(fibonacci(1)); // 1
+console.log(fibonacci(2)); // 2
+console.log(fibonacci(3)); // 3
+console.log(fibonacci(4)); // 5
+console.log(fibonacci(5)); // 8
+</code></pre>
+<br>
+
+<h2>Фирма в кремниевой долине</h2>
+<p>Сам Пол Грэм известен своей удивительной работой на lisp, так что он, очевидно, очень опытный, когда дело доходит до функционального программирования и, следовательно, знает Y-Combinator.</p>
+<p>Согласно собственному веб-сайту YC, именно поэтому они выбрали имя:</p>
+<blockquote>
+<p>Y Combinator - одна из самых крутых идей в области компьютерных наук. Это также метафора того, что мы делаем. Это программа, которая запускает программы; мы компания, которая помогает начать компании.</p>
+</blockquote>
+<p>Теперь, когда мы немного знаем о Y, мы можем исследовать значение этого имени немного больше.</p>
+<p>Учитывая, что YC ускоряет стартапы, можно сказать, что:</p>
+<center><p style="font-size: 22px; font-style: italic;">YC(accelerateStartups)(startup)</p></center>
+
+<p>И до тех пор, пока <code>accelerateStartups</code> не достигнет своего базового условия (либо из-за нехватки денег, либо мотивации), мы будем продолжать кормить его все большим и большим количеством стартапов.</p>
+<p>Отличная работа, мистер Грэм. Я ваш большой поклонник.</p>
+<br>
+
+<h2>Связанные материалы и ссылки</h2>
+<ul>
+<li><a href="https://mvanier.livejournal.com/2897.html">Y Combinator или как добиться успеха в рекурсии без рекурсии</a> by [Mike Vanier](<a href="http://users.cms.caltech.edu">http://users.cms.caltech.edu</a> / ~mvanier/) - это один из лучших постов в блоге, которые я читал в своей жизни. Это сообщение в блоге пытается следовать тому же дидактическому маршруту, что и этот, но с немного большей детализацией и более медленными темпами. Если вы заинтересованы в более подробной информации о том, как получить Y в нестрогих языках программирования, я настоятельно рекомендую вам прочитать это. Отличный материал, спасибо, Майк.</li>
+<li><a href="https://github.com/calincru/Y-Combinator">Лямбда-исчисление: у комбинатора в JavaScript</a> по <a href="https://twitter.com/viebel">Yehonathan Sharvit</a> - еще один отличный блоге в JavaScript. Больше внимания уделяется практическому и короткому выводу y-комбинатора и его практическим приложениям</li>
+<li><a href="https://www.youtube.com/watch?v=9T8A89jgeTI">Основы: комбинатор Y функционального программирования</a> by <a href="https://www.youtube.com/channel/UC9-y-6csu5WGm29I7JiwpnA">компьютерный файл</a> - обычно я не смотрю много видео на Youtube о компьютерных науках, но это определенно стоит вашего времени. Это очень простое объяснение, которое поможет вам понять теоретическую сторону y-комбинатора, если вы никогда раньше не имели дело с лямбда-исчислением. Это хорошая отправная точка.</li>
+<li><a href="https://cs.stackexchange.com/questions/9604/clear-intuitive-derivation-of-the-fixed-point-combinator-y-combinator">Четкий, интуитивно понятный вывод комбинатора с фиксированной точкой (Y Combinator)?</a> на <a href="https://cs.stackexchange.com/">CS StackExchange</a> - также очень хороший и простой вывод Y. не практичный, но определенно очень элегантный и лаконичный. Настоятельно рекомендуемый.</li>
+<li><a href="https://github.com/thunks/thunks">thunks / thunks на Github</a> &amp; <a href="https://github.com/reduxjs/redux-thunk">redux-thunk</a> - более отличные ресурсы, чтобы узнать о thunks и как они могут быть полезны</li>
+</ul>
+<br>
+
+<h2>Особая благодарность</h2>
+<ul>
+<li>Я бы хотел поблагодарить моего друга <a href="https://twitter.com/mrgnrdrck">Morgan Roderick</a> за ревью этой статьи и за все удивительные работы, которые он делает с Sinon.js. Спасибо, приятель :)</li>
+</ul>
+
+    </article>
+</body>
+</html>

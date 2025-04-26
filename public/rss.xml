@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Vadim Gorbachev | bmsdave</title>
+  <link>https://bmsdave.com</link>
+  <description>Vadim Gorbachev&apos;s personal website and blog about programming</description>
+  <language>ru</language>
+  <lastBuildDate>Sat, 26 Apr 2025 18:40:58 GMT</lastBuildDate>
+  <atom:link href="https://bmsdave.com/rss.xml" rel="self" type="application/rss+xml" />
+
+    <item>
+      <title>Test Article</title>
+      <link>https://bmsdave.com/blog/test-article</link>
+      <guid>https://bmsdave.com/blog/test-article</guid>
+      <pubDate>Sun, 01 Jan 2023 00:00:00 GMT</pubDate>
+      <author>Vadim Gorbachev (bmsdave)</author>
+      <description></description>
+      
+    </item>
+
+    <item>
+      <title>Одна из самых красивых идей в информатике: Y-Combinator</title>
+      <link>https://bmsdave.com/blog/y-combinator</link>
+      <guid>https://bmsdave.com/blog/y-combinator</guid>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 GMT</pubDate>
+      <author>Lucas Fernandes da Costa</author>
+      <description>Deep dive into Y-Combinator: Understanding one of computer science&apos;s most elegant concepts through JavaScript. Learn how to implement recursion without explicit recursion, explore fixed points, and discover practical applications. Includes step-by-step explanations, code examples, and connections to functional programming principles.</description>
+      
+    </item>
+
+    <item>
+      <title>AST, автоматизации, оптимизации или как прошла PiterJS conf #1</title>
+      <link>https://bmsdave.com/blog/piterjsconf-2019</link>
+      <guid>https://bmsdave.com/blog/piterjsconf-2019</guid>
+      <pubDate>Thu, 31 Oct 2019 00:00:00 GMT</pubDate>
+      <author>Vadim Gorbachev (bmsdave)</author>
+      <description>PiterJS Conf 2019: Comprehensive review of Russia&apos;s premier JavaScript conference featuring insights on AST transformations, GraphQL, CSS-in-JS, JSX, SPA optimization, and hexagonal architecture. Includes detailed coverage of lightning talks on Node.js, Vue.js, prototyping, automation, and design systems. Learn about the conference organization, attendee feedback, and future events in the JavaScript community.</description>
+      
+    </item>
+
+    <item>
+      <title>Анализ уязвимостей процесса аутентификации</title>
+      <link>https://bmsdave.com/blog/auth-vulnerabilities</link>
+      <guid>https://bmsdave.com/blog/auth-vulnerabilities</guid>
+      <pubDate>Fri, 25 Jan 2019 00:00:00 GMT</pubDate>
+      <author>Vadim Gorbachev (bmsdave)</author>
+      <description>Comprehensive analysis of authentication vulnerabilities in web applications: SQL injection prevention, HTTPS implementation, password hashing with bcrypt vs crypto, timing attacks, and security best practices. Includes real-world examples, practical code samples, and tools for security testing. Learn how to protect your Node.js applications from common authentication threats.</description>
+      
+    </item>
+</channel>
+</rss>
