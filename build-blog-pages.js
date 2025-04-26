@@ -6,9 +6,9 @@ import matter from 'gray-matter';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const contentDir = path.join(__dirname, 'content', 'blog');
-const publicDir = path.join(__dirname, 'public', 'blog');
+const publicDir = path.join(__dirname, 'blog');
 
-// Ensure public/blog directory exists
+// Ensure blog directory exists
 if (!fs.existsSync(publicDir)) {
     fs.mkdirSync(publicDir, { recursive: true });
 }
@@ -93,7 +93,7 @@ const htmlTemplate = (content, title, frontmatter) => `
     </script>
     
     <link rel="stylesheet" href="/github-markdown.css">
-    <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" href="/style.css">
     <style>
         body {
             background-color: var(--background-color);
@@ -358,13 +358,13 @@ fs.readdirSync(contentDir).forEach(postDir => {
         // Look for index.md in each post directory
         const indexPath = path.join(postPath, 'index.md');
         if (fs.existsSync(indexPath)) {
-            // Create post directory in public/blog
+            // Create post directory in blog
             const publicPostDir = path.join(publicDir, postDir);
             if (!fs.existsSync(publicPostDir)) {
                 fs.mkdirSync(publicPostDir, { recursive: true });
             }
 
-            // Copy all files from post directory to public/blog/postDir
+            // Copy all files from post directory to blog/postDir
             copyDir(postPath, publicPostDir);
 
             const markdown = fs.readFileSync(indexPath, 'utf-8');
